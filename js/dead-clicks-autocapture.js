@@ -1,0 +1,712 @@
+! function() {
+    try {
+        var e = "undefined" != typeof window ? window : "undefined" != typeof global ? global : "undefined" != typeof globalThis ? globalThis : "undefined" != typeof self ? self : {},
+            n = (new e.Error).stack;
+        n && (e._posthogChunkIds = e._posthogChunkIds || {}, e._posthogChunkIds[n] = "019fb8dc-263c-75c1-923d-6c1c35a0a9cb")
+    } catch (e) {}
+}();
+! function() {
+    "use strict";
+
+    function t() {
+        return t = Object.assign ? Object.assign.bind() : function(t) {
+            for (var i = 1; arguments.length > i; i++) {
+                var r = arguments[i];
+                for (var e in r)({}).hasOwnProperty.call(r, e) && (t[e] = r[e])
+            }
+            return t
+        }, t.apply(null, arguments)
+    }
+    var i = "undefined" != typeof window ? window : void 0,
+        r = "undefined" != typeof globalThis ? globalThis : i,
+        e = null == r ? void 0 : r.document;
+    null != r && r.XMLHttpRequest && new r.XMLHttpRequest;
+    var n = "undefined" != typeof globalThis ? globalThis : i;
+    n && "undefined" == typeof self && (n.self = n), n && "undefined" == typeof File && (n.File = function() {});
+    var a = null != i ? i : {};
+
+    function s(t, i) {
+        return -1 !== t.indexOf(i)
+    }
+    var o = function(t) {
+            return t.trim()
+        },
+        u = Object.prototype,
+        l = u.hasOwnProperty,
+        c = u.toString,
+        h = Array.isArray || function(t) {
+            return "[object Array]" === c.call(t)
+        },
+        v = t => "function" == typeof t,
+        f = t => void 0 === t,
+        d = t => "[object String]" == c.call(t),
+        _ = t => null === t,
+        p = t => f(t) || _(t),
+        b = t => "[object Number]" == c.call(t) && t == t,
+        m = t => t instanceof FormData;
+
+    function g(t) {
+        return t ? t.split("#")[0] : t
+    }
+    var w = function(t, r) {
+            var e = (void 0 === r ? {} : r).debugEnabled,
+                n = {
+                    k(r) {
+                        if (i && (i.POSTHOG_DEBUG || e) && !f(i.console) && i.console) {
+                            for (var n = ("__rrweb_original__" in i.console[r] ? i.console[r].__rrweb_original__ : i.console[r]), a = arguments.length, s = new Array(a > 1 ? a - 1 : 0), o = 1; a > o; o++) s[o - 1] = arguments[o];
+                            n(t, ...s)
+                        }
+                    },
+                    debug() {
+                        for (var t = arguments.length, i = new Array(t), r = 0; t > r; r++) i[r] = arguments[r];
+                        n.k("debug", ...i)
+                    },
+                    info() {
+                        for (var t = arguments.length, i = new Array(t), r = 0; t > r; r++) i[r] = arguments[r];
+                        n.k("log", ...i)
+                    },
+                    warn() {
+                        for (var t = arguments.length, i = new Array(t), r = 0; t > r; r++) i[r] = arguments[r];
+                        n.k("warn", ...i)
+                    },
+                    error() {
+                        for (var t = arguments.length, i = new Array(t), r = 0; t > r; r++) i[r] = arguments[r];
+                        n.k("error", ...i)
+                    },
+                    critical() {
+                        for (var i = arguments.length, r = new Array(i), e = 0; i > e; e++) r[e] = arguments[e];
+                        console.error(t, ...r)
+                    },
+                    uninitializedWarning(t) {
+                        n.error("You must initialize PostHog before calling " + t)
+                    },
+                    createLogger: (i, r) => w(t + " " + i, r)
+                };
+            return n
+        },
+        y = w("[PostHog.js]"),
+        k = y.createLogger;
+
+    function A(t, i) {
+        if (!p(t))
+            if (h(t)) t.forEach(i);
+            else if (m(t)) t.forEach(((t, r) => i(t, r)));
+        else
+            for (var r in t) l.call(t, r) && i(t[r], r)
+    }
+    var x = function(t) {
+        for (var i = arguments.length, r = new Array(i > 1 ? i - 1 : 0), e = 1; i > e; e++) r[e - 1] = arguments[e];
+        for (var n of r)
+            for (var a in n) void 0 !== n[a] && (t[a] = n[a]);
+        return t
+    };
+
+    function C(t) {
+        for (var i = Object.keys(t), r = i.length, e = new Array(r); r--;) e[r] = [i[r], t[i[r]]];
+        return e
+    }
+
+    function O(t, i, r, e) {
+        var n = null != e ? e : {},
+            a = n.capture,
+            s = n.passive;
+        null == t || t.addEventListener(i, r, {
+            capture: void 0 !== a && a,
+            passive: void 0 === s || s
+        })
+    }
+    var D = 1,
+        j = 3,
+        E = 11;
+
+    function M(t) {
+        return !!t && t.nodeType === D
+    }
+
+    function S(t, i) {
+        return !!t && !!t.tagName && t.tagName.toLowerCase() === i.toLowerCase()
+    }
+
+    function T(t) {
+        return !!t && t.nodeType === E && M(t.host)
+    }
+    var z = 1e3;
+
+    function L(t) {
+        return t ? o(t).split(/\s+/) : []
+    }
+
+    function H(t) {
+        var i = "";
+        switch (typeof t.className) {
+            case "string":
+                i = t.className;
+                break;
+            case "object":
+                i = (t.className && "baseVal" in t.className ? t.className.baseVal : null) || t.getAttribute("class") || "";
+                break;
+            default:
+                i = ""
+        }
+        return L(i)
+    }
+
+    function R(t) {
+        var i = "";
+        return B(t) && !F(t) && t.childNodes && t.childNodes.length && A(t.childNodes, (function(t) {
+            var r, e;
+            (function(t) {
+                return !!t && t.nodeType === j
+            })(t) && t.textContent && (i += null !== (r = p(e = t.textContent) ? null : o(e).split(/(\s+)/).filter((t => Q(t))).join("").replace(/[\r\n]/g, " ").replace(/[ ]+/g, " ").substring(0, 255)) && void 0 !== r ? r : "")
+        })), o(i)
+    }
+    var P = ["a", "button", "form", "input", "select", "textarea", "label"];
+
+    function U(t) {
+        var i = t.parentNode;
+        return !(!i || !M(i)) && i
+    }
+    var Z = [".ph-no-deadclick", ".ph-no-capture"];
+    var I = t => !t || S(t, "html") || !M(t),
+        W = (t, r) => {
+            if (!i || I(t)) return {
+                parentIsUsefulElement: !1,
+                targetElementList: []
+            };
+            for (var e = !1, n = [t], a = t; a.parentNode && !S(a, "body");)
+                if (T(a.parentNode)) n.push(a.parentNode.host), a = a.parentNode.host;
+                else {
+                    var s = U(a);
+                    if (!s) break;
+                    if (P.indexOf(s.tagName.toLowerCase()) > -1) e = !0;
+                    else try {
+                        var o = i.getComputedStyle(s);
+                        o && "pointer" === o.getPropertyValue("cursor") && (e = !0)
+                    } catch (t) {}
+                    n.push(s), a = s
+                } return {
+                parentIsUsefulElement: e,
+                targetElementList: n
+            }
+        };
+
+    function B(t) {
+        for (var i = new Set, r = 0, e = t; e.parentNode && !S(e, "body"); e = e.parentNode) {
+            if (r++ >= z || i.has(e)) return !1;
+            i.add(e);
+            var n = H(e);
+            if (s(n, "ph-sensitive") || s(n, "ph-no-capture")) return !1
+        }
+        if (s(H(t), "ph-include")) return !0;
+        var a = t.type || "";
+        if (d(a)) switch (a.toLowerCase()) {
+            case "hidden":
+            case "password":
+                return !1
+        }
+        var o = t.name || t.id || "";
+        return !d(o) || !/^cc|cardnum|ccnum|creditcard|csc|cvc|cvv|exp|pass|pwd|routing|seccode|securitycode|securitynum|socialsec|socsec|ssn/i.test(o.replace(/[^a-zA-Z0-9]/g, ""))
+    }
+
+    function F(t) {
+        return !!(S(t, "input") && !["button", "checkbox", "submit", "reset"].includes(t.type) || S(t, "select") || S(t, "textarea") || "true" === t.getAttribute("contenteditable"))
+    }
+    var N = new RegExp("^(?:(4[0-9]{12}(?:[0-9]{3})?)|(5[1-5][0-9]{14})|(6(?:011|5[0-9]{2})[0-9]{12})|(3[47][0-9]{13})|(3(?:0[0-5]|[68][0-9])[0-9]{11})|((?:2131|1800|35[0-9]{3})[0-9]{11}))$"),
+        V = /(^|[^0-9A-Za-z_])([0-9][0-9 -]*[0-9])(?=$|[^0-9A-Za-z_])/g,
+        q = [16, 15, 14, 13],
+        G = new RegExp("^(\\d{3}-?\\d{2}-?\\d{4})$"),
+        K = new RegExp("(^|[^0-9])((?!000|666)[0-9]{3}-?(?!00)[0-9]{2}-?(?!0000)[0-9]{4})(?=$|([^0-9]))", "g"),
+        Y = /[0-9A-Za-z_]/;
+
+    function J(t) {
+        for (var i = 0, r = !1, e = t.length - 1; e >= 0; e--) {
+            var n = t.charCodeAt(e) - 48;
+            r && (n *= 2) > 9 && (n -= 9), i += n, r = !r
+        }
+        return i % 10 == 0
+    }
+
+    function Q(t, i) {
+        if (void 0 === i && (i = !0), p(t)) return !1;
+        if (d(t)) {
+            t = o(t);
+            var r = i ? N.test((t || "").replace(/[- ]/g, "")) : function(t) {
+                var i;
+                for (V.lastIndex = 0; i = V.exec(t);) {
+                    var r = i[2];
+                    if (r)
+                        for (var e = r.replace(/[- ]/g, ""), n = 0; e.length > n; n++)
+                            for (var a of q) {
+                                var s = n + a;
+                                if (e.length >= s) {
+                                    var o = e.slice(n, s);
+                                    if (N.test(o) && J(o)) return !0
+                                }
+                            }
+                }
+                return !1
+            }(t);
+            if (r) return !1;
+            var e = i ? G.test(t) : function(t) {
+                var i;
+                for (K.lastIndex = 0; i = K.exec(t);) {
+                    var r = i[1],
+                        e = i[3];
+                    if (!(r && e && Y.test(r) && Y.test(e))) return !0
+                }
+                return !1
+            }(t);
+            if (e) return !1
+        }
+        return !0
+    }
+
+    function X(t) {
+        var i = R(t);
+        return Q(i = (i + " " + tt(t)).trim()) ? i : ""
+    }
+
+    function tt(t) {
+        var i = "";
+        return t && t.childNodes && t.childNodes.length && A(t.childNodes, (function(t) {
+            var r;
+            if (t && "span" === (null == (r = t.tagName) ? void 0 : r.toLowerCase())) try {
+                var e = R(t);
+                i = (i + " " + e).trim(), t.childNodes && t.childNodes.length && (i = (i + " " + tt(t)).trim())
+            } catch (t) {
+                y.error("[AutoCapture]", t)
+            }
+        })), i
+    }
+
+    function it(t) {
+        return t.replace(/"|\\"/g, '\\"')
+    }
+
+    function rt(t) {
+        var i = t.attr__class;
+        if (i) return h(i) ? i : L(i)
+    }
+
+    function et(t, i) {
+        return i.length > t ? i.slice(0, t) + "..." : i
+    }
+
+    function nt(t) {
+        if (t.previousElementSibling) return t.previousElementSibling;
+        var i = t;
+        do {
+            i = i.previousSibling
+        } while (i && !M(i));
+        return i
+    }
+
+    function at(r, n) {
+        var a, o, u = n.e,
+            l = n.maskAllElementAttributes,
+            c = n.maskAllText,
+            h = n.elementAttributeIgnoreList,
+            v = n.disableCaptureUrlHashes;
+        if (!M(r)) return {
+            props: {}
+        };
+        for (var _ = [r], p = new Set([r]), b = r; b.parentNode && !S(b, "body") && z > _.length;)
+            if (T(b.parentNode)) {
+                var m = b.parentNode.host;
+                if (p.has(m)) break;
+                p.add(m), _.push(m), b = m
+            } else {
+                if (!M(b.parentNode)) break;
+                if (p.has(b.parentNode)) break;
+                p.add(b.parentNode), _.push(b.parentNode), b = b.parentNode
+            } var w, y, k, O, D = [],
+            j = {},
+            E = !1,
+            U = !1;
+        if (A(_, (t => {
+                var i = B(t);
+                if (S(t, "a")) {
+                    var r = t.getAttribute("href");
+                    E = !!(i && r && Q(r)) && (v ? g(r) : r)
+                }
+                s(H(t), "ph-no-capture") && (U = !0), D.push(function(t, i, r, e, n) {
+                    void 0 === n && (n = !1);
+                    var a = t.tagName.toLowerCase(),
+                        s = {
+                            tag_name: a
+                        };
+                    P.indexOf(a) > -1 && !r && (s.$el_text = "a" === a.toLowerCase() || "button" === a.toLowerCase() ? et(1024, X(t)) : et(1024, R(t)));
+                    var o = H(t);
+                    o.length > 0 && (s.classes = o.filter((function(t) {
+                        return "" !== t
+                    }))), A(t.attributes, (function(r) {
+                        var a;
+                        if ((!F(t) || -1 !== ["name", "id", "class", "aria-label"].indexOf(r.name)) && (null == e || !e.includes(r.name)) && !i && Q(r.value) && (!d(a = r.name) || "_ngcontent" !== a.substring(0, 10) && "_nghost" !== a.substring(0, 7))) {
+                            var o = r.value;
+                            "class" === r.name && (o = L(o).join(" ")), s["attr__" + r.name] = et(1024, "href" === r.name && n ? g(o) : o)
+                        }
+                    }));
+                    for (var u = 1, l = 1, c = t; c = nt(c);) u++, c.tagName === t.tagName && l++;
+                    return s.nth_child = u, s.nth_of_type = l, s
+                }(t, l, c, h, v));
+                var e = function(t) {
+                    if (!B(t)) return {};
+                    var i = {};
+                    return A(t.attributes, (function(t) {
+                        if (t.name && 0 === t.name.indexOf("data-ph-capture-attribute")) {
+                            var r = t.name.replace("data-ph-capture-attribute-", ""),
+                                e = t.value;
+                            r && e && Q(e) && (i[r] = e)
+                        }
+                    })), i
+                }(t);
+                x(j, e)
+            })), U) return {
+            props: {},
+            explicitNoCapture: U
+        };
+        if (c || (D[0].$el_text = S(r, "a") || S(r, "button") ? X(r) : R(r)), E) {
+            var Z, I;
+            D[0].attr__href = E;
+            var W = null == (y = E, k = null == e ? void 0 : e.createElement("a"), Z = f(k) ? null : (k.href = y, k)) ? void 0 : Z.host,
+                N = null == i || null == (I = i.location) ? void 0 : I.host;
+            W && N && W !== N && (w = E)
+        }
+        return {
+            props: x({
+                $event_type: u.type,
+                $ce_version: 1
+            }, {
+                $elements: D
+            }, {
+                $elements_chain: (O = D, function(i) {
+                    return i.map((i => {
+                        var r, e, n = "";
+                        if (i.tag_name && (n += i.tag_name), i.attr_class)
+                            for (var a of (i.attr_class.sort(), i.attr_class)) n += "." + a.replace(/"/g, "");
+                        var s = t({}, i.text ? {
+                                text: i.text
+                            } : {}, {
+                                "nth-child": null !== (r = i.nth_child) && void 0 !== r ? r : 0,
+                                "nth-of-type": null !== (e = i.nth_of_type) && void 0 !== e ? e : 0
+                            }, i.href ? {
+                                href: i.href
+                            } : {}, i.attr_id ? {
+                                attr_id: i.attr_id
+                            } : {}, i.attributes),
+                            o = {};
+                        return C(s).sort(((t, i) => t[0].localeCompare(i[0]))).forEach((t => {
+                            var i = t[1];
+                            return o[it(t[0].toString())] = it(i.toString())
+                        })), (n += ":") + C(o).map((t => t[0] + '="' + t[1] + '"')).join("")
+                    })).join(";")
+                }(function(t) {
+                    return t.map((t => {
+                        var i, r, e = {
+                            text: null == (i = t.$el_text) ? void 0 : i.slice(0, 400),
+                            tag_name: t.tag_name,
+                            href: null == (r = t.attr__href) ? void 0 : r.slice(0, 2048),
+                            attr_class: rt(t),
+                            attr_id: t.attr__id,
+                            nth_child: t.nth_child,
+                            nth_of_type: t.nth_of_type,
+                            attributes: {}
+                        };
+                        return C(t).filter((t => 0 === t[0].indexOf("attr__"))).forEach((t => e.attributes[t[0]] = t[1])), e
+                    }))
+                }(O)))
+            }, null != (a = D[0]) && a.$el_text ? {
+                $el_text: null == (o = D[0]) ? void 0 : o.$el_text
+            } : {}, w && "click" === u.type ? {
+                $external_click_url: w
+            } : {}, j)
+        }
+    }
+    k("[AutoCapture]");
+    var st = {};
+
+    function ot(t, r) {
+        var e = st[t];
+        if (e) return e;
+        var n, a = r[t];
+        if (v(n = a) && -1 !== n.toString().indexOf("[native code]") && (null == i || !i.Zone)) return st[t] = a.bind(r);
+        var o, u = r.document;
+        if (u && v(u.createElement)) {
+            var l, c = !1;
+            try {
+                (l = u.createElement("iframe")).hidden = !0, u.head.appendChild(l);
+                var h, f, d = l.contentWindow;
+                d && d[t] && (a = d[t], "MutationObserver" === t && s(o = null !== (h = null == (f = r.navigator) ? void 0 : f.userAgent) && void 0 !== h ? h : "", "AppleWebKit") && !s(o, "Chrome") && (l.classList.add("rr-block", "ph-no-capture"), c = !0))
+            } catch (i) {
+                y.warn("Could not create sandbox iframe for " + t + " check, bailing to assignableWindow." + t + ": ", i)
+            } finally {
+                var _;
+                !c && null != (_ = l) && _.parentNode && l.parentNode.removeChild(l)
+            }
+        }
+        return a && v(a) ? st[t] = a.bind(r) : a
+    }
+
+    function ut(i, r) {
+        var e, n, a = f((e = i).target) ? e.srcElement || null : null != (n = e.target) && n.shadowRoot ? e.composedPath()[0] || null : e.target || null;
+        return a ? t({
+            node: a,
+            originalEvent: i,
+            timestamp: Date.now()
+        }, r) : null
+    }
+
+    function lt(t, i) {
+        return Math.abs(t) < Math.abs(i) ? 0 > i ? "up" : "down" : 0 > t ? "left" : "right"
+    }
+
+    function ct(t) {
+        return "swipe" === t.type ? "$dead_swipe" : "$dead_click"
+    }
+    var ht = "canvas,video,audio,embed,object";
+
+    function vt(t, i) {
+        return b(t) && t >= i
+    }
+    class ft {
+        ce(t) {
+            var i, r, e, n, a, s, o, u, l = this.de((null == t ? void 0 : t.__onCapture) || this.he.bind(this));
+            return {
+                element_attribute_ignorelist: null !== (i = null == t ? void 0 : t.element_attribute_ignorelist) && void 0 !== i ? i : l.element_attribute_ignorelist,
+                scroll_threshold_ms: null !== (r = null == t ? void 0 : t.scroll_threshold_ms) && void 0 !== r ? r : l.scroll_threshold_ms,
+                selection_change_threshold_ms: null !== (e = null == t ? void 0 : t.selection_change_threshold_ms) && void 0 !== e ? e : l.selection_change_threshold_ms,
+                mutation_threshold_ms: null !== (n = null == t ? void 0 : t.mutation_threshold_ms) && void 0 !== n ? n : l.mutation_threshold_ms,
+                capture_clicks_with_modifier_keys: null !== (a = null == t ? void 0 : t.capture_clicks_with_modifier_keys) && void 0 !== a ? a : l.capture_clicks_with_modifier_keys,
+                capture_dead_swipes: null !== (s = null == t ? void 0 : t.capture_dead_swipes) && void 0 !== s ? s : l.capture_dead_swipes,
+                swipe_threshold_px: null !== (o = null == t ? void 0 : t.swipe_threshold_px) && void 0 !== o ? o : l.swipe_threshold_px,
+                max_dead_swipes_per_page_load: null !== (u = null == t ? void 0 : t.max_dead_swipes_per_page_load) && void 0 !== u ? u : l.max_dead_swipes_per_page_load,
+                css_selector_ignorelist: null == t ? void 0 : t.css_selector_ignorelist,
+                __onCapture: l.__onCapture
+            }
+        }
+        constructor(t, i) {
+            this.ve = [], this.fe = 0, this.de = t => ({
+                element_attribute_ignorelist: [],
+                scroll_threshold_ms: 100,
+                selection_change_threshold_ms: 100,
+                mutation_threshold_ms: 2500,
+                capture_clicks_with_modifier_keys: !1,
+                capture_dead_swipes: !0,
+                swipe_threshold_px: 30,
+                max_dead_swipes_per_page_load: 10,
+                __onCapture: t
+            }), this.pe = t => {
+                var i = ut(t, {
+                    type: "click"
+                });
+                _(i) || this.me(i) || this.ve.push(i), this.ye()
+            }, this.ge = () => {
+                var t = Date.now();
+                this.be = t, t % 50 == 0 && this.ve.forEach((i => {
+                    f(i.scrollDelayMs) && (i.scrollDelayMs = t - i.timestamp)
+                }))
+            }, this.we = () => {
+                this.ke = Date.now()
+            }, this.xe = () => {
+                "visible" === (null == e ? void 0 : e.visibilityState) && (this.Se = Date.now())
+            }, this.Ce = t => {
+                var i = t.touches,
+                    r = 1 === (null == i ? void 0 : i.length) ? i[0] : void 0;
+                this._e = r ? {
+                    x: r.clientX,
+                    y: r.clientY,
+                    timestamp: Date.now()
+                } : void 0
+            }, this.Me = () => {
+                this._e = void 0
+            }, this.Ie = t => {
+                var i, r = this._e;
+                if (this._e = void 0, !f(r) && this.Te.max_dead_swipes_per_page_load > this.fe) {
+                    var n = t,
+                        a = null == (i = n.changedTouches) ? void 0 : i[0];
+                    if (a) {
+                        var s = a.clientX - r.x,
+                            o = a.clientY - r.y,
+                            u = s * s + o * o,
+                            l = this.Te.swipe_threshold_px;
+                        if (u >= l * l && ![this.be, this.Re, this.ke].some((t => b(t) && t >= r.timestamp))) {
+                            var c;
+                            if (this.Ee() && (null !== (c = null == e || null == e.elementsFromPoint ? void 0 : e.elementsFromPoint(r.x, r.y)) && void 0 !== c ? c : []).some((t => null == t.matches ? void 0 : t.matches(ht)))) return;
+                            var h = ut(n, {
+                                type: "swipe",
+                                swipeDirection: lt(s, o),
+                                swipeDistancePx: Math.round(Math.sqrt(u))
+                            });
+                            _(h) || this.me(h) || this.ve.push(h), this.ye()
+                        }
+                    }
+                }
+            }, this.instance = t, this.Te = this.ce(i), this._onCapture = this.Te.__onCapture
+        }
+        start(t) {
+            this.Le(), this.Oe(), this.Ne(), this.Ae(), this.qe(t), this.Te.capture_dead_swipes && this.De()
+        }
+        qe(t) {
+            if (!this.Pe) {
+                var i = function(t) {
+                    return ot("MutationObserver", t)
+                }(a);
+                this.Pe = new i((t => {
+                    this.Fe(t)
+                })), this.Pe.observe(t, {
+                    attributes: !0,
+                    characterData: !0,
+                    childList: !0,
+                    subtree: !0
+                })
+            }
+        }
+        stop() {
+            var t;
+            null == (t = this.Pe) || t.disconnect(), this.Pe = void 0, a.removeEventListener("click", this.pe), a.removeEventListener("scroll", this.ge, {
+                capture: !0
+            }), a.removeEventListener("selectionchange", this.we), a.removeEventListener("touchstart", this.Ce, {
+                capture: !0
+            }), a.removeEventListener("touchend", this.Ie, {
+                capture: !0
+            }), a.removeEventListener("touchcancel", this.Me, {
+                capture: !0
+            }), null == e || e.removeEventListener("visibilitychange", this.xe), this._e = void 0
+        }
+        Fe(t) {
+            this.Re = Date.now()
+        }
+        Le() {
+            O(a, "click", this.pe)
+        }
+        ye() {
+            this.ve.length && f(this.je) && (this.je = a.setTimeout((() => {
+                this.He()
+            }), 1e3))
+        }
+        Oe() {
+            O(a, "scroll", this.ge, {
+                capture: !0
+            })
+        }
+        Ne() {
+            O(a, "selectionchange", this.we)
+        }
+        Ae() {
+            O(e, "visibilitychange", this.xe)
+        }
+        De() {
+            O(a, "touchstart", this.Ce, {
+                capture: !0,
+                passive: !0
+            }), O(a, "touchend", this.Ie, {
+                capture: !0,
+                passive: !0
+            }), O(a, "touchcancel", this.Me, {
+                capture: !0,
+                passive: !0
+            })
+        }
+        Ee() {
+            var t = f(this.Be) || b(this.Re) && this.Re > this.Be;
+            return (f(this.Ue) || t) && (this.Be = Date.now(), this.Ue = !(null == e || !e.querySelector(ht))), !!this.Ue
+        }
+        me(t) {
+            return !t || ("swipe" === t.type ? this.We(t) : this.Ve(t))
+        }
+        We(t) {
+            return !(!((r = t.node) instanceof Element && ("__POSTHOG_TOOLBAR__" === r.id || null != r.closest && r.closest(".toolbar-global-fade-container"))) && !this.ve.some((i => i.type === t.type && i.node === t.node && 1e3 > Math.abs(i.timestamp - t.timestamp))) && !S(t.node, "html") && M(t.node) && function(t, r) {
+                var e;
+                if (!i || I(t)) return !1;
+                var n = "[object Boolean]" === c.call(r) ? Z : null !== (e = null == r ? void 0 : r.css_selector_ignorelist) && void 0 !== e ? e : Z;
+                return ! function(t, i) {
+                    if (f(i)) return !0;
+                    var r, e = function(t) {
+                        if (i.some((i => function(t, i) {
+                                var r = t.matches || t.matchesSelector || t.msMatchesSelector || t.mozMatchesSelector || t.webkitMatchesSelector || t.oMatchesSelector;
+                                try {
+                                    return !!r && r.call(t, i)
+                                } catch (t) {
+                                    return !1
+                                }
+                            }(t, i)))) return {
+                            v: !0
+                        }
+                    };
+                    for (var n of t)
+                        if (r = e(n)) return r.v;
+                    return !1
+                }(W(t).targetElementList, n)
+            }(t.node, {
+                css_selector_ignorelist: this.Te.css_selector_ignorelist
+            }));
+            var r
+        }
+        Ve(t) {
+            return !(this.Te.capture_clicks_with_modifier_keys || (r = t.originalEvent, !(r.ctrlKey || r.metaKey || r.altKey || r.shiftKey))) || !!this.We(t) || (e = t.node, !(!i || I(e)) && W(e).targetElementList.some((t => S(t, "a"))));
+            var r, e
+        }
+        He() {
+            if (this.ve.length) {
+                clearTimeout(this.je), this.je = void 0;
+                var t = this.ve;
+                for (var i of (this.ve = [], t)) {
+                    var r;
+                    i.mutationDelayMs = null !== (r = i.mutationDelayMs) && void 0 !== r ? r : this.Re && this.Re >= i.timestamp ? this.Re - i.timestamp : void 0, i.absoluteDelayMs = Date.now() - i.timestamp, i.selectionChangedDelayMs = this.ke && this.ke >= i.timestamp ? this.ke - i.timestamp : void 0, i.visibilityChangedDelayMs = this.Se ? Math.abs(i.timestamp - this.Se) : void 0;
+                    var e = vt(i.scrollDelayMs, this.Te.scroll_threshold_ms),
+                        n = vt(i.selectionChangedDelayMs, this.Te.selection_change_threshold_ms),
+                        a = vt(i.mutationDelayMs, this.Te.mutation_threshold_ms),
+                        s = vt(i.absoluteDelayMs, 1.1 * this.Te.mutation_threshold_ms),
+                        o = b(i.scrollDelayMs) && this.Te.scroll_threshold_ms > i.scrollDelayMs,
+                        u = b(i.mutationDelayMs) && this.Te.mutation_threshold_ms > i.mutationDelayMs,
+                        l = b(i.selectionChangedDelayMs) && this.Te.selection_change_threshold_ms > i.selectionChangedDelayMs,
+                        c = b(i.visibilityChangedDelayMs) && this.Te.selection_change_threshold_ms > i.visibilityChangedDelayMs;
+                    if (!(o || u || l || c)) {
+                        var h = vt(i.visibilityChangedDelayMs, this.Te.selection_change_threshold_ms);
+                        if (e || a || s || n || h) {
+                            var v = ct(i);
+                            if ("$dead_swipe" === v) {
+                                if (this.fe >= this.Te.max_dead_swipes_per_page_load) continue;
+                                this.fe++
+                            }
+                            this._onCapture(i, {
+                                [v + "_last_mutation_timestamp"]: this.Re,
+                                [v + "_event_timestamp"]: i.timestamp,
+                                [v + "_scroll_timeout"]: e,
+                                [v + "_mutation_timeout"]: a,
+                                [v + "_absolute_timeout"]: s,
+                                [v + "_selection_changed_timeout"]: n,
+                                [v + "_visibility_changed_timeout"]: h
+                            })
+                        } else this.Te.mutation_threshold_ms > i.absoluteDelayMs && this.ve.push(i)
+                    }
+                }
+                this.ye()
+            }
+        }
+        he(i, r) {
+            var e = ct(i);
+            this.instance.capture(e, t({}, r, at(i.node, {
+                e: i.originalEvent,
+                maskAllElementAttributes: this.instance.config.mask_all_element_attributes,
+                maskAllText: this.instance.config.mask_all_text,
+                elementAttributeIgnoreList: this.Te.element_attribute_ignorelist,
+                disableCaptureUrlHashes: this.instance.config.disable_capture_url_hashes
+            }).props, {
+                [e + "_scroll_delay_ms"]: i.scrollDelayMs,
+                [e + "_mutation_delay_ms"]: i.mutationDelayMs,
+                [e + "_absolute_delay_ms"]: i.absoluteDelayMs,
+                [e + "_selection_changed_delay_ms"]: i.selectionChangedDelayMs,
+                [e + "_visibility_changed_delay_ms"]: i.visibilityChangedDelayMs,
+                $dead_swipe_direction: i.swipeDirection,
+                $dead_swipe_distance_px: i.swipeDistancePx
+            }), {
+                timestamp: new Date(i.timestamp)
+            })
+        }
+    }
+    a.__PosthogExtensions__ = a.__PosthogExtensions__ || {}, a.__PosthogExtensions__.initDeadClicksAutocapture = (t, i) => new ft(t, i)
+}();
+//# sourceMappingURL=dead-clicks-autocapture.js.map
+
+//# chunkId=019fb8dc-263c-75c1-923d-6c1c35a0a9cb

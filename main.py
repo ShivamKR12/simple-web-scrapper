@@ -6,7 +6,7 @@ from playwright.sync_api import sync_playwright
 import requests
 
 
-def dump_offline_site(url, output_dir="site_dump"):
+def dump_offline_site(url, output_dir="."):
   # 1. Create all asset folders (including fonts for CSS @font-face rules)
   for folder in ["css", "js", "images", "media", "fonts"]:
     os.makedirs(os.path.join(output_dir, folder), exist_ok=True)

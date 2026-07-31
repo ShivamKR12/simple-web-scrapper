@@ -1,0 +1,6738 @@
+! function() {
+    try {
+        var e = "undefined" != typeof window ? window : "undefined" != typeof global ? global : "undefined" != typeof globalThis ? globalThis : "undefined" != typeof self ? self : {},
+            n = (new e.Error).stack;
+        n && (e._posthogChunkIds = e._posthogChunkIds || {}, e._posthogChunkIds[n] = "019fb8dc-1e45-7f93-9e69-f5ffe0eba414")
+    } catch (e) {}
+}();
+! function() {
+    "use strict";
+
+    function t(t, e, r, i, n, s, a) {
+        try {
+            var o = t[s](a),
+                u = o.value
+        } catch (t) {
+            return void r(t)
+        }
+        o.done ? e(u) : Promise.resolve(u).then(i, n)
+    }
+
+    function e(e) {
+        return function() {
+            var r = this,
+                i = arguments;
+            return new Promise((function(n, s) {
+                var a = e.apply(r, i);
+
+                function o(e) {
+                    t(a, n, s, o, u, "next", e)
+                }
+
+                function u(e) {
+                    t(a, n, s, o, u, "throw", e)
+                }
+                o(void 0)
+            }))
+        }
+    }
+
+    function r() {
+        return r = Object.assign ? Object.assign.bind() : function(t) {
+            for (var e = 1; arguments.length > e; e++) {
+                var r = arguments[e];
+                for (var i in r)({}).hasOwnProperty.call(r, i) && (t[i] = r[i])
+            }
+            return t
+        }, r.apply(null, arguments)
+    }
+    var i, n = ["type"],
+        s = Object.defineProperty,
+        a = (t, e, r) => ((t, e, r) => e in t ? s(t, e, {
+            enumerable: !0,
+            configurable: !0,
+            writable: !0,
+            value: r
+        }) : t[e] = r)(t, "symbol" != typeof e ? e + "" : e, r),
+        o = (t => (t[t.DomContentLoaded = 0] = "DomContentLoaded", t[t.Load = 1] = "Load", t[t.FullSnapshot = 2] = "FullSnapshot", t[t.IncrementalSnapshot = 3] = "IncrementalSnapshot", t[t.Meta = 4] = "Meta", t[t.Custom = 5] = "Custom", t[t.Plugin = 6] = "Plugin", t))(o || {}),
+        u = (t => (t[t.Mutation = 0] = "Mutation", t[t.MouseMove = 1] = "MouseMove", t[t.MouseInteraction = 2] = "MouseInteraction", t[t.Scroll = 3] = "Scroll", t[t.ViewportResize = 4] = "ViewportResize", t[t.Input = 5] = "Input", t[t.TouchMove = 6] = "TouchMove", t[t.MediaInteraction = 7] = "MediaInteraction", t[t.StyleSheetRule = 8] = "StyleSheetRule", t[t.CanvasMutation = 9] = "CanvasMutation", t[t.Font = 10] = "Font", t[t.Log = 11] = "Log", t[t.Drag = 12] = "Drag", t[t.StyleDeclaration = 13] = "StyleDeclaration", t[t.Selection = 14] = "Selection", t[t.AdoptedStyleSheet = 15] = "AdoptedStyleSheet", t[t.CustomElement = 16] = "CustomElement", t))(u || {}),
+        l = (t => (t[t.MouseUp = 0] = "MouseUp", t[t.MouseDown = 1] = "MouseDown", t[t.Click = 2] = "Click", t[t.ContextMenu = 3] = "ContextMenu", t[t.DblClick = 4] = "DblClick", t[t.Focus = 5] = "Focus", t[t.Blur = 6] = "Blur", t[t.TouchStart = 7] = "TouchStart", t[t.TouchMove_Departed = 8] = "TouchMove_Departed", t[t.TouchEnd = 9] = "TouchEnd", t[t.TouchCancel = 10] = "TouchCancel", t))(l || {}),
+        h = (t => (t[t.Mouse = 0] = "Mouse", t[t.Pen = 1] = "Pen", t[t.Touch = 2] = "Touch", t))(h || {}),
+        d = (t => (t[t["2D"] = 0] = "2D", t[t.WebGL = 1] = "WebGL", t[t.WebGL2 = 2] = "WebGL2", t))(d || {}),
+        c = (t => (t[t.Play = 0] = "Play", t[t.Pause = 1] = "Pause", t[t.Seeked = 2] = "Seeked", t[t.VolumeChange = 3] = "VolumeChange", t[t.RateChange = 4] = "RateChange", t))(c || {}),
+        v = (t => (t[t.Document = 0] = "Document", t[t.DocumentType = 1] = "DocumentType", t[t.Element = 2] = "Element", t[t.Text = 3] = "Text", t[t.CDATA = 4] = "CDATA", t[t.Comment = 5] = "Comment", t))(v || {});
+
+    function f(t, e) {
+        return -1 !== t.indexOf(e)
+    }
+    var p = {
+            Node: ["childNodes", "parentNode", "parentElement", "textContent"],
+            ShadowRoot: ["host", "styleSheets"],
+            Element: ["shadowRoot"],
+            MutationObserver: []
+        },
+        m = {
+            Node: ["contains", "getRootNode"],
+            ShadowRoot: ["getSelection"],
+            Element: ["querySelector", "querySelectorAll"],
+            MutationObserver: ["constructor"]
+        },
+        g = {};
+
+    function y(t) {
+        if (g[t]) return g[t];
+        var e = function(t) {
+                var e, r, i = null == (r = null == (e = null == globalThis ? void 0 : globalThis.Zone) ? void 0 : e.__symbol__) ? void 0 : r.call(e, t);
+                return i && globalThis[i] ? globalThis[i] : void 0
+            }(t) || globalThis[t],
+            r = e.prototype,
+            i = t in p ? p[t] : void 0,
+            n = Boolean(i && i.every((t => {
+                var e, i;
+                return Boolean(null == (i = null == (e = Object.getOwnPropertyDescriptor(r, t)) ? void 0 : e.get) ? void 0 : i.toString().includes("[native code]"))
+            }))),
+            s = t in m ? m[t] : void 0,
+            a = Boolean(s && s.every((t => {
+                var e;
+                return "function" == typeof r[t] && (null == (e = r[t]) ? void 0 : e.toString().includes("[native code]"))
+            })));
+        if (n && a) return g[t] = e.prototype, e.prototype;
+        var o = document.createElement("iframe");
+        o.style.display = "none";
+        var u, l = !1;
+        try {
+            document.body.appendChild(o);
+            var h = o.contentWindow;
+            if (!h) return e.prototype;
+            var d = h[t].prototype;
+            return d ? (f(u = navigator.userAgent, "AppleWebKit") && !f(u, "Chrome") && (o.classList.add("rr-block", "ph-no-capture"), o.setAttribute("__rrwebUntaintedPrototype", t), l = !0), g[t] = d) : r
+        } catch (t) {
+            return r
+        } finally {
+            !l && o.parentNode && document.body.removeChild(o)
+        }
+    }
+    var w = {};
+
+    function b(t, e, r) {
+        var i, n = t + "." + String(r);
+        if (w[n]) return w[n].call(e);
+        var s = y(t),
+            a = null == (i = Object.getOwnPropertyDescriptor(s, r)) ? void 0 : i.get;
+        return a ? (w[n] = a, a.call(e)) : e[r]
+    }
+    var k = {};
+
+    function _(t, e, r) {
+        var i = t + "." + String(r);
+        if (k[i]) return k[i].bind(e);
+        var n = y(t)[r];
+        return "function" != typeof n ? e[r] : (k[i] = n, n.bind(e))
+    }
+
+    function S() {
+        return y("MutationObserver").constructor
+    }
+
+    function I(t, e, r) {
+        try {
+            if (!(e in t)) return () => {};
+            var i = t[e],
+                n = {
+                    next: i
+                },
+                s = r((function() {
+                    for (var t = arguments.length, e = new Array(t), r = 0; t > r; r++) e[r] = arguments[r];
+                    return n.next.apply(this, e)
+                }));
+            return "function" == typeof s && (s.prototype = s.prototype || {}, Object.defineProperties(s, {
+                __rrweb_original__: {
+                    enumerable: !1,
+                    value: i
+                },
+                __rrweb_layer__: {
+                    enumerable: !1,
+                    value: n
+                }
+            })), t[e] = s, () => {
+                if (t[e] !== s)
+                    for (var r = t[e];
+                        "function" == typeof r && r.__rrweb_layer__;) {
+                        var i = r.__rrweb_layer__;
+                        if (i.next === s) return void(i.next = n.next);
+                        r = i.next
+                    } else t[e] = n.next
+            }
+        } catch (t) {
+            return () => {}
+        }
+    }
+    var M = {
+        childNodes: t => b("Node", t, "childNodes"),
+        parentNode: t => b("Node", t, "parentNode"),
+        parentElement: t => b("Node", t, "parentElement"),
+        textContent: t => b("Node", t, "textContent"),
+        contains: (t, e) => _("Node", t, "contains")(e),
+        getRootNode: t => _("Node", t, "getRootNode")(),
+        host: t => t && "host" in t ? b("ShadowRoot", t, "host") : null,
+        styleSheets: t => t.styleSheets,
+        shadowRoot: t => t && "shadowRoot" in t ? b("Element", t, "shadowRoot") : null,
+        querySelector: (t, e) => _("Element", t, "querySelector")(e),
+        querySelectorAll: (t, e) => _("Element", t, "querySelectorAll")(e),
+        mutationObserver: S,
+        patch: I
+    };
+
+    function C(t) {
+        return t.nodeType === t.ELEMENT_NODE
+    }
+
+    function R(t) {
+        var e = t && "host" in t && "mode" in t && M.host(t) || null;
+        return Boolean(e && "shadowRoot" in e && M.shadowRoot(e) === t)
+    }
+
+    function x(t) {
+        return "[object ShadowRoot]" === {}.toString.call(t)
+    }
+
+    function T(t) {
+        try {
+            var e = t.rules || t.cssRules;
+            if (!e) return null;
+            var r = t.href;
+            return !r && t.ownerNode && (r = t.ownerNode.baseURI), (i = Array.from(e, (t => A(t, r))).join("")).includes(" background-clip: text;") && !i.includes(" -webkit-background-clip: text;") && (i = i.replace(/\sbackground-clip:\s*text;/g, " -webkit-background-clip: text; background-clip: text;")), i
+        } catch (t) {
+            return null
+        }
+        var i
+    }
+
+    function A(t, e) {
+        var r;
+        if (function(t) {
+                return "styleSheet" in t
+            }(t)) {
+            var i;
+            try {
+                i = T(t.styleSheet) || function(t) {
+                    var e = t.cssText;
+                    if (3 > e.split('"').length) return e;
+                    var r = ["@import", "url(" + JSON.stringify(t.href) + ")"];
+                    return "" === t.layerName ? r.push("layer") : t.layerName && r.push("layer(" + t.layerName + ")"), t.supportsText && r.push("supports(" + t.supportsText + ")"), t.media.length && r.push(t.media.mediaText), r.join(" ") + ";"
+                }(t)
+            } catch (e) {
+                i = t.cssText
+            }
+            try {
+                if (i && (null == (r = t.styleSheet) ? void 0 : r.href)) return z(i, t.styleSheet.href)
+            } catch (t) {}
+            return i
+        }
+        var n = t.cssText;
+        return function(t) {
+            return "selectorText" in t
+        }(t) && t.selectorText.includes(":") && (n = n.replace(/(\[(?:[\w-]+)[^\\])(:(?:[\w-]+)\])/gm, "$1\\$2")), e ? z(n, e) : n
+    }
+    class O {
+        constructor() {
+            a(this, "idNodeMap", new Map), a(this, "nodeMetaMap", new WeakMap)
+        }
+        getId(t) {
+            var e;
+            if (!t) return -1;
+            var r = null == (e = this.getMeta(t)) ? void 0 : e.id;
+            return null != r ? r : -1
+        }
+        getNode(t) {
+            return this.idNodeMap.get(t) || null
+        }
+        getIds() {
+            return Array.from(this.idNodeMap.keys())
+        }
+        getMeta(t) {
+            return this.nodeMetaMap.get(t) || null
+        }
+        removeNodeFromMap(t) {
+            var e = this.getId(t);
+            if (this.idNodeMap.delete(e), t.childNodes && t.childNodes.forEach((t => this.removeNodeFromMap(t))), C(t)) {
+                var r = M.shadowRoot(t);
+                r && this.removeNodeFromMap(r), "IFRAME" === t.nodeName && t.contentDocument && this.removeNodeFromMap(t.contentDocument)
+            }
+        }
+        has(t) {
+            return this.idNodeMap.has(t)
+        }
+        hasNode(t) {
+            return this.nodeMetaMap.has(t)
+        }
+        add(t, e) {
+            this.idNodeMap.set(e.id, t), this.nodeMetaMap.set(t, e)
+        }
+        replace(t, e) {
+            var r = this.getNode(t);
+            if (r) {
+                var i = this.nodeMetaMap.get(r);
+                i && this.nodeMetaMap.set(e, i)
+            }
+            this.idNodeMap.set(t, e)
+        }
+        reset() {
+            this.idNodeMap = new Map, this.nodeMetaMap = new WeakMap
+        }
+    }
+
+    function E(t) {
+        var e = t.element,
+            r = t.maskInputOptions,
+            i = t.tagName,
+            n = t.type,
+            s = t.maskInputFn,
+            a = t.value || "",
+            o = n && N(n);
+        return (r[i.toLowerCase()] || o && r[o]) && (a = s ? s(a, e) : "*".repeat(a.length)), a
+    }
+
+    function N(t) {
+        return t.toLowerCase()
+    }
+    var F = "__rrweb_original__";
+
+    function L(t) {
+        try {
+            var e = t.type;
+            return t.hasAttribute("data-rr-is-password") ? "password" : e ? N(e) : null
+        } catch (t) {
+            return null
+        }
+    }
+    var D = /url\((?:(')([^']*)'|(")(.*?)"|([^)]*))\)/gm,
+        P = /^(?:[a-z+]+:)?\/\//i,
+        W = /^www\..*/i,
+        B = /^(data:)([^,]*),(.*)/i;
+
+    function z(t, e) {
+        return (t || "").replace(D, ((t, r, i, n, s, a) => {
+            var o, u = i || s || a,
+                l = r || n || "";
+            if (!u) return t;
+            if (P.test(u) || W.test(u)) return "url(" + l + u + l + ")";
+            if (B.test(u)) return "url(" + l + u + l + ")";
+            if ("/" === u[0]) return "url(" + l + (((o = e).indexOf("//") > -1 ? o.split("/").slice(0, 3).join("/") : o.split("/")[0]).split("?")[0] + u) + l + ")";
+            var h = e.split("/"),
+                d = u.split("/");
+            for (var c of (h.pop(), d)) "." !== c && (".." === c ? h.pop() : h.push(c));
+            return "url(" + l + h.join("/") + l + ")"
+        }))
+    }
+    var U, j, q = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogIDxkZWZzPgogICAgPHBhdHRlcm4gaWQ9InN0cmlwZXMiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiI+CiAgICAgIDxyZWN0IHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgZmlsbD0iYmxhY2siLz4KICAgICAgPHBhdGggZD0iTTggMEgxNkwwIDE2VjhMOCAwWiIgZmlsbD0iIzJEMkQyRCIvPgogICAgICA8cGF0aCBkPSJNMTYgOFYxNkg4TDE2IDhaIiBmaWxsPSIjMkQyRDJEIi8+CiAgICA8L3BhdHRlcm4+CiAgPC9kZWZzPgogIDxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjc3RyaXBlcykiLz4KPC9zdmc+Cg==",
+        H = 4096,
+        G = 1,
+        V = new RegExp("[^a-z0-9-_:]"),
+        Z = -2;
+
+    function J() {
+        return G++
+    }
+    var Q = /^[^ \t\n\r\u000c]+/,
+        K = /^[, \t\n\r\u000c]+/,
+        X = new WeakMap;
+
+    function Y(t, e) {
+        return e && "" !== e.trim() ? tt(t, e) : e
+    }
+
+    function tt(t, e) {
+        var r = X.get(t);
+        if (r || (r = t.createElement("a"), X.set(t, r)), e) {
+            if (e.startsWith("blob:") || e.startsWith("data:")) return e
+        } else e = "";
+        return r.setAttribute("href", e), r.href
+    }
+
+    function et(t, e) {
+        return (null == e ? void 0 : e.maxBase64ImageLength) ? function(t, e) {
+            return e && t.length > e ? q : t
+        }(t, e.maxBase64ImageLength) : t
+    }
+
+    function rt(t, e, r, i, n, s) {
+        var a;
+        if (!i) return i;
+        if ("src" === r || "href" === r && ("use" !== e || "#" !== i[0])) {
+            if ("link" === e && n) {
+                var o = null == (a = n.sheet) ? void 0 : a.href;
+                if (o) return o
+            }
+            var u = Y(t, i);
+            if (u.startsWith("data:")) {
+                if ("img" === e && n) {
+                    var l = u;
+                    return ((null == s ? void 0 : s.type) || void 0 !== (null == s ? void 0 : s.quality)) && (l = function(t, e, r, i) {
+                        if (!t.complete || 0 === t.naturalWidth) return e;
+                        if (t.naturalWidth > H || t.naturalHeight > H) return e;
+                        try {
+                            var n = document.createElement("canvas");
+                            n.width = t.naturalWidth, n.height = t.naturalHeight;
+                            var s = n.getContext("2d");
+                            return s ? (s.drawImage(t, 0, 0), n.toDataURL(r || "image/webp", null != i ? i : .4)) : e
+                        } catch (t) {
+                            return e
+                        }
+                    }(n, u, s.type, s.quality)), et(l, s)
+                }
+                if ("image" === e) return et(u, s)
+            }
+            return u
+        }
+        if ("xlink:href" === r && "#" !== i[0]) {
+            var h = Y(t, i);
+            return "image" === e && h.startsWith("data:") ? et(h, s) : h
+        }
+        return "background" !== r || "table" !== e && "td" !== e && "th" !== e ? "srcset" === r ? function(t, e) {
+            if ("" === e.trim()) return e;
+            var r = 0;
+
+            function i(t) {
+                var i, n = t.exec(e.substring(r));
+                return n ? (r += (i = n[0]).length, i) : ""
+            }
+            for (var n = []; i(K), e.length > r;) {
+                var s = i(Q);
+                if ("," === s.slice(-1)) s = Y(t, s.substring(0, s.length - 1)), n.push(s);
+                else {
+                    var a = "";
+                    s = Y(t, s);
+                    for (var o = !1;;) {
+                        var u = e.charAt(r);
+                        if ("" === u) {
+                            n.push((s + a).trim());
+                            break
+                        }
+                        if (o) ")" === u && (o = !1);
+                        else {
+                            if ("," === u) {
+                                r += 1, n.push((s + a).trim());
+                                break
+                            }
+                            "(" === u && (o = !0)
+                        }
+                        a += u, r += 1
+                    }
+                }
+            }
+            return n.join(", ")
+        }(t, i) : "style" === r ? z(i, tt(t)) : "object" === e && "data" === r ? Y(t, i) : i : Y(t, i)
+    }
+
+    function it(t, e, r) {
+        return ("video" === t || "audio" === t) && "autoplay" === e
+    }
+
+    function nt(t, e, r) {
+        if (!t) return !1;
+        if (t.nodeType !== t.ELEMENT_NODE) return !!r && nt(M.parentNode(t), e, r);
+        for (var i = t.classList.length; i--;)
+            if (e.test(t.classList[i])) return !0;
+        return !!r && nt(M.parentNode(t), e, r)
+    }
+
+    function st(t, e, r, i) {
+        var n;
+        if (C(t)) {
+            if (!M.childNodes(n = t).length) return !1
+        } else {
+            if (null === M.parentElement(t)) return !1;
+            n = M.parentElement(t)
+        }
+        try {
+            if ("string" == typeof e) {
+                if (i) {
+                    if (n.closest("." + e)) return !0
+                } else if (n.classList.contains(e)) return !0
+            } else if (nt(n, e, i)) return !0;
+            if (r)
+                if (i) {
+                    if (n.closest(r)) return !0
+                } else if (n.matches(r)) return !0
+        } catch (t) {}
+        return !1
+    }
+
+    function at(t, e, r) {
+        var i = t.removeEventListener;
+        "function" == typeof i && i.call(t, e, r)
+    }
+    var ot = new Map;
+
+    function ut(t, e) {
+        return Array.from(t.styleSheets).find((t => t.href === e))
+    }
+
+    function lt(t) {
+        return null == t ? "" : t.toLowerCase()
+    }
+    var ht = 50,
+        dt = !1,
+        ct = !1;
+
+    function vt(t, e) {
+        var r = e.doc,
+            i = e.mirror,
+            n = e.blockClass,
+            s = e.blockSelector,
+            a = e.maskTextClass,
+            o = e.maskTextSelector,
+            u = e.skipChild,
+            l = void 0 !== u && u,
+            h = e.inlineStylesheet,
+            d = void 0 === h || h,
+            c = e.maskInputOptions,
+            f = void 0 === c ? {} : c,
+            p = e.maskTextFn,
+            m = e.maskInputFn,
+            g = e.slimDOMOptions,
+            y = e.dataURLOptions,
+            w = void 0 === y ? {} : y,
+            b = e.inlineImages,
+            k = void 0 !== b && b,
+            _ = e.recordCanvas,
+            S = void 0 !== _ && _,
+            I = e.canvasMaskingConfigured,
+            A = e.onSerialize,
+            O = e.onIframeLoad,
+            D = e.iframeLoadTimeout,
+            P = void 0 === D ? 5e3 : D,
+            W = e.onIframeListenerRegistered,
+            B = e.onStylesheetLoad,
+            q = e.stylesheetLoadTimeout,
+            H = void 0 === q ? 5e3 : q,
+            G = e.keepIframeSrcFn,
+            Q = void 0 === G ? () => !1 : G,
+            K = e.newlyAddedElement,
+            X = void 0 !== K && K,
+            Y = e.depth,
+            et = void 0 === Y ? 0 : Y,
+            nt = e.maxDepth,
+            ft = void 0 === nt ? ht : nt,
+            pt = e.needsMask,
+            mt = e.preserveWhiteSpace,
+            gt = void 0 === mt || mt;
+        if (et >= ft) return ct = !0, dt || (dt = !0, console.warn("[rrweb-snapshot] DOM tree depth exceeded max depth of " + ft + ". Children beyond this depth will not be recorded. This may indicate deeply nested DOM structures.")), null;
+        pt || (pt = st(t, a, o, void 0 === pt));
+        var yt, wt = function(t, e) {
+            var r = e.doc,
+                i = e.blockClass,
+                n = e.blockSelector,
+                s = e.needsMask,
+                a = e.inlineStylesheet,
+                o = e.maskInputOptions,
+                u = void 0 === o ? {} : o,
+                l = e.maskTextFn,
+                h = e.maskInputFn,
+                d = e.dataURLOptions,
+                c = void 0 === d ? {} : d,
+                f = e.inlineImages,
+                p = e.recordCanvas,
+                m = e.canvasMaskingConfigured,
+                g = e.keepIframeSrcFn,
+                y = e.newlyAddedElement,
+                w = void 0 !== y && y,
+                b = function(t, e) {
+                    if (e.hasNode(t)) {
+                        var r = e.getId(t);
+                        return 1 === r ? void 0 : r
+                    }
+                }(r, e.mirror);
+            switch (t.nodeType) {
+                case t.DOCUMENT_NODE:
+                    return "CSS1Compat" !== t.compatMode ? {
+                        type: v.Document,
+                        childNodes: [],
+                        compatMode: t.compatMode
+                    } : {
+                        type: v.Document,
+                        childNodes: []
+                    };
+                case t.DOCUMENT_TYPE_NODE:
+                    return {
+                        type: v.DocumentType, name: t.name, publicId: t.publicId, systemId: t.systemId, rootId: b
+                    };
+                case t.ELEMENT_NODE:
+                    return function(t, e) {
+                        for (var r, i, n, s, a = e.doc, o = e.inlineStylesheet, u = e.maskInputOptions, l = void 0 === u ? {} : u, h = e.maskInputFn, d = e.dataURLOptions, c = void 0 === d ? {} : d, f = e.inlineImages, p = e.recordCanvas, m = e.canvasMaskingConfigured, g = e.keepIframeSrcFn, y = e.newlyAddedElement, w = void 0 !== y && y, b = e.rootId, k = function(t, e, r) {
+                                try {
+                                    if ("string" == typeof e) {
+                                        if (t.classList.contains(e)) return !0
+                                    } else
+                                        for (var i = t.classList.length; i--;)
+                                            if (e.test(t.classList[i])) return !0;
+                                    if (r) return t.matches(r)
+                                } catch (t) {}
+                                return !1
+                            }(t, e.blockClass, e.blockSelector), _ = function(t) {
+                                if (t instanceof HTMLFormElement) return "form";
+                                var e = N(t.tagName);
+                                return V.test(e) ? "div" : e
+                            }(t), S = {}, I = t.attributes.length, C = 0; I > C; C++) {
+                            var R = t.attributes[C];
+                            it(_, R.name) || (S[R.name] = rt(a, _, N(R.name), R.value, t, c))
+                        }
+                        if ("link" === _ && o) {
+                            var x = t.sheet;
+                            if (!x) {
+                                var A = function(t) {
+                                    return t.href
+                                }(t);
+                                A && !(x = ut(a, A)) && A.includes(".css") && (x = ut(a, window.location.origin + "/" + A.replace(window.location.href, "")))
+                            }
+                            var O = null;
+                            x && (O = T(x)), O && (delete S.rel, delete S.href, S._cssText = O)
+                        }
+                        if ("style" === _ && t.sheet && !(t.innerText || M.textContent(t) || "").trim().length) {
+                            var D = T(t.sheet);
+                            D && (S._cssText = D)
+                        }
+                        if ("input" === _ || "textarea" === _ || "select" === _) {
+                            var P = t.value,
+                                W = t.checked;
+                            "radio" !== S.type && "checkbox" !== S.type && "submit" !== S.type && "button" !== S.type && P ? S.value = E({
+                                element: t,
+                                type: L(t),
+                                tagName: _,
+                                value: P,
+                                maskInputOptions: l,
+                                maskInputFn: h
+                            }) : W && (S.checked = W)
+                        }
+                        if ("option" === _ && (t.selected && !l.select ? S.selected = !0 : delete S.selected), "dialog" === _ && t.open) try {
+                            S.rr_open_mode = t.matches("dialog:modal") ? "modal" : "non-modal"
+                        } catch (t) {
+                            S.rr_open_mode = "modal", S.ph_rr_could_not_detect_modal = !0
+                        }
+                        if ("canvas" === _ && p && !(null == m ? void 0 : m()))
+                            if ("2d" === t.__context)(function(t) {
+                                var e = t.getContext("2d");
+                                if (!e) return !0;
+                                for (var r = 0; t.width > r; r += 50)
+                                    for (var i = 0; t.height > i; i += 50) {
+                                        var n = e.getImageData;
+                                        if (new Uint32Array((F in n ? n[F] : n).call(e, r, i, Math.min(50, t.width - r), Math.min(50, t.height - i)).data.buffer).some((t => 0 !== t))) return !1
+                                    }
+                                return !0
+                            })(t) || (S.rr_dataURL = t.toDataURL(c.type, c.quality));
+                            else if (!("__context" in t)) {
+                            var B = t.toDataURL(c.type, c.quality),
+                                z = a.createElement("canvas");
+                            z.width = t.width, z.height = t.height, B !== z.toDataURL(c.type, c.quality) && (S.rr_dataURL = B)
+                        }
+                        if ("img" === _ && f) {
+                            U || (U = a.createElement("canvas"), j = U.getContext("2d"));
+                            var q = t,
+                                H = q.currentSrc || q.getAttribute("src") || "<unknown-src>",
+                                G = q.crossOrigin,
+                                Z = () => {
+                                    at(q, "load", Z);
+                                    try {
+                                        U.width = q.naturalWidth, U.height = q.naturalHeight, j.drawImage(q, 0, 0), S.rr_dataURL = U.toDataURL(c.type, c.quality)
+                                    } catch (t) {
+                                        if ("anonymous" !== q.crossOrigin) return q.crossOrigin = "anonymous", void(q.complete && 0 !== q.naturalWidth ? Z() : q.addEventListener("load", Z));
+                                        console.warn("Cannot inline img src=" + H + "! Error: " + t)
+                                    }
+                                    "anonymous" === q.crossOrigin && (G ? S.crossOrigin = G : q.removeAttribute("crossorigin"))
+                                };
+                            q.complete && 0 !== q.naturalWidth ? Z() : q.addEventListener("load", Z)
+                        }
+                        if ("audio" === _ || "video" === _) {
+                            var J = S;
+                            J.rr_mediaState = t.paused ? "paused" : "played", J.rr_mediaCurrentTime = t.currentTime, J.rr_mediaPlaybackRate = t.playbackRate, J.rr_mediaMuted = t.muted, J.rr_mediaLoop = t.loop, J.rr_mediaVolume = t.volume
+                        }
+                        if (w || (t.scrollLeft && (S.rr_scrollLeft = t.scrollLeft), t.scrollTop && (S.rr_scrollTop = t.scrollTop)), k) {
+                            var Q = t.getBoundingClientRect(),
+                                K = Q.width,
+                                X = Q.height,
+                                Y = Q.left,
+                                tt = Q.top,
+                                et = null == (r = a.defaultView) ? void 0 : r.getComputedStyle(t);
+                            S = {
+                                class: S.class,
+                                rr_width: K + "px",
+                                rr_height: X + "px",
+                                rr_left: Math.floor(Y + ((null == (i = a.defaultView) ? void 0 : i.scrollX) || 0)) + "px",
+                                rr_top: Math.floor(tt + ((null == (n = a.defaultView) ? void 0 : n.scrollY) || 0)) + "px"
+                            }, et && (S.rr_position = et.position || "static", et.transform && "none" !== et.transform && (S.rr_transform = et.transform), et.display && et.display.startsWith("inline") && (S.rr_display = et.display))
+                        }
+                        "iframe" !== _ || g(S.src) || (t.contentDocument || (S.rr_src = S.src), delete S.src);
+                        try {
+                            customElements.get(_) && (s = !0)
+                        } catch (t) {}
+                        return {
+                            type: v.Element,
+                            tagName: _,
+                            attributes: S,
+                            childNodes: [],
+                            isSVG: (nt = t, Boolean("svg" === nt.tagName || nt.ownerSVGElement) || void 0),
+                            needBlock: k,
+                            rootId: b,
+                            isCustom: s
+                        };
+                        var nt
+                    }(t, {
+                        doc: r,
+                        blockClass: i,
+                        blockSelector: n,
+                        inlineStylesheet: a,
+                        maskInputOptions: u,
+                        maskInputFn: h,
+                        dataURLOptions: c,
+                        inlineImages: f,
+                        recordCanvas: p,
+                        canvasMaskingConfigured: m,
+                        keepIframeSrcFn: g,
+                        newlyAddedElement: w,
+                        rootId: b
+                    });
+                case t.TEXT_NODE:
+                    return function(t, e) {
+                        var r, i = e.needsMask,
+                            n = e.maskTextFn,
+                            s = e.rootId,
+                            a = M.parentNode(t),
+                            o = a && a.tagName,
+                            u = M.textContent(t),
+                            l = "STYLE" === o || void 0,
+                            h = "SCRIPT" === o || void 0;
+                        if (l && u) {
+                            try {
+                                if (t.nextSibling || t.previousSibling);
+                                else if (null == (r = a.sheet) ? void 0 : r.cssRules) {
+                                    var d = T(a.sheet);
+                                    d && !/(?:^|[\s;{}])-?[a-zA-Z][\w-]*\s*:\s*;/.test(d) && (u = d)
+                                }
+                            } catch (e) {
+                                console.warn("Cannot get CSS styles from text's parentNode. Error: " + e, t)
+                            }
+                            u = z(u, tt(e.doc))
+                        }
+                        return h && (u = "SCRIPT_PLACEHOLDER"), !l && !h && u && i && (u = n ? n(u, M.parentElement(t)) : u.replace(/[\S]/g, "*")), {
+                            type: v.Text,
+                            textContent: u || "",
+                            isStyle: l,
+                            rootId: s
+                        }
+                    }(t, {
+                        doc: r,
+                        needsMask: s,
+                        maskTextFn: l,
+                        rootId: b
+                    });
+                case t.CDATA_SECTION_NODE:
+                    return {
+                        type: v.CDATA, textContent: "", rootId: b
+                    };
+                case t.COMMENT_NODE:
+                    return {
+                        type: v.Comment, textContent: M.textContent(t) || "", rootId: b
+                    };
+                default:
+                    return !1
+            }
+        }(t, {
+            doc: r,
+            mirror: i,
+            blockClass: n,
+            blockSelector: s,
+            needsMask: pt,
+            inlineStylesheet: d,
+            maskInputOptions: f,
+            maskTextFn: p,
+            maskInputFn: m,
+            dataURLOptions: w,
+            inlineImages: k,
+            recordCanvas: S,
+            canvasMaskingConfigured: I,
+            keepIframeSrcFn: Q,
+            newlyAddedElement: X
+        });
+        if (!wt) return console.warn(t, "not serialized"), null;
+        yt = i.hasNode(t) ? i.getId(t) : function(t, e) {
+            if (e.comment && t.type === v.Comment) return !0;
+            if (t.type === v.Element) {
+                if (e.script && ("script" === t.tagName || "link" === t.tagName && ("preload" === t.attributes.rel && "script" === t.attributes.as || "modulepreload" === t.attributes.rel) || "link" === t.tagName && "prefetch" === t.attributes.rel && "string" == typeof t.attributes.href && "js" === function(t, e) {
+                        var r, i;
+                        try {
+                            i = new URL(t, window.location.href)
+                        } catch (t) {
+                            return null
+                        }
+                        var n = i.pathname.match(/\.([0-9a-z]+)(?:$)/i);
+                        return null !== (r = null == n ? void 0 : n[1]) && void 0 !== r ? r : null
+                    }(t.attributes.href))) return !0;
+                if (e.headFavicon && ("link" === t.tagName && "shortcut icon" === t.attributes.rel || "meta" === t.tagName && (lt(t.attributes.name).match(/^msapplication-tile(image|color)$/) || "application-name" === lt(t.attributes.name) || ["icon", "apple-touch-icon", "shortcut icon"].includes(lt(t.attributes.rel))))) return !0;
+                if ("meta" === t.tagName) {
+                    if (e.headMetaDescKeywords && lt(t.attributes.name).match(/^description|keywords$/)) return !0;
+                    if (e.headMetaSocial && (lt(t.attributes.property).match(/^(og|twitter|fb):/) || lt(t.attributes.name).match(/^(og|twitter):/) || "pinterest" === lt(t.attributes.name))) return !0;
+                    if (e.headMetaRobots && ["robots", "googlebot", "bingbot"].includes(lt(t.attributes.name))) return !0;
+                    if (e.headMetaHttpEquiv && void 0 !== t.attributes["http-equiv"]) return !0;
+                    if (e.headMetaAuthorship && (["author", "generator", "framework", "publisher", "progid"].includes(lt(t.attributes.name)) || lt(t.attributes.property).match(/^article:/) || lt(t.attributes.property).match(/^product:/))) return !0;
+                    if (e.headMetaVerification && ["google-site-verification", "yandex-verification", "csrf-token", "p:domain_verify", "verify-v1", "verification", "shopify-checkout-api-token"].includes(lt(t.attributes.name))) return !0
+                }
+            }
+            return !1
+        }(wt, g) || !gt && wt.type === v.Text && !wt.isStyle && !wt.textContent.replace(/^\s+|\s+$/gm, "").length ? Z : J();
+        var bt = Object.assign(wt, {
+            id: yt
+        });
+        if (i.add(t, bt), yt === Z) return null;
+        A && A(t);
+        var kt = !l;
+        if (bt.type === v.Element) {
+            kt = kt && !bt.needBlock, delete bt.needBlock;
+            var _t = M.shadowRoot(t);
+            _t && x(_t) && (bt.isShadowHost = !0)
+        }
+        if ((bt.type === v.Document || bt.type === v.Element) && kt) {
+            g.headWhitespace && bt.type === v.Element && "head" === bt.tagName && (gt = !1);
+            var St = {
+                doc: r,
+                mirror: i,
+                blockClass: n,
+                blockSelector: s,
+                needsMask: pt,
+                maskTextClass: a,
+                maskTextSelector: o,
+                skipChild: l,
+                inlineStylesheet: d,
+                maskInputOptions: f,
+                maskTextFn: p,
+                maskInputFn: m,
+                slimDOMOptions: g,
+                dataURLOptions: w,
+                inlineImages: k,
+                recordCanvas: S,
+                canvasMaskingConfigured: I,
+                preserveWhiteSpace: gt,
+                onSerialize: A,
+                onIframeLoad: O,
+                iframeLoadTimeout: P,
+                onIframeListenerRegistered: W,
+                onStylesheetLoad: B,
+                stylesheetLoadTimeout: H,
+                keepIframeSrcFn: Q,
+                depth: et + 1,
+                maxDepth: ft
+            };
+            if (bt.type === v.Element && "textarea" === bt.tagName && void 0 !== bt.attributes.value);
+            else
+                for (var It of Array.from(M.childNodes(t))) {
+                    var Mt = vt(It, St);
+                    Mt && bt.childNodes.push(Mt)
+                }
+            var Ct = null;
+            if (C(t) && (Ct = M.shadowRoot(t)))
+                for (var Rt of Array.from(M.childNodes(Ct))) {
+                    var xt = vt(Rt, St);
+                    xt && (x(Ct) && (xt.isShadow = !0), bt.childNodes.push(xt))
+                }
+        }
+        var Tt = M.parentNode(t);
+        if (Tt && R(Tt) && x(Tt) && (bt.isShadow = !0), bt.type === v.Element && "iframe" === bt.tagName) {
+            var At = function(t, e, r) {
+                var i, n = () => {},
+                    s = t.contentWindow;
+                if (!s) return n;
+                try {
+                    i = s.document.readyState
+                } catch (t) {
+                    return n
+                }
+                var a = () => e();
+                if ("complete" !== i) {
+                    var o = !1,
+                        u = null,
+                        l = () => {
+                            o || (o = !0, null !== u && (clearTimeout(u), u = null), at(t, "load", h), t.addEventListener("load", a), e())
+                        },
+                        h = () => l();
+                    return u = setTimeout(l, r), t.addEventListener("load", h), () => {
+                        null !== u && (clearTimeout(u), u = null), o ? at(t, "load", a) : (o = !0, at(t, "load", h))
+                    }
+                }
+                var d, c = "about:blank";
+                try {
+                    d = s.location.href
+                } catch (t) {
+                    return n
+                }
+                if (d !== c || t.src === c || "" === t.src) {
+                    var v = setTimeout(e, 0);
+                    return t.addEventListener("load", a), () => {
+                        clearTimeout(v), at(t, "load", a)
+                    }
+                }
+                return t.addEventListener("load", a), () => {
+                    at(t, "load", a)
+                }
+            }(t, (() => {
+                var e = t.contentDocument;
+                if (e && O) {
+                    var r = vt(e, {
+                        doc: e,
+                        mirror: i,
+                        blockClass: n,
+                        blockSelector: s,
+                        needsMask: pt,
+                        maskTextClass: a,
+                        maskTextSelector: o,
+                        skipChild: !1,
+                        inlineStylesheet: d,
+                        maskInputOptions: f,
+                        maskTextFn: p,
+                        maskInputFn: m,
+                        slimDOMOptions: g,
+                        dataURLOptions: w,
+                        inlineImages: k,
+                        recordCanvas: S,
+                        canvasMaskingConfigured: I,
+                        preserveWhiteSpace: gt,
+                        onSerialize: A,
+                        onIframeLoad: O,
+                        iframeLoadTimeout: P,
+                        onIframeListenerRegistered: W,
+                        onStylesheetLoad: B,
+                        stylesheetLoadTimeout: H,
+                        keepIframeSrcFn: Q,
+                        depth: et + 1,
+                        maxDepth: ft
+                    });
+                    r && O(t, r)
+                }
+            }), P);
+            null == W || W(t, At)
+        }
+        return bt.type === v.Element && "link" === bt.tagName && "stylesheet" === bt.attributes.rel && function(e, u, l) {
+            if (!ot.has(e)) {
+                var h;
+                try {
+                    h = e.sheet
+                } catch (t) {
+                    return
+                }
+                if (!h) {
+                    var c = new AbortController,
+                        v = !1,
+                        y = () => {
+                            if (!v) {
+                                v = !0;
+                                try {
+                                    (() => {
+                                        if (B) {
+                                            var e = vt(t, {
+                                                doc: r,
+                                                mirror: i,
+                                                blockClass: n,
+                                                blockSelector: s,
+                                                needsMask: pt,
+                                                maskTextClass: a,
+                                                maskTextSelector: o,
+                                                skipChild: !1,
+                                                inlineStylesheet: d,
+                                                maskInputOptions: f,
+                                                maskTextFn: p,
+                                                maskInputFn: m,
+                                                slimDOMOptions: g,
+                                                dataURLOptions: w,
+                                                inlineImages: k,
+                                                recordCanvas: S,
+                                                canvasMaskingConfigured: I,
+                                                preserveWhiteSpace: gt,
+                                                onSerialize: A,
+                                                onIframeLoad: O,
+                                                iframeLoadTimeout: P,
+                                                onStylesheetLoad: B,
+                                                stylesheetLoadTimeout: H,
+                                                keepIframeSrcFn: Q,
+                                                depth: et,
+                                                maxDepth: ft
+                                            });
+                                            e && B(t, e)
+                                        }
+                                    })()
+                                } finally {
+                                    ot.delete(e), c.abort()
+                                }
+                            }
+                        },
+                        b = setTimeout(y, l);
+                    c.signal.addEventListener("abort", (() => clearTimeout(b)), {
+                        once: !0
+                    }), e.addEventListener("load", y, {
+                        signal: c.signal,
+                        once: !0
+                    }), ot.set(e, c)
+                }
+            }
+        }(t, 0, H), bt
+    }
+
+    function ft(t) {
+        return !0 === t || "all" === t ? {
+            script: !0,
+            comment: !0,
+            headFavicon: !0,
+            headWhitespace: !0,
+            headMetaSocial: !0,
+            headMetaRobots: !0,
+            headMetaHttpEquiv: !0,
+            headMetaVerification: !0,
+            headMetaAuthorship: "all" === t,
+            headMetaDescKeywords: "all" === t,
+            headTitleMutations: "all" === t
+        } : !1 === t ? {} : t
+    }
+    class pt {
+        constructor() {
+            a(this, "parentElement", null), a(this, "parentNode", null), a(this, "ownerDocument"), a(this, "firstChild", null), a(this, "lastChild", null), a(this, "previousSibling", null), a(this, "nextSibling", null), a(this, "ELEMENT_NODE", 1), a(this, "TEXT_NODE", 3), a(this, "nodeType"), a(this, "nodeName"), a(this, "RRNodeType")
+        }
+        get childNodes() {
+            for (var t = [], e = this.firstChild; e;) t.push(e), e = e.nextSibling;
+            return t
+        }
+        contains(t) {
+            if (!(t instanceof pt)) return !1;
+            if (t.ownerDocument !== this.ownerDocument) return !1;
+            if (t === this) return !0;
+            for (; t.parentNode;) {
+                if (t.parentNode === this) return !0;
+                t = t.parentNode
+            }
+            return !1
+        }
+        appendChild(t) {
+            throw new Error("RRDomException: Failed to execute 'appendChild' on 'RRNode': This RRNode type does not support this method.")
+        }
+        insertBefore(t, e) {
+            throw new Error("RRDomException: Failed to execute 'insertBefore' on 'RRNode': This RRNode type does not support this method.")
+        }
+        removeChild(t) {
+            throw new Error("RRDomException: Failed to execute 'removeChild' on 'RRNode': This RRNode type does not support this method.")
+        }
+        toString() {
+            return "RRNode"
+        }
+    }
+
+    function mt(t, e, r) {
+        void 0 === r && (r = document);
+        var i = {
+            capture: !0,
+            passive: !0
+        };
+        return r.addEventListener(t, e, i), () => gt(r, t, e, i)
+    }
+
+    function gt(t, e, r, i) {
+        yt((() => {
+            var n = t.removeEventListener;
+            "function" == typeof n && (void 0 !== i ? n.call(t, e, r, i) : n.call(t, e, r))
+        }))
+    }
+
+    function yt(t) {
+        try {
+            t()
+        } catch (t) {
+            if (!(t instanceof DOMException && "SecurityError" === t.name)) throw t
+        }
+    }
+    var wt = "Please stop import mirror directly. Instead of that,\r\nnow you can use replayer.getMirror() to access the mirror instance of a replayer,\r\nor you can use record.mirror to access the mirror instance during recording.",
+        bt = {
+            map: {},
+            getId() {
+                return console.error(wt), -1
+            },
+            getNode() {
+                return console.error(wt), null
+            },
+            removeNodeFromMap() {
+                console.error(wt)
+            },
+            has() {
+                return console.error(wt), !1
+            },
+            reset() {
+                console.error(wt)
+            }
+        };
+
+    function kt(t, e, r) {
+        void 0 === r && (r = {});
+        var i = null,
+            n = 0;
+        return function() {
+            for (var s = arguments.length, a = new Array(s), o = 0; s > o; o++) a[o] = arguments[o];
+            var u = Date.now();
+            n || !1 !== r.leading || (n = u);
+            var l = e - (u - n),
+                h = this;
+            0 >= l || l > e ? (i && (clearTimeout(i), i = null), n = u, t.apply(h, a)) : i || !1 === r.trailing || (i = setTimeout((() => {
+                n = !1 === r.leading ? 0 : Date.now(), i = null, t.apply(h, a)
+            }), l))
+        }
+    }
+
+    function _t(t, e, r, i, n) {
+        void 0 === n && (n = window);
+        var s = n.Object.getOwnPropertyDescriptor(t, e);
+        return n.Object.defineProperty(t, e, i ? r : {
+            set(t) {
+                if (setTimeout((() => {
+                        try {
+                            r.set.call(this, t)
+                        } catch (t) {}
+                    }), 0), s && s.set) {
+                    if (s.get) try {
+                        s.get.call(this)
+                    } catch (t) {
+                        return
+                    }
+                    s.set.call(this, t)
+                }
+            }
+        }), () => _t(t, e, s || {}, !0)
+    }
+    "undefined" != typeof window && window.Proxy && window.Reflect && (bt = new Proxy(bt, {
+        get(t, e, r) {
+            return "map" === e && console.error(wt), Reflect.get(t, e, r)
+        }
+    }));
+    var St = Date.now;
+
+    function It(t) {
+        var e, r, i, n, s = t.document;
+        return {
+            left: s.scrollingElement ? s.scrollingElement.scrollLeft : void 0 !== t.pageXOffset ? t.pageXOffset : s.documentElement.scrollLeft || (null == s ? void 0 : s.body) && (null == (e = M.parentElement(s.body)) ? void 0 : e.scrollLeft) || (null == (r = null == s ? void 0 : s.body) ? void 0 : r.scrollLeft) || 0,
+            top: s.scrollingElement ? s.scrollingElement.scrollTop : void 0 !== t.pageYOffset ? t.pageYOffset : (null == s ? void 0 : s.documentElement.scrollTop) || (null == s ? void 0 : s.body) && (null == (i = M.parentElement(s.body)) ? void 0 : i.scrollTop) || (null == (n = null == s ? void 0 : s.body) ? void 0 : n.scrollTop) || 0
+        }
+    }
+
+    function Mt() {
+        return window.innerHeight || document.documentElement && document.documentElement.clientHeight || document.body && document.body.clientHeight
+    }
+
+    function Ct() {
+        return window.innerWidth || document.documentElement && document.documentElement.clientWidth || document.body && document.body.clientWidth
+    }
+
+    function Rt(t) {
+        return t ? t.nodeType === t.ELEMENT_NODE ? t : M.parentElement(t) : null
+    }
+
+    function xt(t, e, r, i) {
+        if (!t) return !1;
+        var n = Rt(t);
+        if (!n) return !1;
+        try {
+            if ("string" == typeof e) {
+                if (n.classList.contains(e)) return !0;
+                if (i && null !== n.closest("." + e)) return !0
+            } else if (nt(n, e, i)) return !0
+        } catch (t) {}
+        if (r) {
+            if (n.matches(r)) return !0;
+            if (i && null !== n.closest(r)) return !0
+        }
+        return !1
+    }
+
+    function Tt(t, e, r) {
+        return !("TITLE" !== t.tagName || !r.headTitleMutations) || e.getId(t) === Z
+    }
+
+    function At(t, e) {
+        if (R(t)) return !1;
+        var r = e.getId(t);
+        if (!e.has(r)) return !0;
+        var i = M.parentNode(t);
+        return (!i || i.nodeType !== t.DOCUMENT_NODE) && (!i || At(i, e))
+    }
+
+    function Ot(t) {
+        return Boolean(t.changedTouches)
+    }
+
+    function Et(t, e) {
+        return Boolean("IFRAME" === t.nodeName && e.getMeta(t))
+    }
+
+    function Nt(t, e) {
+        return Boolean("LINK" === t.nodeName && t.nodeType === t.ELEMENT_NODE && t.getAttribute && "stylesheet" === t.getAttribute("rel") && e.getMeta(t))
+    }
+
+    function Ft(t) {
+        return !!t && (t instanceof pt && "shadowRoot" in t ? Boolean(t.shadowRoot) : Boolean(M.shadowRoot(t)))
+    }
+    /[1-9][0-9]{12}/.test(Date.now().toString()) || (St = () => (new Date).getTime());
+    class Lt {
+        constructor() {
+            a(this, "id", 1), a(this, "styleIDMap", new WeakMap), a(this, "idStyleMap", new Map)
+        }
+        getId(t) {
+            var e;
+            return null !== (e = this.styleIDMap.get(t)) && void 0 !== e ? e : -1
+        }
+        has(t) {
+            return this.styleIDMap.has(t)
+        }
+        add(t, e) {
+            return this.has(t) ? this.getId(t) : (r = void 0 === e ? this.id++ : e, this.styleIDMap.set(t, r), this.idStyleMap.set(r, t), r);
+            var r
+        }
+        getStyle(t) {
+            return this.idStyleMap.get(t) || null
+        }
+        reset() {
+            this.styleIDMap = new WeakMap, this.idStyleMap = new Map, this.id = 1
+        }
+        generateId() {
+            return this.id++
+        }
+    }
+
+    function Dt(t) {
+        var e, r = null;
+        return "getRootNode" in t && (null == (e = M.getRootNode(t)) ? void 0 : e.nodeType) === Node.DOCUMENT_FRAGMENT_NODE && M.host(M.getRootNode(t)) && (r = M.host(M.getRootNode(t))), r
+    }
+
+    function Pt(t) {
+        var e = t.ownerDocument;
+        return !!e && (M.contains(e, t) || function(t) {
+            var e = t.ownerDocument;
+            if (!e) return !1;
+            var r = function(t) {
+                for (var e, r = t; e = Dt(r);) r = e;
+                return r
+            }(t);
+            return M.contains(e, r)
+        }(t))
+    }
+
+    function Wt(t) {
+        return "__ln" in t
+    }
+    class $t {
+        constructor() {
+            a(this, "length", 0), a(this, "head", null), a(this, "tail", null)
+        }
+        get(t) {
+            if (t >= this.length) throw new Error("Position outside of list range");
+            for (var e = this.head, r = 0; t > r; r++) e = (null == e ? void 0 : e.next) || null;
+            return e
+        }
+        addNode(t) {
+            var e = {
+                value: t,
+                previous: null,
+                next: null
+            };
+            if (t.__ln = e, t.previousSibling && Wt(t.previousSibling)) {
+                var r = t.previousSibling.__ln.next;
+                e.next = r, e.previous = t.previousSibling.__ln, t.previousSibling.__ln.next = e, r && (r.previous = e)
+            } else if (t.nextSibling && Wt(t.nextSibling) && t.nextSibling.__ln.previous) {
+                var i = t.nextSibling.__ln.previous;
+                e.previous = i, e.next = t.nextSibling.__ln, t.nextSibling.__ln.previous = e, i && (i.next = e)
+            } else this.head && (this.head.previous = e), e.next = this.head, this.head = e;
+            null === e.next && (this.tail = e), this.length++
+        }
+        removeNode(t) {
+            var e = t.__ln;
+            this.head && (e.previous ? (e.previous.next = e.next, e.next ? e.next.previous = e.previous : this.tail = e.previous) : (this.head = e.next, this.head ? this.head.previous = null : this.tail = null), t.__ln && delete t.__ln, this.length--)
+        }
+    }
+    var Bt, zt = (t, e) => t + "@" + e;
+    class Ut {
+        constructor() {
+            a(this, "frozen", !1), a(this, "locked", !1), a(this, "texts", []), a(this, "attributes", []), a(this, "attributeMap", new WeakMap), a(this, "removes", []), a(this, "mapRemoves", []), a(this, "movedMap", {}), a(this, "addedSet", new Set), a(this, "movedSet", new Set), a(this, "droppedSet", new Set), a(this, "removesSubTreeCache", new Set), a(this, "mutationCb"), a(this, "blockClass"), a(this, "blockSelector"), a(this, "maskTextClass"), a(this, "maskTextSelector"), a(this, "inlineStylesheet"), a(this, "maskInputOptions"), a(this, "maskTextFn"), a(this, "maskInputFn"), a(this, "keepIframeSrcFn"), a(this, "recordCanvas"), a(this, "canvasMaskingConfigured"), a(this, "inlineImages"), a(this, "slimDOMOptions"), a(this, "dataURLOptions"), a(this, "doc"), a(this, "mirror"), a(this, "iframeManager"), a(this, "stylesheetManager"), a(this, "shadowDomManager"), a(this, "canvasManager"), a(this, "processedNodeManager"), a(this, "unattachedDoc"), a(this, "canvasManagerReleased", !1), a(this, "processMutations", (t => {
+                t.forEach(this.processMutation), this.emit()
+            })), a(this, "emit", (() => {
+                if (!this.frozen && !this.locked) {
+                    for (var t = [], e = new Set, r = new $t, i = t => {
+                            for (var e = t, r = Z; r === Z;) r = (e = e && e.nextSibling) && this.mirror.getId(e);
+                            return r
+                        }, n = n => {
+                            var s = M.parentNode(n);
+                            if (s && Pt(n) && "TEXTAREA" !== s.tagName) {
+                                var a = R(s) ? this.mirror.getId(Dt(n)) : this.mirror.getId(s),
+                                    o = i(n);
+                                if (-1 === a || -1 === o) return r.addNode(n);
+                                var u = vt(n, {
+                                    doc: this.doc,
+                                    mirror: this.mirror,
+                                    blockClass: this.blockClass,
+                                    blockSelector: this.blockSelector,
+                                    maskTextClass: this.maskTextClass,
+                                    maskTextSelector: this.maskTextSelector,
+                                    skipChild: !0,
+                                    newlyAddedElement: !0,
+                                    inlineStylesheet: this.inlineStylesheet,
+                                    maskInputOptions: this.maskInputOptions,
+                                    maskTextFn: this.maskTextFn,
+                                    maskInputFn: this.maskInputFn,
+                                    slimDOMOptions: this.slimDOMOptions,
+                                    dataURLOptions: this.dataURLOptions,
+                                    recordCanvas: this.recordCanvas,
+                                    canvasMaskingConfigured: this.canvasMaskingConfigured,
+                                    inlineImages: this.inlineImages,
+                                    onSerialize: t => {
+                                        Et(t, this.mirror) && this.iframeManager.addIframe(t), Nt(t, this.mirror) && this.stylesheetManager.trackLinkElement(t), Ft(n) && this.shadowDomManager.addShadowRoot(M.shadowRoot(n), this.doc)
+                                    },
+                                    onIframeLoad: (t, e) => {
+                                        this.iframeManager.attachIframe(t, e), this.shadowDomManager.observeAttachShadow(t)
+                                    },
+                                    onIframeListenerRegistered: (t, e) => {
+                                        this.iframeManager.registerLoadListenerDisposer(t, e)
+                                    },
+                                    onStylesheetLoad: (t, e) => {
+                                        this.stylesheetManager.attachLinkElement(t, e)
+                                    }
+                                });
+                                u && (t.push({
+                                    parentId: a,
+                                    nextId: o,
+                                    node: u
+                                }), e.add(u.id))
+                            }
+                        }; this.mapRemoves.length;) this.mirror.removeNodeFromMap(this.mapRemoves.shift());
+                    for (var s of this.movedSet) qt(this.removesSubTreeCache, s) && !this.movedSet.has(M.parentNode(s)) || n(s);
+                    for (var a of this.addedSet) Ht(this.droppedSet, a) || qt(this.removesSubTreeCache, a) ? Ht(this.movedSet, a) ? n(a) : this.droppedSet.add(a) : n(a);
+                    for (var o = null; r.length;) {
+                        var u = null;
+                        if (o) {
+                            var l = this.mirror.getId(M.parentNode(o.value)),
+                                h = i(o.value); - 1 !== l && -1 !== h && (u = o)
+                        }
+                        if (!u)
+                            for (var d = r.tail; d;) {
+                                var c = d;
+                                if (d = d.previous, c) {
+                                    var v = this.mirror.getId(M.parentNode(c.value));
+                                    if (-1 === i(c.value)) continue;
+                                    if (-1 !== v) {
+                                        u = c;
+                                        break
+                                    }
+                                    var f = M.parentNode(c.value);
+                                    if (f && f.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
+                                        var p = M.host(f);
+                                        if (-1 !== this.mirror.getId(p)) {
+                                            u = c;
+                                            break
+                                        }
+                                    }
+                                }
+                            }
+                        if (!u) {
+                            for (; r.head;) r.removeNode(r.head.value);
+                            break
+                        }
+                        o = u.previous, r.removeNode(u.value), n(u.value)
+                    }
+                    var m = {
+                        texts: this.texts.map((t => {
+                            var e = t.node,
+                                r = M.parentNode(e);
+                            return r && "TEXTAREA" === r.tagName && this.genTextAreaValueMutation(r), {
+                                id: this.mirror.getId(e),
+                                value: t.value
+                            }
+                        })).filter((t => !e.has(t.id))).filter((t => this.mirror.has(t.id))),
+                        attributes: this.attributes.map((t => {
+                            var e = t.attributes;
+                            if ("string" == typeof e.style) {
+                                var r = JSON.stringify(t.styleDiff),
+                                    i = JSON.stringify(t._unchangedStyles);
+                                e.style.length > r.length && (r + i).split("var(").length === e.style.split("var(").length && (e.style = t.styleDiff)
+                            }
+                            return {
+                                id: this.mirror.getId(t.node),
+                                attributes: e
+                            }
+                        })).filter((t => !e.has(t.id))).filter((t => this.mirror.has(t.id))),
+                        removes: this.removes,
+                        adds: t
+                    };
+                    (m.texts.length || m.attributes.length || m.removes.length || m.adds.length) && (this.texts = [], this.attributes = [], this.attributeMap = new WeakMap, this.removes = [], this.addedSet = new Set, this.movedSet = new Set, this.droppedSet = new Set, this.removesSubTreeCache = new Set, this.movedMap = {}, this.mutationCb(m))
+                }
+            })), a(this, "bufferBelongsToIframe", (t => this.doc === t.contentDocument)), a(this, "genTextAreaValueMutation", (t => {
+                var e = this.attributeMap.get(t);
+                e || (this.attributes.push(e = {
+                    node: t,
+                    attributes: {},
+                    styleDiff: {},
+                    _unchangedStyles: {}
+                }), this.attributeMap.set(t, e));
+                var r = Array.from(M.childNodes(t), (t => M.textContent(t) || "")).join("");
+                e.attributes.value = E({
+                    element: t,
+                    maskInputOptions: this.maskInputOptions,
+                    tagName: t.tagName,
+                    type: L(t),
+                    value: r,
+                    maskInputFn: this.maskInputFn
+                })
+            })), a(this, "processMutation", (t => {
+                if (!Tt(t.target, this.mirror, this.slimDOMOptions)) switch (t.type) {
+                    case "characterData":
+                        var e = M.textContent(t.target);
+                        xt(t.target, this.blockClass, this.blockSelector, !1) || e === t.oldValue || this.texts.push({
+                            value: st(t.target, this.maskTextClass, this.maskTextSelector, !0) && e ? this.maskTextFn ? this.maskTextFn(e, Rt(t.target)) : e.replace(/[\S]/g, "*") : e,
+                            node: t.target
+                        });
+                        break;
+                    case "attributes":
+                        var r = t.target,
+                            i = t.attributeName,
+                            n = t.target.getAttribute(i);
+                        if ("value" === i) {
+                            var s = L(r);
+                            n = E({
+                                element: r,
+                                maskInputOptions: this.maskInputOptions,
+                                tagName: r.tagName,
+                                type: s,
+                                value: n,
+                                maskInputFn: this.maskInputFn
+                            })
+                        }
+                        if (xt(t.target, this.blockClass, this.blockSelector, !1) || n === t.oldValue) return;
+                        var a = this.attributeMap.get(t.target);
+                        if ("IFRAME" === r.tagName && "src" === i && !this.keepIframeSrcFn(n)) {
+                            if (r.contentDocument) return;
+                            i = "rr_src"
+                        }
+                        if (a || (this.attributes.push(a = {
+                                node: t.target,
+                                attributes: {},
+                                styleDiff: {},
+                                _unchangedStyles: {}
+                            }), this.attributeMap.set(t.target, a)), "type" === i && "INPUT" === r.tagName && "password" === (t.oldValue || "").toLowerCase() && r.setAttribute("data-rr-is-password", "true"), !it(r.tagName, i))
+                            if (a.attributes[i] = rt(this.doc, N(r.tagName), N(i), n, r, this.dataURLOptions), "style" === i) {
+                                if (!this.unattachedDoc) try {
+                                    this.unattachedDoc = document.implementation.createHTMLDocument()
+                                } catch (t) {
+                                    this.unattachedDoc = this.doc
+                                }
+                                var o = this.unattachedDoc.createElement("span");
+                                for (var u of (t.oldValue && (o.style.cssText = t.oldValue), Array.from(r.style))) {
+                                    var l = r.style.getPropertyValue(u),
+                                        h = r.style.getPropertyPriority(u);
+                                    l !== o.style.getPropertyValue(u) || h !== o.style.getPropertyPriority(u) ? a.styleDiff[u] = "" === h ? l : [l, h] : a._unchangedStyles[u] = [l, h]
+                                }
+                                for (var d of Array.from(o.style)) "" === r.style.getPropertyValue(d) && (a.styleDiff[d] = !1)
+                            } else "open" === i && "DIALOG" === r.tagName && (a.attributes.rr_open_mode = r.matches("dialog:modal") ? "modal" : "non-modal");
+                        break;
+                    case "childList":
+                        if (xt(t.target, this.blockClass, this.blockSelector, !0)) return;
+                        if ("TEXTAREA" === t.target.tagName) return void this.genTextAreaValueMutation(t.target);
+                        t.addedNodes.forEach((e => this.genAdds(e, t.target))), t.removedNodes.forEach((e => {
+                            var r = this.mirror.getId(e),
+                                i = R(t.target) ? this.mirror.getId(M.host(t.target)) : this.mirror.getId(t.target);
+                            xt(t.target, this.blockClass, this.blockSelector, !1) || Tt(e, this.mirror, this.slimDOMOptions) || ! function(t, e) {
+                                return -1 !== e.getId(t)
+                            }(e, this.mirror) || (this.addedSet.has(e) ? (jt(this.addedSet, e), this.droppedSet.add(e)) : this.addedSet.has(t.target) && -1 === r || At(t.target, this.mirror) || (this.movedSet.has(e) && this.movedMap[zt(r, i)] ? jt(this.movedSet, e) : (this.removes.push({
+                                parentId: i,
+                                id: r,
+                                isShadow: !(!R(t.target) || !x(t.target)) || void 0
+                            }), function(t, e) {
+                                for (var r = [t]; r.length;) {
+                                    var i = r.pop();
+                                    e.has(i) || (e.add(i), M.childNodes(i).forEach((t => r.push(t))))
+                                }
+                            }(e, this.removesSubTreeCache))), this.mapRemoves.push(e))
+                        }))
+                }
+            })), a(this, "genAdds", ((t, e) => {
+                if (!this.processedNodeManager.inOtherBuffer(t, this)) {
+                    if (this.addedSet.has(t)) return this.addedSet.delete(t), void this.addedSet.add(t);
+                    if (!this.movedSet.has(t)) {
+                        if (this.mirror.hasNode(t)) {
+                            if (Tt(t, this.mirror, this.slimDOMOptions)) return;
+                            this.movedSet.add(t);
+                            var r = null;
+                            e && this.mirror.hasNode(e) && (r = this.mirror.getId(e)), r && -1 !== r && (this.movedMap[zt(this.mirror.getId(t), r)] = !0)
+                        } else this.addedSet.add(t), this.droppedSet.delete(t);
+                        xt(t, this.blockClass, this.blockSelector, !1) || (M.childNodes(t).forEach((t => this.genAdds(t))), Ft(t) && M.childNodes(M.shadowRoot(t)).forEach((e => {
+                            this.processedNodeManager.add(e, this), this.genAdds(e, t)
+                        })))
+                    }
+                }
+            }))
+        }
+        init(t) {
+            ["mutationCb", "blockClass", "blockSelector", "maskTextClass", "maskTextSelector", "inlineStylesheet", "maskInputOptions", "maskTextFn", "maskInputFn", "keepIframeSrcFn", "recordCanvas", "canvasMaskingConfigured", "inlineImages", "slimDOMOptions", "dataURLOptions", "doc", "mirror", "iframeManager", "stylesheetManager", "shadowDomManager", "canvasManager", "processedNodeManager"].forEach((e => {
+                this[e] = t[e]
+            })), this.canvasManager.acquire()
+        }
+        freeze() {
+            this.frozen = !0, this.canvasManager.freeze()
+        }
+        unfreeze() {
+            this.frozen = !1, this.canvasManager.unfreeze(), this.emit()
+        }
+        isFrozen() {
+            return this.frozen
+        }
+        lock() {
+            this.locked = !0, this.canvasManager.lock()
+        }
+        unlock() {
+            this.locked = !1, this.canvasManager.unlock(), this.emit()
+        }
+        reset() {
+            this.releaseCanvasManager()
+        }
+        releaseCanvasManager() {
+            this.canvasManagerReleased || (this.canvasManagerReleased = !0, this.canvasManager.reset())
+        }
+        bufferDoc() {
+            return this.doc
+        }
+        destroy() {
+            for (; this.mapRemoves.length;) this.mirror.removeNodeFromMap(this.mapRemoves.shift())
+        }
+    }
+
+    function jt(t, e) {
+        t.delete(e), M.childNodes(e).forEach((e => jt(t, e)))
+    }
+
+    function qt(t, e, r) {
+        return 0 !== t.size && function(t, e, r) {
+            var i = M.parentNode(e);
+            return !!i && t.has(i)
+        }(t, e)
+    }
+
+    function Ht(t, e) {
+        return 0 !== t.size && Gt(t, e)
+    }
+
+    function Gt(t, e) {
+        var r = M.parentNode(e);
+        return !!r && (!!t.has(r) || Gt(t, r))
+    }
+    var Vt = t => Bt ? function() {
+            try {
+                return t(...arguments)
+            } catch (t) {
+                if (Bt && !0 === Bt(t)) return;
+                throw t
+            }
+        } : t,
+        Zt = [];
+
+    function Jt(t) {
+        try {
+            if ("composedPath" in t) {
+                var e = t.composedPath();
+                if (e.length) return e[0]
+            } else if ("path" in t && t.path.length) return t.path[0]
+        } catch (t) {}
+        return t && t.target
+    }
+
+    function Qt(t, e) {
+        var r = new Ut;
+        Zt.push(r), r.init(t);
+        var i = new(S())(Vt(r.processMutations.bind(r))),
+            n = {
+                attributes: !0,
+                attributeOldValue: !0,
+                characterData: !0,
+                characterDataOldValue: !0,
+                childList: !0,
+                subtree: !0
+            };
+        return t.attributeFilter && t.attributeFilter.length > 0 && (n.attributeFilter = t.attributeFilter), i.observe(e, n), {
+            observer: i,
+            buffer: r
+        }
+    }
+
+    function Kt(t) {
+        var e = t.scrollCb,
+            r = t.doc,
+            i = t.mirror,
+            n = t.blockClass,
+            s = t.blockSelector,
+            a = t.sampling,
+            o = new Map,
+            u = t => {
+                var a = Jt(t);
+                if (a && !xt(a, n, s, !0)) {
+                    var u, l, h = i.getId(a);
+                    if (a === r && r.defaultView) {
+                        var d = It(r.defaultView);
+                        u = d.left, l = d.top
+                    } else u = a.scrollLeft, l = a.scrollTop;
+                    var c = u + "," + l;
+                    o.get(h) !== c && (o.set(h, c), e({
+                        id: h,
+                        x: u,
+                        y: l
+                    }))
+                }
+            },
+            l = [mt("scroll", Vt(kt(Vt((t => u(t))), a.scroll || 100)), r)];
+        return "onscrollend" in r && l.push(mt("scrollend", Vt(u), r)), () => l.forEach((t => t()))
+    }
+
+    function Xt(t, e) {
+        for (var r = Zt.length - 1; r >= 0; r--) {
+            var i = Zt[r];
+            if (i) {
+                var n = i.bufferBelongsToIframe(t);
+                !n && e && e.has(i.bufferDoc()) && (n = !0), n && (i.reset(), Zt.splice(r, 1))
+            }
+        }
+    }
+    var Yt = ["INPUT", "TEXTAREA", "SELECT"],
+        te = new WeakMap;
+
+    function ee(t) {
+        return function t(e, r) {
+            if (se("CSSGroupingRule") && e.parentRule instanceof CSSGroupingRule || se("CSSMediaRule") && e.parentRule instanceof CSSMediaRule || se("CSSSupportsRule") && e.parentRule instanceof CSSSupportsRule || se("CSSConditionRule") && e.parentRule instanceof CSSConditionRule) {
+                var i = Array.from(e.parentRule.cssRules).indexOf(e);
+                return r.unshift(i), t(e.parentRule, r)
+            }
+            if (e.parentStyleSheet) {
+                var n = Array.from(e.parentStyleSheet.cssRules).indexOf(e);
+                r.unshift(n)
+            }
+            return r
+        }(t, [])
+    }
+
+    function re(t, e, r) {
+        var i, n;
+        return t ? (t.ownerNode ? i = e.getId(t.ownerNode) : n = r.getId(t), {
+            styleId: n,
+            id: i
+        }) : {}
+    }
+
+    function ie(t, e) {
+        var r, i, n, s, a = t.stylesheetManager;
+        s = t.mirror.getId("#document" === e.nodeName ? e : M.host(e));
+        var o = "#document" === e.nodeName ? null == (r = e.defaultView) ? void 0 : r.Document : null == (n = null == (i = e.ownerDocument) ? void 0 : i.defaultView) ? void 0 : n.ShadowRoot,
+            u = (null == o ? void 0 : o.prototype) ? Object.getOwnPropertyDescriptor(null == o ? void 0 : o.prototype, "adoptedStyleSheets") : void 0;
+        return null !== s && -1 !== s && o && u ? (Object.defineProperty(e, "adoptedStyleSheets", {
+            configurable: u.configurable,
+            enumerable: u.enumerable,
+            get() {
+                var t;
+                return null == (t = u.get) ? void 0 : t.call(this)
+            },
+            set(t) {
+                var e, r;
+                try {
+                    r = null == (e = u.set) ? void 0 : e.call(this, t)
+                } catch (t) {
+                    if (t && "object" == typeof t && "NotAllowedError" === t.name) return;
+                    throw t
+                }
+                if (null !== s && -1 !== s) try {
+                    a.adoptStyleSheets(t, s)
+                } catch (t) {}
+                return r
+            }
+        }), Vt((() => {
+            Object.defineProperty(e, "adoptedStyleSheets", {
+                configurable: u.configurable,
+                enumerable: u.enumerable,
+                get: u.get,
+                set: u.set
+            })
+        }))) : () => {}
+    }
+
+    function ne(t, e) {
+        void 0 === e && (e = {});
+        var i, n, s = t.doc.defaultView;
+        if (!s) return () => {};
+        if (function(t, e) {
+                var r = t.mutationCb,
+                    i = t.mousemoveCb,
+                    n = t.mouseInteractionCb,
+                    s = t.scrollCb,
+                    a = t.viewportResizeCb,
+                    o = t.inputCb,
+                    u = t.mediaInteractionCb,
+                    l = t.styleSheetRuleCb,
+                    h = t.styleDeclarationCb,
+                    d = t.canvasMutationCb,
+                    c = t.fontCb,
+                    v = t.selectionCb,
+                    f = t.customElementCb;
+                t.mutationCb = function() {
+                    e.mutation && e.mutation(...arguments), r(...arguments)
+                }, t.mousemoveCb = function() {
+                    e.mousemove && e.mousemove(...arguments), i(...arguments)
+                }, t.mouseInteractionCb = function() {
+                    e.mouseInteraction && e.mouseInteraction(...arguments), n(...arguments)
+                }, t.scrollCb = function() {
+                    e.scroll && e.scroll(...arguments), s(...arguments)
+                }, t.viewportResizeCb = function() {
+                    e.viewportResize && e.viewportResize(...arguments), a(...arguments)
+                }, t.inputCb = function() {
+                    e.input && e.input(...arguments), o(...arguments)
+                }, t.mediaInteractionCb = function() {
+                    e.mediaInteaction && e.mediaInteaction(...arguments), u(...arguments)
+                }, t.styleSheetRuleCb = function() {
+                    e.styleSheetRule && e.styleSheetRule(...arguments), l(...arguments)
+                }, t.styleDeclarationCb = function() {
+                    e.styleDeclaration && e.styleDeclaration(...arguments), h(...arguments)
+                }, t.canvasMutationCb = function() {
+                    e.canvasMutation && e.canvasMutation(...arguments), d(...arguments)
+                }, t.fontCb = function() {
+                    e.font && e.font(...arguments), c(...arguments)
+                }, t.selectionCb = function() {
+                    e.selection && e.selection(...arguments), v(...arguments)
+                }, t.customElementCb = function() {
+                    e.customElement && e.customElement(...arguments), f(...arguments)
+                }
+            }(t, e), t.recordDOM) {
+            var a = Qt(t, t.doc);
+            i = a.observer, n = a.buffer
+        }
+        var o, d, v, f, p, m, g, y, w, b = function(t) {
+                var e = t.mousemoveCb,
+                    r = t.sampling,
+                    i = t.doc,
+                    n = t.mirror;
+                if (!1 === r.mousemove) return () => {};
+                var s, a = "number" == typeof r.mousemove ? r.mousemove : 50,
+                    o = "number" == typeof r.mousemoveCallback ? r.mousemoveCallback : 500,
+                    l = [],
+                    h = kt(Vt((t => {
+                        var r = Date.now() - s;
+                        e(l.map((t => (t.timeOffset -= r, t))), t), l = [], s = null
+                    })), o),
+                    d = Vt(kt(Vt((t => {
+                        var e = Jt(t),
+                            r = Ot(t) ? t.changedTouches[0] : t,
+                            i = r.clientX,
+                            a = r.clientY;
+                        s || (s = St()), l.push({
+                            x: i,
+                            y: a,
+                            id: n.getId(e),
+                            timeOffset: St() - s
+                        }), h("undefined" != typeof DragEvent && t instanceof DragEvent ? u.Drag : t instanceof MouseEvent ? u.MouseMove : u.TouchMove)
+                    })), a, {
+                        trailing: !1
+                    })),
+                    c = [mt("mousemove", d, i), mt("touchmove", d, i), mt("drag", d, i)];
+                return Vt((() => {
+                    c.forEach((t => t()))
+                }))
+            }(t),
+            k = function(t) {
+                var e = t.mouseInteractionCb,
+                    i = t.doc,
+                    n = t.mirror,
+                    s = t.blockClass,
+                    a = t.blockSelector,
+                    o = t.sampling;
+                if (!1 === o.mouseInteraction) return () => {};
+                var u = !0 === o.mouseInteraction || void 0 === o.mouseInteraction ? {} : o.mouseInteraction,
+                    d = [],
+                    c = null;
+                return Object.keys(l).filter((t => Number.isNaN(Number(t)) && !t.endsWith("_Departed") && !1 !== u[t])).forEach((t => {
+                    var o = N(t),
+                        u = (t => i => {
+                            var o = Jt(i);
+                            if (!xt(o, s, a, !0)) {
+                                var u = null,
+                                    d = t;
+                                if ("pointerType" in i) {
+                                    switch (i.pointerType) {
+                                        case "mouse":
+                                            u = h.Mouse;
+                                            break;
+                                        case "touch":
+                                            u = h.Touch;
+                                            break;
+                                        case "pen":
+                                            u = h.Pen
+                                    }
+                                    u === h.Touch && (l[t] === l.MouseDown ? d = "TouchStart" : l[t] === l.MouseUp && (d = "TouchEnd"))
+                                } else Ot(i) && (u = h.Touch);
+                                null !== u ? (c = u, (d.startsWith("Touch") && u === h.Touch || d.startsWith("Mouse") && u === h.Mouse) && (u = null)) : l[t] === l.Click && (u = c, c = null);
+                                var v = Ot(i) ? i.changedTouches[0] : i;
+                                if (v) {
+                                    var f = n.getId(o),
+                                        p = v.clientX,
+                                        m = v.clientY;
+                                    Vt(e)(r({
+                                        type: l[d],
+                                        id: f,
+                                        x: p,
+                                        y: m
+                                    }, null !== u && {
+                                        pointerType: u
+                                    }))
+                                }
+                            }
+                        })(t);
+                    if (window.PointerEvent) switch (l[t]) {
+                        case l.MouseDown:
+                        case l.MouseUp:
+                            o = o.replace("mouse", "pointer");
+                            break;
+                        case l.TouchStart:
+                        case l.TouchEnd:
+                            return
+                    }
+                    d.push(mt(o, u, i))
+                })), Vt((() => {
+                    d.forEach((t => t()))
+                }))
+            }(t),
+            _ = Kt(t),
+            S = function(t, e) {
+                var r = t.viewportResizeCb,
+                    i = e.win,
+                    n = -1,
+                    s = -1;
+                return mt("resize", Vt(kt(Vt((() => {
+                    var t = Mt(),
+                        e = Ct();
+                    n === t && s === e || (r({
+                        width: Number(e),
+                        height: Number(t)
+                    }), n = t, s = e)
+                })), 200)), i)
+            }(t, {
+                win: s
+            }),
+            C = function(t) {
+                var e = t.inputCb,
+                    i = t.doc,
+                    n = t.mirror,
+                    s = t.blockClass,
+                    a = t.blockSelector,
+                    o = t.ignoreClass,
+                    u = t.ignoreSelector,
+                    l = t.maskInputOptions,
+                    h = t.maskInputFn,
+                    d = t.userTriggeredOnInput;
+
+                function c(t) {
+                    var e = Jt(t),
+                        r = t.isTrusted,
+                        n = i.defaultView;
+                    if (!e || !n || e instanceof n.HTMLElement) {
+                        var c = e && e.tagName;
+                        if (e && "OPTION" === c && (e = M.parentElement(e)), e && c && Yt.indexOf(c) >= 0 && !xt(e, s, a, !0) && !(e.classList.contains(o) || u && e.matches(u))) {
+                            var f = e.value,
+                                p = !1,
+                                m = L(e) || "";
+                            "radio" === m || "checkbox" === m ? p = e.checked : (l[c.toLowerCase()] || l[m]) && (f = E({
+                                element: e,
+                                maskInputOptions: l,
+                                tagName: c,
+                                type: m,
+                                value: f,
+                                maskInputFn: h
+                            })), v(e, d ? {
+                                text: f,
+                                isChecked: p,
+                                userTriggered: r
+                            } : {
+                                text: f,
+                                isChecked: p
+                            });
+                            var g = e.name;
+                            "radio" === m && g && p && i.querySelectorAll('input[type="radio"][name="' + g + '"]').forEach((t => {
+                                if (t !== e) {
+                                    var r = t.value;
+                                    v(t, d ? {
+                                        text: r,
+                                        isChecked: !p,
+                                        userTriggered: !1
+                                    } : {
+                                        text: r,
+                                        isChecked: !p
+                                    })
+                                }
+                            }))
+                        }
+                    }
+                }
+
+                function v(t, i) {
+                    var s = te.get(t);
+                    if (!s || s.text !== i.text || s.isChecked !== i.isChecked) {
+                        te.set(t, i);
+                        var a = n.getId(t);
+                        Vt(e)(r({}, i, {
+                            id: a
+                        }))
+                    }
+                }
+                var f = ("last" === t.sampling.input ? ["change"] : ["input", "change"]).map((t => mt(t, Vt(c), i))),
+                    p = i.defaultView;
+                if (!p) return () => {
+                    f.forEach((t => t()))
+                };
+                var m = p.Object.getOwnPropertyDescriptor(p.HTMLInputElement.prototype, "value");
+                return m && m.set && f.push(...[
+                    [p.HTMLInputElement.prototype, "value"],
+                    [p.HTMLInputElement.prototype, "checked"],
+                    [p.HTMLSelectElement.prototype, "value"],
+                    [p.HTMLTextAreaElement.prototype, "value"],
+                    [p.HTMLSelectElement.prototype, "selectedIndex"],
+                    [p.HTMLOptionElement.prototype, "selected"]
+                ].map((t => _t(t[0], t[1], {
+                    set() {
+                        Vt(c)({
+                            target: this,
+                            isTrusted: !1
+                        })
+                    }
+                }, !1, p)))), Vt((() => {
+                    f.forEach((t => t()))
+                }))
+            }(t),
+            R = (d = (o = t).mediaInteractionCb, v = o.blockClass, f = o.blockSelector, p = o.mirror, m = o.sampling, g = o.doc, y = Vt((t => kt(Vt((e => {
+                var r = Jt(e);
+                if (r && !xt(r, v, f, !0)) {
+                    var i = r.currentTime,
+                        n = r.volume,
+                        s = r.muted,
+                        a = r.playbackRate,
+                        o = r.loop;
+                    d({
+                        type: t,
+                        id: p.getId(r),
+                        currentTime: i,
+                        volume: n,
+                        muted: s,
+                        playbackRate: a,
+                        loop: o
+                    })
+                }
+            })), m.media || 500))), w = [mt("play", y(c.Play), g), mt("pause", y(c.Pause), g), mt("seeked", y(c.Seeked), g), mt("volumechange", y(c.VolumeChange), g), mt("ratechange", y(c.RateChange), g)], Vt((() => {
+                w.forEach((t => t()))
+            }))),
+            x = () => {},
+            T = () => {},
+            A = () => {},
+            O = () => {};
+        t.recordDOM && (x = function(t, e) {
+            var r = t.styleSheetRuleCb,
+                i = t.mirror,
+                n = t.stylesheetManager,
+                s = e.win;
+            if (!s.CSSStyleSheet || !s.CSSStyleSheet.prototype) return () => {};
+            var a = s.CSSStyleSheet.prototype.insertRule;
+            s.CSSStyleSheet.prototype.insertRule = new Proxy(a, {
+                apply: Vt(((t, e, s) => {
+                    var a = s[0],
+                        o = s[1],
+                        u = re(e, i, n.styleMirror),
+                        l = u.id,
+                        h = u.styleId;
+                    return (l && -1 !== l || h && -1 !== h) && r({
+                        id: l,
+                        styleId: h,
+                        adds: [{
+                            rule: a,
+                            index: o
+                        }]
+                    }), t.apply(e, s)
+                }))
+            }), s.CSSStyleSheet.prototype.addRule = function(t, e, r) {
+                return void 0 === r && (r = this.cssRules.length), s.CSSStyleSheet.prototype.insertRule.apply(this, [t + " { " + e + " }", r])
+            };
+            var o, u, l = s.CSSStyleSheet.prototype.deleteRule;
+            s.CSSStyleSheet.prototype.deleteRule = new Proxy(l, {
+                apply: Vt(((t, e, s) => {
+                    var a = s[0],
+                        o = re(e, i, n.styleMirror),
+                        u = o.id,
+                        l = o.styleId;
+                    return (u && -1 !== u || l && -1 !== l) && r({
+                        id: u,
+                        styleId: l,
+                        removes: [{
+                            index: a
+                        }]
+                    }), t.apply(e, s)
+                }))
+            }), s.CSSStyleSheet.prototype.removeRule = function(t) {
+                return s.CSSStyleSheet.prototype.deleteRule.apply(this, [t])
+            }, s.CSSStyleSheet.prototype.replace && (o = s.CSSStyleSheet.prototype.replace, s.CSSStyleSheet.prototype.replace = new Proxy(o, {
+                apply: Vt(((t, e, s) => {
+                    var a = s[0],
+                        o = re(e, i, n.styleMirror),
+                        u = o.id,
+                        l = o.styleId;
+                    return (u && -1 !== u || l && -1 !== l) && r({
+                        id: u,
+                        styleId: l,
+                        replace: a
+                    }), t.apply(e, s)
+                }))
+            })), s.CSSStyleSheet.prototype.replaceSync && (u = s.CSSStyleSheet.prototype.replaceSync, s.CSSStyleSheet.prototype.replaceSync = new Proxy(u, {
+                apply: Vt(((t, e, s) => {
+                    var a = s[0],
+                        o = re(e, i, n.styleMirror),
+                        u = o.id,
+                        l = o.styleId;
+                    return (u && -1 !== u || l && -1 !== l) && r({
+                        id: u,
+                        styleId: l,
+                        replaceSync: a
+                    }), t.apply(e, s)
+                }))
+            }));
+            var h = {};
+            ae("CSSGroupingRule") ? h.CSSGroupingRule = s.CSSGroupingRule : (ae("CSSMediaRule") && (h.CSSMediaRule = s.CSSMediaRule), ae("CSSConditionRule") && (h.CSSConditionRule = s.CSSConditionRule), ae("CSSSupportsRule") && (h.CSSSupportsRule = s.CSSSupportsRule));
+            var d = {};
+            return Object.entries(h).forEach((t => {
+                var e = t[0],
+                    s = t[1];
+                d[e] = {
+                    insertRule: s.prototype.insertRule,
+                    deleteRule: s.prototype.deleteRule
+                }, s.prototype.insertRule = new Proxy(d[e].insertRule, {
+                    apply: Vt(((t, e, s) => {
+                        var a = s[0],
+                            o = s[1],
+                            u = re(e.parentStyleSheet, i, n.styleMirror),
+                            l = u.id,
+                            h = u.styleId;
+                        return (l && -1 !== l || h && -1 !== h) && r({
+                            id: l,
+                            styleId: h,
+                            adds: [{
+                                rule: a,
+                                index: [...ee(e), o || 0]
+                            }]
+                        }), t.apply(e, s)
+                    }))
+                }), s.prototype.deleteRule = new Proxy(d[e].deleteRule, {
+                    apply: Vt(((t, e, s) => {
+                        var a = s[0],
+                            o = re(e.parentStyleSheet, i, n.styleMirror),
+                            u = o.id,
+                            l = o.styleId;
+                        return (u && -1 !== u || l && -1 !== l) && r({
+                            id: u,
+                            styleId: l,
+                            removes: [{
+                                index: [...ee(e), a]
+                            }]
+                        }), t.apply(e, s)
+                    }))
+                })
+            })), Vt((() => {
+                s.CSSStyleSheet.prototype.insertRule = a, s.CSSStyleSheet.prototype.deleteRule = l, o && (s.CSSStyleSheet.prototype.replace = o), u && (s.CSSStyleSheet.prototype.replaceSync = u), Object.entries(h).forEach((t => {
+                    var e = t[0],
+                        r = t[1];
+                    r.prototype.insertRule = d[e].insertRule, r.prototype.deleteRule = d[e].deleteRule
+                }))
+            }))
+        }(t, {
+            win: s
+        }), T = ie(t, t.doc), A = function(t, e) {
+            var r = t.styleDeclarationCb,
+                i = t.mirror,
+                n = t.ignoreCSSAttributes,
+                s = t.stylesheetManager,
+                a = e.win,
+                o = a.CSSStyleDeclaration.prototype.setProperty;
+            a.CSSStyleDeclaration.prototype.setProperty = new Proxy(o, {
+                apply: Vt(((t, e, a) => {
+                    var u, l = a[0],
+                        h = a[1],
+                        d = a[2];
+                    if (n.has(l)) return o.apply(e, [l, h, d]);
+                    var c = re(null == (u = e.parentRule) ? void 0 : u.parentStyleSheet, i, s.styleMirror),
+                        v = c.id,
+                        f = c.styleId;
+                    return (v && -1 !== v || f && -1 !== f) && r({
+                        id: v,
+                        styleId: f,
+                        set: {
+                            property: l,
+                            value: h,
+                            priority: d
+                        },
+                        index: ee(e.parentRule)
+                    }), t.apply(e, a)
+                }))
+            });
+            var u = a.CSSStyleDeclaration.prototype.removeProperty;
+            return a.CSSStyleDeclaration.prototype.removeProperty = new Proxy(u, {
+                apply: Vt(((t, e, a) => {
+                    var o, l = a[0];
+                    if (n.has(l)) return u.apply(e, [l]);
+                    var h = re(null == (o = e.parentRule) ? void 0 : o.parentStyleSheet, i, s.styleMirror),
+                        d = h.id,
+                        c = h.styleId;
+                    return (d && -1 !== d || c && -1 !== c) && r({
+                        id: d,
+                        styleId: c,
+                        remove: {
+                            property: l
+                        },
+                        index: ee(e.parentRule)
+                    }), t.apply(e, a)
+                }))
+            }), Vt((() => {
+                a.CSSStyleDeclaration.prototype.setProperty = o, a.CSSStyleDeclaration.prototype.removeProperty = u
+            }))
+        }(t, {
+            win: s
+        }), t.collectFonts && (O = function(t) {
+            var e = t.fontCb,
+                r = t.doc,
+                i = r.defaultView;
+            if (!i) return () => {};
+            var n = [],
+                s = new WeakMap,
+                a = i.FontFace;
+            i.FontFace = function(t, e, r) {
+                var i = new a(t, e, r);
+                return s.set(i, {
+                    family: t,
+                    buffer: "string" != typeof e,
+                    descriptors: r,
+                    fontSource: "string" == typeof e ? e : JSON.stringify(Array.from(new Uint8Array(e)))
+                }), i
+            };
+            var o = I(r.fonts, "add", (function(t) {
+                return function(r) {
+                    return setTimeout(Vt((() => {
+                        var t = s.get(r);
+                        t && (e(t), s.delete(r))
+                    })), 0), t.apply(this, [r])
+                }
+            }));
+            return n.push((() => {
+                i.FontFace = a
+            })), n.push(o), Vt((() => {
+                n.forEach((t => t()))
+            }))
+        }(t)));
+        var F = function(t) {
+                var e = t.doc,
+                    r = t.mirror,
+                    i = t.blockClass,
+                    n = t.blockSelector,
+                    s = t.selectionCb,
+                    a = !0,
+                    o = Vt((() => {
+                        var t = e.getSelection();
+                        if (!(!t || a && (null == t ? void 0 : t.isCollapsed))) {
+                            a = t.isCollapsed || !1;
+                            for (var o = [], u = t.rangeCount || 0, l = 0; u > l; l++) {
+                                var h = t.getRangeAt(l),
+                                    d = h.startContainer,
+                                    c = h.startOffset,
+                                    v = h.endContainer,
+                                    f = h.endOffset;
+                                xt(d, i, n, !0) || xt(v, i, n, !0) || o.push({
+                                    start: r.getId(d),
+                                    startOffset: c,
+                                    end: r.getId(v),
+                                    endOffset: f
+                                })
+                            }
+                            s({
+                                ranges: o
+                            })
+                        }
+                    }));
+                return o(), mt("selectionchange", o)
+            }(t),
+            D = function(t) {
+                var e = t.customElementCb,
+                    r = t.doc.defaultView;
+                return r && r.customElements ? I(r.customElements, "define", (function(t) {
+                    return function(r, i, n) {
+                        try {
+                            e({
+                                define: {
+                                    name: r
+                                }
+                            })
+                        } catch (t) {
+                            console.warn("Custom element callback failed for " + r)
+                        }
+                        return t.apply(this, [r, i, n])
+                    }
+                })) : () => {}
+            }(t),
+            P = [];
+        for (var W of t.plugins) P.push(W.observer(W.callback, s, W.options));
+        return Vt((() => {
+            if (n) {
+                n.destroy(), n.reset();
+                var e = Zt.indexOf(n); - 1 !== e && Zt.splice(e, 1)
+            }
+            t.shadowDomManager.resetForDoc(t.doc), null == i || i.disconnect(), b(), k(), _(), S(), C(), R(), x(), T(), A(), O(), F(), D(), P.forEach((t => t()))
+        }))
+    }
+
+    function se(t) {
+        return void 0 !== window[t]
+    }
+
+    function ae(t) {
+        return Boolean(void 0 !== window[t] && window[t].prototype && "insertRule" in window[t].prototype && "deleteRule" in window[t].prototype)
+    }
+    class oe {
+        constructor(t) {
+            a(this, "iframeIdToRemoteIdMap", new WeakMap), a(this, "iframeRemoteIdToIdMap", new WeakMap), this.generateIdFn = t
+        }
+        getId(t, e, r, i) {
+            var n = r || this.getIdToRemoteIdMap(t),
+                s = i || this.getRemoteIdToIdMap(t),
+                a = n.get(e);
+            return a || (a = this.generateIdFn(), n.set(e, a), s.set(a, e)), a
+        }
+        getIds(t, e) {
+            var r = this.getIdToRemoteIdMap(t),
+                i = this.getRemoteIdToIdMap(t);
+            return e.map((e => this.getId(t, e, r, i)))
+        }
+        getRemoteId(t, e, r) {
+            var i = r || this.getRemoteIdToIdMap(t);
+            return "number" != typeof e ? e : i.get(e) || -1
+        }
+        getRemoteIds(t, e) {
+            var r = this.getRemoteIdToIdMap(t);
+            return e.map((e => this.getRemoteId(t, e, r)))
+        }
+        reset(t) {
+            if (!t) return this.iframeIdToRemoteIdMap = new WeakMap, void(this.iframeRemoteIdToIdMap = new WeakMap);
+            this.iframeIdToRemoteIdMap.delete(t), this.iframeRemoteIdToIdMap.delete(t)
+        }
+        getIdToRemoteIdMap(t) {
+            var e = this.iframeIdToRemoteIdMap.get(t);
+            return e || this.iframeIdToRemoteIdMap.set(t, e = new Map), e
+        }
+        getRemoteIdToIdMap(t) {
+            var e = this.iframeRemoteIdToIdMap.get(t);
+            return e || this.iframeRemoteIdToIdMap.set(t, e = new Map), e
+        }
+    }
+    class ue {
+        constructor(t) {
+            a(this, "iframes", new WeakMap), a(this, "crossOriginIframeMap", new WeakMap), a(this, "crossOriginIframeMirror", new oe(J)), a(this, "crossOriginIframeStyleMirror"), a(this, "crossOriginIframeRootIdMap", new WeakMap), a(this, "mirror"), a(this, "mutationCb"), a(this, "wrappedEmit"), a(this, "loadListener"), a(this, "pageHideListener"), a(this, "stylesheetManager"), a(this, "recordCrossOriginIframes"), a(this, "messageHandler"), a(this, "nestedIframeListeners", new Map), a(this, "attachedWindows", new WeakMap), a(this, "attachedDocuments", new WeakMap), a(this, "attachedIframes", new Map), a(this, "loadListenerDisposers", new WeakMap), a(this, "iframeElementsById", new Map), a(this, "pageHideHandlers", new WeakMap), this.mutationCb = t.mutationCb, this.wrappedEmit = t.wrappedEmit, this.stylesheetManager = t.stylesheetManager, this.recordCrossOriginIframes = t.recordCrossOriginIframes, this.crossOriginIframeStyleMirror = new oe(this.stylesheetManager.styleMirror.generateId.bind(this.stylesheetManager.styleMirror)), this.mirror = t.mirror, this.messageHandler = this.handleMessage.bind(this), this.recordCrossOriginIframes && window.addEventListener("message", this.messageHandler)
+        }
+        addIframe(t) {
+            this.iframes.set(t, !0), t.contentWindow && this.crossOriginIframeMap.set(t.contentWindow, t)
+        }
+        registerLoadListenerDisposer(t, e) {
+            var r = this.loadListenerDisposers.get(t);
+            r || this.loadListenerDisposers.set(t, r = new Set), r.add(e);
+            var i = this.mirror.getId(t); - 1 !== i && this.iframeElementsById.set(i, t)
+        }
+        getIframeElementById(t) {
+            var e, r, i;
+            return null !== (e = null !== (r = null == (i = this.attachedIframes.get(t)) ? void 0 : i.element) && void 0 !== r ? r : this.iframeElementsById.get(t)) && void 0 !== e ? e : null
+        }
+        forgetIframeId(t) {
+            this.attachedIframes.delete(t), this.iframeElementsById.delete(t)
+        }
+        disposeLoadListeners(t) {
+            var e = this.loadListenerDisposers.get(t);
+            e && (e.forEach((t => yt(t))), this.loadListenerDisposers.delete(t))
+        }
+        removePageHideListener(t) {
+            var e = this.pageHideHandlers.get(t);
+            e && (e.forEach((t => {
+                gt(t.win, "pagehide", t.handler)
+            })), this.pageHideHandlers.delete(t))
+        }
+        addLoadListener(t) {
+            this.loadListener = t
+        }
+        addPageHideListener(t) {
+            this.pageHideListener = t
+        }
+        removeLoadListener() {
+            this.loadListener = void 0
+        }
+        trackIframeContent(t, e) {
+            var r = this.mirror.getId(t);
+            return this.attachedIframes.set(r, {
+                element: t,
+                content: e
+            }), r
+        }
+        attachIframe(t, e) {
+            var r, i = this.trackIframeContent(t, e);
+            if (t.contentDocument) {
+                var n = this.attachedDocuments.get(t);
+                n || this.attachedDocuments.set(t, n = new Set), n.add(t.contentDocument)
+            }
+            this.mutationCb({
+                adds: [{
+                    parentId: i,
+                    nextId: null,
+                    node: e
+                }],
+                removes: [],
+                texts: [],
+                attributes: [],
+                isAttachIframe: !0
+            });
+            var s = t.contentWindow;
+            if (this.recordCrossOriginIframes && s && !this.nestedIframeListeners.has(s)) {
+                var a = this.handleMessage.bind(this);
+                yt((() => {
+                    s.addEventListener("message", a), this.nestedIframeListeners.set(s, a);
+                    var e = this.attachedWindows.get(t);
+                    e || this.attachedWindows.set(t, e = new Set), e.add(s)
+                }))
+            }
+            yt((() => {
+                var e = t.contentWindow;
+                if (e) {
+                    var r = this.pageHideHandlers.get(t);
+                    if (r)
+                        for (var i of r)
+                            if (i.win === e) return;
+                    var n = () => {
+                        var e;
+                        null == (e = this.pageHideListener) || e.call(this, t), t.contentDocument && this.mirror.removeNodeFromMap(t.contentDocument), t.contentWindow && this.crossOriginIframeMap.delete(t.contentWindow)
+                    };
+                    e.addEventListener("pagehide", n), r || this.pageHideHandlers.set(t, r = new Set), r.add({
+                        win: e,
+                        handler: n
+                    })
+                }
+            })), null == (r = this.loadListener) || r.call(this, t), t.contentDocument && t.contentDocument.adoptedStyleSheets && t.contentDocument.adoptedStyleSheets.length > 0 && this.stylesheetManager.adoptStyleSheets(t.contentDocument.adoptedStyleSheets, this.mirror.getId(t.contentDocument))
+        }
+        handleMessage(t) {
+            var e = t;
+            if ("rrweb" === e.data.type && e.origin === e.data.origin && t.source) {
+                var r = this.crossOriginIframeMap.get(t.source);
+                if (r) {
+                    var i = this.transformCrossOriginEvent(r, e.data.event);
+                    i && this.wrappedEmit(i, e.data.isCheckout)
+                }
+            }
+        }
+        transformCrossOriginEvent(t, e) {
+            var r;
+            switch (e.type) {
+                case o.FullSnapshot:
+                    this.crossOriginIframeMirror.reset(t), this.crossOriginIframeStyleMirror.reset(t), this.replaceIdOnNode(e.data.node, t);
+                    var i = e.data.node.id;
+                    return this.crossOriginIframeRootIdMap.set(t, i), this.patchRootIdOnNode(e.data.node, i), this.trackIframeContent(t, e.data.node), {
+                        timestamp: e.timestamp,
+                        type: o.IncrementalSnapshot,
+                        data: {
+                            source: u.Mutation,
+                            adds: [{
+                                parentId: this.mirror.getId(t),
+                                nextId: null,
+                                node: e.data.node
+                            }],
+                            removes: [],
+                            texts: [],
+                            attributes: [],
+                            isAttachIframe: !0
+                        }
+                    };
+                case o.Meta:
+                case o.Load:
+                case o.DomContentLoaded:
+                    return !1;
+                case o.Plugin:
+                    return e;
+                case o.Custom:
+                    return this.replaceIds(e.data.payload, t, ["id", "parentId", "previousId", "nextId"]), e;
+                case o.IncrementalSnapshot:
+                    switch (e.data.source) {
+                        case u.Mutation:
+                            return e.data.adds.forEach((e => {
+                                this.replaceIds(e, t, ["parentId", "nextId", "previousId"]), this.replaceIdOnNode(e.node, t);
+                                var r = this.crossOriginIframeRootIdMap.get(t);
+                                r && this.patchRootIdOnNode(e.node, r)
+                            })), e.data.removes.forEach((e => {
+                                this.replaceIds(e, t, ["parentId", "id"])
+                            })), e.data.attributes.forEach((e => {
+                                this.replaceIds(e, t, ["id"])
+                            })), e.data.texts.forEach((e => {
+                                this.replaceIds(e, t, ["id"])
+                            })), e;
+                        case u.Drag:
+                        case u.TouchMove:
+                        case u.MouseMove:
+                            return e.data.positions.forEach((e => {
+                                this.replaceIds(e, t, ["id"])
+                            })), e;
+                        case u.ViewportResize:
+                            return !1;
+                        case u.MediaInteraction:
+                        case u.MouseInteraction:
+                        case u.Scroll:
+                        case u.CanvasMutation:
+                        case u.Input:
+                            return this.replaceIds(e.data, t, ["id"]), e;
+                        case u.StyleSheetRule:
+                        case u.StyleDeclaration:
+                            return this.replaceIds(e.data, t, ["id"]), this.replaceStyleIds(e.data, t, ["styleId"]), e;
+                        case u.Font:
+                            return e;
+                        case u.Selection:
+                            return e.data.ranges.forEach((e => {
+                                this.replaceIds(e, t, ["start", "end"])
+                            })), e;
+                        case u.AdoptedStyleSheet:
+                            return this.replaceIds(e.data, t, ["id"]), this.replaceStyleIds(e.data, t, ["styleIds"]), null == (r = e.data.styles) || r.forEach((e => {
+                                this.replaceStyleIds(e, t, ["styleId"])
+                            })), e
+                    }
+            }
+            return !1
+        }
+        replace(t, e, r, i) {
+            for (var n of i)(Array.isArray(e[n]) || "number" == typeof e[n]) && (e[n] = Array.isArray(e[n]) ? t.getIds(r, e[n]) : t.getId(r, e[n]));
+            return e
+        }
+        replaceIds(t, e, r) {
+            return this.replace(this.crossOriginIframeMirror, t, e, r)
+        }
+        replaceStyleIds(t, e, r) {
+            return this.replace(this.crossOriginIframeStyleMirror, t, e, r)
+        }
+        replaceIdOnNode(t, e) {
+            this.replaceIds(t, e, ["id", "rootId"]), "childNodes" in t && t.childNodes.forEach((t => {
+                this.replaceIdOnNode(t, e)
+            }))
+        }
+        patchRootIdOnNode(t, e) {
+            t.type === v.Document || t.rootId || (t.rootId = e), "childNodes" in t && t.childNodes.forEach((t => {
+                this.patchRootIdOnNode(t, e)
+            }))
+        }
+        removeIframeById(t) {
+            var e = this.attachedIframes.get(t),
+                r = (null == e ? void 0 : e.element) || this.iframeElementsById.get(t) || this.mirror.getNode(t);
+            if (this.iframeElementsById.delete(t), r) {
+                var i = r.contentWindow,
+                    n = this.attachedWindows.get(r);
+                n && (n.forEach((t => {
+                    var e = this.nestedIframeListeners.get(t);
+                    e && (gt(t, "message", e), this.nestedIframeListeners.delete(t)), this.crossOriginIframeMap.delete(t)
+                })), this.attachedWindows.delete(r)), i && this.nestedIframeListeners.has(i) && (gt(i, "message", this.nestedIframeListeners.get(i)), this.nestedIframeListeners.delete(i)), i && this.crossOriginIframeMap.delete(i), this.iframes.delete(r), this.disposeLoadListeners(r), this.removePageHideListener(r);
+                var s = this.attachedDocuments.get(r);
+                s && (s.forEach((t => {
+                    yt((() => this.mirror.removeNodeFromMap(t)))
+                })), yt((() => Xt(r, s))), this.attachedDocuments.delete(r))
+            }
+            e && this.attachedIframes.delete(t)
+        }
+        cleanupDetachedIframes() {
+            if (0 !== this.attachedIframes.size) {
+                var t = [];
+                this.attachedIframes.forEach(((e, r) => {
+                    this.mirror.has(r) || t.push(r)
+                })), t.forEach((t => this.removeIframeById(t)))
+            }
+        }
+        reattachIframes() {
+            this.attachedIframes.forEach(((t, e) => {
+                var r = t.content;
+                this.mirror.has(e) ? this.mutationCb({
+                    adds: [{
+                        parentId: e,
+                        nextId: null,
+                        node: r
+                    }],
+                    removes: [],
+                    texts: [],
+                    attributes: [],
+                    isAttachIframe: !0
+                }) : this.attachedIframes.delete(e)
+            }))
+        }
+        destroy() {
+            this.recordCrossOriginIframes && gt(window, "message", this.messageHandler), this.nestedIframeListeners.forEach(((t, e) => {
+                gt(e, "message", t)
+            })), this.nestedIframeListeners.clear();
+            var t = new Set;
+            this.iframeElementsById.forEach((e => t.add(e))), this.attachedIframes.forEach((e => t.add(e.element))), t.forEach((t => {
+                this.disposeLoadListeners(t), this.removePageHideListener(t)
+            })), this.crossOriginIframeMirror.reset(), this.crossOriginIframeStyleMirror.reset(), this.attachedIframes.clear(), this.crossOriginIframeMap = new WeakMap, this.iframes = new WeakMap, this.crossOriginIframeRootIdMap = new WeakMap, this.loadListenerDisposers = new WeakMap, this.pageHideHandlers = new WeakMap, this.attachedDocuments = new WeakMap, this.attachedWindows = new WeakMap, this.iframeElementsById = new Map
+        }
+    }
+    class le {
+        constructor(t) {
+            a(this, "shadowDoms", new WeakSet), a(this, "mutationCb"), a(this, "scrollCb"), a(this, "bypassOptions"), a(this, "mirror"), a(this, "restoreHandlers", []), this.mutationCb = t.mutationCb, this.scrollCb = t.scrollCb, this.bypassOptions = t.bypassOptions, this.mirror = t.mirror, this.init()
+        }
+        init() {
+            this.reset(), this.patchAttachShadow(Element, document)
+        }
+        addShadowRoot(t, e) {
+            var i, n;
+            if (x(t) && !this.shadowDoms.has(t)) {
+                this.shadowDoms.add(t);
+                var s = null !== (i = null == (n = M.host(t)) ? void 0 : n.ownerDocument) && void 0 !== i ? i : e,
+                    a = Qt(r({}, this.bypassOptions, {
+                        doc: s,
+                        mutationCb: this.mutationCb,
+                        mirror: this.mirror,
+                        shadowDomManager: this
+                    }), t),
+                    o = a.observer,
+                    u = a.buffer;
+                this.restoreHandlers.push({
+                    doc: s,
+                    handler() {
+                        o.disconnect(), u.destroy(), u.releaseCanvasManager();
+                        var t = Zt.indexOf(u); - 1 !== t && Zt.splice(t, 1)
+                    }
+                }), this.restoreHandlers.push({
+                    doc: s,
+                    handler: Kt(r({}, this.bypassOptions, {
+                        scrollCb: this.scrollCb,
+                        doc: t,
+                        mirror: this.mirror
+                    }))
+                }), setTimeout((() => {
+                    t.adoptedStyleSheets && t.adoptedStyleSheets.length > 0 && this.bypassOptions.stylesheetManager.adoptStyleSheets(t.adoptedStyleSheets, this.mirror.getId(M.host(t))), this.restoreHandlers.push({
+                        doc: s,
+                        handler: ie({
+                            mirror: this.mirror,
+                            stylesheetManager: this.bypassOptions.stylesheetManager
+                        }, t)
+                    })
+                }), 0)
+            }
+        }
+        observeAttachShadow(t) {
+            t.contentWindow && t.contentDocument && this.patchAttachShadow(t.contentWindow.Element, t.contentDocument)
+        }
+        patchAttachShadow(t, e) {
+            var r = this;
+            this.restoreHandlers.push({
+                doc: e,
+                handler: I(t.prototype, "attachShadow", (function(t) {
+                    return function(i) {
+                        var n = t.call(this, i),
+                            s = M.shadowRoot(this);
+                        return s && Pt(this) && r.addShadowRoot(s, e), n
+                    }
+                }))
+            })
+        }
+        reset() {
+            this.restoreHandlers.forEach((t => {
+                var e = t.handler;
+                try {
+                    e()
+                } catch (t) {}
+            })), this.restoreHandlers = [], this.shadowDoms = new WeakSet
+        }
+        resetForDoc(t) {
+            var e = [];
+            for (var r of this.restoreHandlers)
+                if (r.doc === t) try {
+                    r.handler()
+                } catch (t) {} else e.push(r);
+            this.restoreHandlers = e
+        }
+    }
+    var he = "skip-frame";
+
+    function de(t) {
+        if ("object" != typeof t || null === t) return !1;
+        var e = t.y,
+            r = t.width,
+            i = t.height;
+        return Number.isFinite(t.x) && Number.isFinite(e) && Number.isFinite(r) && Number.isFinite(i) && r >= 0 && i >= 0
+    }
+    for (var ce = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/", ve = "undefined" == typeof Uint8Array ? [] : new Uint8Array(256), fe = 0; 64 > fe; fe++) ve[ce.charCodeAt(fe)] = fe;
+    var pe = new Map,
+        me = (t, e, r) => {
+            if (t && (we(t, e) || "object" == typeof t)) {
+                var i = function(t, e) {
+                        var r = pe.get(t);
+                        return r || pe.set(t, r = new Map), r.has(e) || r.set(e, []), r.get(e)
+                    }(r, t.constructor.name),
+                    n = i.indexOf(t);
+                return -1 === n && (n = i.length, i.push(t)), n
+            }
+        };
+
+    function ge(t, e, r, i) {
+        if (t instanceof Array) return t.map((t => ge(t, e, r, i)));
+        if (null === t) return t;
+        if (t instanceof Float32Array || t instanceof Float64Array || t instanceof Int32Array || t instanceof Uint32Array || t instanceof Uint8Array || t instanceof Uint16Array || t instanceof Int16Array || t instanceof Int8Array || t instanceof Uint8ClampedArray) return {
+            rr_type: t.constructor.name,
+            args: [Object.values(t)]
+        };
+        if (t instanceof ArrayBuffer) {
+            var n = t.constructor.name,
+                s = function(t) {
+                    var e, r = new Uint8Array(t),
+                        i = r.length,
+                        n = "";
+                    for (e = 0; i > e; e += 3) n += ce[r[e] >> 2], n += ce[(3 & r[e]) << 4 | r[e + 1] >> 4], n += ce[(15 & r[e + 1]) << 2 | r[e + 2] >> 6], n += ce[63 & r[e + 2]];
+                    return i % 3 == 2 ? n = n.substring(0, n.length - 1) + "=" : i % 3 == 1 && (n = n.substring(0, n.length - 2) + "=="), n
+                }(t);
+            return {
+                rr_type: n,
+                base64: s
+            }
+        }
+        return t instanceof DataView ? {
+            rr_type: t.constructor.name,
+            args: [ge(t.buffer, e, r, i), t.byteOffset, t.byteLength]
+        } : t instanceof HTMLImageElement ? {
+            rr_type: t.constructor.name,
+            src: t.src
+        } : t instanceof HTMLCanvasElement ? {
+            rr_type: "HTMLImageElement",
+            src: t.toDataURL(i.type, i.quality)
+        } : t instanceof ImageData ? {
+            rr_type: t.constructor.name,
+            args: [ge(t.data, e, r, i), t.width, t.height]
+        } : we(t, e) || "object" == typeof t ? {
+            rr_type: t.constructor.name,
+            index: me(t, e, r)
+        } : t
+    }
+    var ye = (t, e, r, i) => t.map((t => ge(t, e, r, i))),
+        we = (t, e) => {
+            var r = ["WebGLActiveInfo", "WebGLBuffer", "WebGLFramebuffer", "WebGLProgram", "WebGLRenderbuffer", "WebGLShader", "WebGLShaderPrecisionFormat", "WebGLTexture", "WebGLUniformLocation", "WebGLVertexArrayObject", "WebGLVertexArrayObjectOES"].filter((t => "function" == typeof e[t]));
+            return Boolean(r.find((r => t instanceof e[r])))
+        },
+        be = ["webgl", "webgl2"];
+
+    function ke(t) {
+        return "nodeType" in t
+    }
+
+    function _e(t, e, i, n) {
+        var s = [];
+        try {
+            if (n) {
+                var a = function(t, e, i) {
+                    var n = t.GPUCanvasContext;
+                    if ((null == n ? void 0 : n.prototype) && "function" == typeof n.prototype.configure) return I(n.prototype, "configure", (function(n) {
+                        return function(s) {
+                            var a = function(t) {
+                                var e = t.canvas;
+                                return e && "object" == typeof e ? e : null
+                            }(this);
+                            if (!a || ke(a) && xt(a, e, i, !0)) return n.call(this, s);
+                            ke(a) && !("__context" in a) && (a.__context = "webgpu");
+                            var o = function(t) {
+                                var e = t.GPUTextureUsage;
+                                return e ? e.COPY_SRC | e.RENDER_ATTACHMENT : null
+                            }(t);
+                            return n.call(this, null !== o && s ? r({}, s, {
+                                usage: "number" == typeof s.usage ? s.usage | o : o
+                            }) : s)
+                        }
+                    }))
+                }(t, e, i);
+                a && s.push(a)
+            }
+            var o = I(t.HTMLCanvasElement.prototype, "getContext", (function(t) {
+                return function(r) {
+                    for (var s = function(t) {
+                            return "experimental-webgl" === t ? "webgl" : t
+                        }(r), a = arguments.length, o = new Array(a > 1 ? a - 1 : 0), u = 1; a > u; u++) o[u - 1] = arguments[u];
+                    if (!xt(this, e, i, !0) && ("__context" in this || (this.__context = s), n && be.includes(s)))
+                        if (o[0] && "object" == typeof o[0]) {
+                            var l = o[0];
+                            l.preserveDrawingBuffer || (l.preserveDrawingBuffer = !0)
+                        } else o.splice(0, 1, {
+                            preserveDrawingBuffer: !0
+                        });
+                    return t.apply(this, [r, ...o])
+                }
+            }));
+            s.push(o)
+        } catch (t) {
+            console.error("failed to patch HTMLCanvasElement.prototype.getContext")
+        }
+        return () => {
+            s.forEach((t => t()))
+        }
+    }
+
+    function Se(t, e, r, i, n, s, a) {
+        var o = [],
+            u = Object.getOwnPropertyNames(t),
+            l = function(u) {
+                if (["isContextLost", "canvas", "drawingBufferWidth", "drawingBufferHeight"].includes(u)) return 0;
+                try {
+                    if ("function" != typeof t[u]) return 0;
+                    var l = I(t, u, (function(t) {
+                        return function() {
+                            for (var o = arguments.length, l = new Array(o), h = 0; o > h; h++) l[h] = arguments[h];
+                            var d = t.apply(this, l);
+                            if (me(d, s, this), "tagName" in this.canvas && !xt(this.canvas, i, n, !0)) {
+                                var c = ye(l, s, this, a);
+                                r(this.canvas, {
+                                    type: e,
+                                    property: u,
+                                    args: c
+                                })
+                            }
+                            return d
+                        }
+                    }));
+                    o.push(l)
+                } catch (i) {
+                    var h = _t(t, u, {
+                        set(t) {
+                            r(this.canvas, {
+                                type: e,
+                                property: u,
+                                args: [t],
+                                setter: !0
+                            })
+                        }
+                    });
+                    o.push(h)
+                }
+            };
+        for (var h of u) l(h);
+        return o
+    }
+    var Ie, Me, Ce, Re = '(function() {\n  "use strict";\n  var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";\n  var lookup = typeof Uint8Array === "undefined" ? [] : new Uint8Array(256);\n  for (var i = 0; i < chars.length; i++) {\n    lookup[chars.charCodeAt(i)] = i;\n  }\n  var encode = function(arraybuffer) {\n    var bytes = new Uint8Array(arraybuffer), i2, len = bytes.length, base64 = "";\n    for (i2 = 0; i2 < len; i2 += 3) {\n      base64 += chars[bytes[i2] >> 2];\n      base64 += chars[(bytes[i2] & 3) << 4 | bytes[i2 + 1] >> 4];\n      base64 += chars[(bytes[i2 + 1] & 15) << 2 | bytes[i2 + 2] >> 6];\n      base64 += chars[bytes[i2 + 2] & 63];\n    }\n    if (len % 3 === 2) {\n      base64 = base64.substring(0, base64.length - 1) + "=";\n    } else if (len % 3 === 1) {\n      base64 = base64.substring(0, base64.length - 2) + "==";\n    }\n    return base64;\n  };\n  const lastFingerprintMap = /* @__PURE__ */ new Map();\n  const transparentFingerprintMap = /* @__PURE__ */ new Map();\n  const lastSentAtMap = /* @__PURE__ */ new Map();\n  const PROVIDER_KEYFRAME_INTERVAL_MS = 3e4;\n  function hashPixels(data) {\n    const view = new Uint32Array(\n      data.buffer,\n      data.byteOffset,\n      data.byteLength >>> 2\n    );\n    let primaryHash = 2166136261;\n    let secondaryHash = 2654435769;\n    for (let i2 = 0; i2 < view.length; i2++) {\n      primaryHash ^= view[i2];\n      primaryHash = Math.imul(primaryHash, 16777619);\n      secondaryHash ^= view[i2];\n      secondaryHash = Math.imul(secondaryHash, 2246822507);\n    }\n    return `${(primaryHash >>> 0).toString(16)}:${(secondaryHash >>> 0).toString(16)}`;\n  }\n  function frameFingerprint(width, height, data) {\n    return `${width}x${height}:${hashPixels(data)}`;\n  }\n  function transparentFingerprint(width, height) {\n    const pixelCount = width * height;\n    let hash = transparentFingerprintMap.get(pixelCount);\n    if (hash === void 0) {\n      hash = hashPixels(new Uint8ClampedArray(pixelCount * 4));\n      transparentFingerprintMap.set(pixelCount, hash);\n    }\n    return `${width}x${height}:${hash}`;\n  }\n  const worker = self;\n  let reusableCanvas = null;\n  let reusableCtx = null;\n  worker.onmessage = async function(e) {\n    if ("resetFrameDedup" in e.data) {\n      lastFingerprintMap.clear();\n      return;\n    }\n    if ("OffscreenCanvas" in globalThis) {\n      const {\n        id,\n        bitmap,\n        width,\n        height,\n        displayWidth,\n        displayHeight,\n        dataURLOptions,\n        maskRegions\n      } = e.data;\n      try {\n        if (!reusableCanvas || reusableCanvas.width !== width || reusableCanvas.height !== height) {\n          reusableCanvas = new OffscreenCanvas(width, height);\n          reusableCtx = reusableCanvas.getContext("2d", {\n            willReadFrequently: true\n          });\n        }\n        const ctx = reusableCtx;\n        ctx.clearRect(0, 0, width, height);\n        ctx.drawImage(bitmap, 0, 0);\n        bitmap.close();\n        if (maskRegions) {\n          ctx.fillStyle = "black";\n          for (const region of maskRegions) {\n            ctx.fillRect(region.x, region.y, region.width, region.height);\n          }\n        }\n        const fingerprint = frameFingerprint(\n          width,\n          height,\n          ctx.getImageData(0, 0, width, height).data\n        );\n        const lastFingerprint = lastFingerprintMap.get(id) ?? transparentFingerprint(width, height);\n        if (fingerprint === lastFingerprint) {\n          const lastSentAt = lastSentAtMap.get(id);\n          const keyframeDue = maskRegions !== void 0 && lastSentAt !== void 0 && Date.now() - lastSentAt >= PROVIDER_KEYFRAME_INTERVAL_MS;\n          if (!keyframeDue) {\n            return worker.postMessage({ id });\n          }\n        }\n        const blob = await reusableCanvas.convertToBlob(dataURLOptions);\n        const arrayBuffer = await blob.arrayBuffer();\n        worker.postMessage({\n          id,\n          type: blob.type,\n          base64: encode(arrayBuffer),\n          // cpu intensive\n          displayWidth,\n          displayHeight\n        });\n        lastFingerprintMap.set(id, fingerprint);\n        lastSentAtMap.set(id, Date.now());\n      } catch {\n        worker.postMessage({ id });\n      }\n    } else {\n      e.data.bitmap.close();\n      return worker.postMessage({ id: e.data.id });\n    }\n  };\n})();\n//# sourceMappingURL=image-bitmap-data-url-worker-BoT8x0Ow.js.map\n',
+        xe = "undefined" != typeof self && self.Blob && new Blob([Re], {
+            type: "text/javascript;charset=utf-8"
+        });
+
+    function Te(t) {
+        var e;
+        try {
+            if (!(e = xe && (self.URL || self.webkitURL).createObjectURL(xe))) throw "";
+            var r = new Worker(e, {
+                name: null == t ? void 0 : t.name
+            });
+            return r.addEventListener("error", (() => {
+                (self.URL || self.webkitURL).revokeObjectURL(e)
+            })), r
+        } catch (e) {
+            return new Worker("data:text/javascript;charset=utf-8," + encodeURIComponent(Re), {
+                name: null == t ? void 0 : t.name
+            })
+        } finally {
+            e && (self.URL || self.webkitURL).revokeObjectURL(e)
+        }
+    }
+    class Ae {
+        constructor(t) {
+            a(this, "pendingCanvasMutations", new Map), a(this, "rafStamps", {
+                latestId: 0,
+                invokeId: null
+            }), a(this, "mirror"), a(this, "mutationCb"), a(this, "resetObservers"), a(this, "frozen", !1), a(this, "locked", !1), a(this, "rafIdTimestamp", null), a(this, "rafIdFlush", null), a(this, "refCount", 0), a(this, "torndown", !1), a(this, "resetFrameDedup", null), a(this, "processMutation", ((t, e) => {
+                !(this.rafStamps.invokeId && this.rafStamps.latestId !== this.rafStamps.invokeId) && this.rafStamps.invokeId || (this.rafStamps.invokeId = this.rafStamps.latestId), this.pendingCanvasMutations.has(t) || this.pendingCanvasMutations.set(t, []), this.pendingCanvasMutations.get(t).push(e)
+            }));
+            var e = t.sampling,
+                r = void 0 === e ? "all" : e,
+                i = t.win,
+                n = t.blockClass,
+                s = t.blockSelector,
+                o = t.recordCanvas,
+                u = t.dataURLOptions,
+                l = t.resolutionScale,
+                h = t.canvasMasking;
+            this.mutationCb = t.mutationCb, this.mirror = t.mirror, o && "all" === r && this.initCanvasMutationObserver(i, n, s, u), o && "number" == typeof r && this.initCanvasFPSObserver(r, i, n, s, {
+                dataURLOptions: u,
+                resolutionScale: l,
+                canvasMasking: h
+            })
+        }
+        onFullSnapshot() {
+            var t;
+            null == (t = this.resetFrameDedup) || t.call(this)
+        }
+        acquire() {
+            this.refCount += 1
+        }
+        reset() {
+            this.refCount > 0 && (this.refCount -= 1), this.refCount > 0 || this.teardown()
+        }
+        teardown() {
+            this.torndown || (this.torndown = !0, this.pendingCanvasMutations.clear(), this.resetObservers && this.resetObservers(), null !== this.rafIdTimestamp && (cancelAnimationFrame(this.rafIdTimestamp), this.rafIdTimestamp = null), null !== this.rafIdFlush && (cancelAnimationFrame(this.rafIdFlush), this.rafIdFlush = null))
+        }
+        freeze() {
+            this.frozen = !0
+        }
+        unfreeze() {
+            this.frozen = !1
+        }
+        lock() {
+            this.locked = !0
+        }
+        unlock() {
+            this.locked = !1
+        }
+        initCanvasFPSObserver(t, r, i, n, s) {
+            var a = this;
+            if ("OffscreenCanvas" in r) {
+                var o, u = "number" == typeof s.resolutionScale && Number.isFinite(s.resolutionScale) ? Math.min(1, Math.max(.1, s.resolutionScale)) : 1,
+                    l = _e(r, i, n, !0),
+                    h = new Map;
+                try {
+                    o = new Te
+                } catch (t) {
+                    return
+                }
+                var c = !1;
+                o.onerror = () => {
+                    var t;
+                    c = !0, cancelAnimationFrame(v), null == (t = o.terminate) || t.call(o), this.resetFrameDedup = null
+                }, this.resetFrameDedup = () => {
+                    o.postMessage({
+                        resetFrameDedup: !0
+                    })
+                }, o.onmessage = t => {
+                    var e = t.data.id;
+                    if (h.set(e, !1), "base64" in t.data) {
+                        var r = t.data,
+                            i = r.displayWidth,
+                            n = r.displayHeight;
+                        this.mutationCb({
+                            id: e,
+                            type: d["2D"],
+                            commands: [{
+                                property: "clearRect",
+                                args: [0, 0, i, n]
+                            }, {
+                                property: "drawImage",
+                                args: [{
+                                    rr_type: "ImageBitmap",
+                                    args: [{
+                                        rr_type: "Blob",
+                                        data: [{
+                                            rr_type: "ArrayBuffer",
+                                            base64: r.base64
+                                        }],
+                                        type: r.type
+                                    }]
+                                }, 0, 0, i, n]
+                            }],
+                            displayWidth: i,
+                            displayHeight: n
+                        })
+                    }
+                };
+                var v, f = 1e3 / t,
+                    p = 0,
+                    m = t => {
+                        var l, d;
+                        c || (p && f > t - p || (p = t, (l = [], d = t => {
+                            try {
+                                t.querySelectorAll("canvas").forEach((t => {
+                                    xt(t, i, n, !0) || l.push(t)
+                                })), t.querySelectorAll("*").forEach((t => {
+                                    t.shadowRoot && d(t.shadowRoot)
+                                }))
+                            } catch (t) {}
+                        }, d(r.document), l).forEach(function() {
+                            var t = e((function*(t) {
+                                var e, r, i = a.mirror.getId(t);
+                                if (!h.get(i) && 0 !== t.width && 0 !== t.height) {
+                                    h.set(i, !0);
+                                    try {
+                                        if (["webgl", "webgl2"].includes(t.__context)) {
+                                            var n = t.getContext(t.__context);
+                                            if (null == (e = null == n ? void 0 : n.isContextLost) ? void 0 : e.call(n)) return void h.set(i, !1);
+                                            !1 === (null == (r = null == n ? void 0 : n.getContextAttributes()) ? void 0 : r.preserveDrawingBuffer) && n.clear(n.COLOR_BUFFER_BIT)
+                                        }
+                                        var l = t.clientWidth || t.width,
+                                            d = t.clientHeight || t.height,
+                                            c = Math.max(1, Math.round(l * u)),
+                                            v = Math.max(1, Math.round(d * u)),
+                                            f = function(t, e, r, i, n, s) {
+                                                if (t && "function" == typeof t.regionsFn) {
+                                                    var a;
+                                                    try {
+                                                        a = t.regionsFn(e)
+                                                    } catch (t) {
+                                                        return he
+                                                    }
+                                                    if (void 0 !== a) {
+                                                        if (!Array.isArray(a) || !a.every(de)) return he;
+                                                        var o = r / n,
+                                                            u = i / s;
+                                                        return a.filter((t => t.width > 0 && t.height > 0)).map((t => {
+                                                            var e = Math.floor(t.x * o),
+                                                                r = Math.floor(t.y * u);
+                                                            return {
+                                                                x: e,
+                                                                y: r,
+                                                                width: Math.ceil((t.x + t.width) * o) - e,
+                                                                height: Math.ceil((t.y + t.height) * u) - r
+                                                            }
+                                                        }))
+                                                    }
+                                                }
+                                            }(s.canvasMasking, t, c, v, l, d);
+                                        if (f === he) return void h.set(i, !1);
+                                        var p = yield createImageBitmap(t, 1 > u ? {
+                                            resizeWidth: c,
+                                            resizeHeight: v,
+                                            resizeQuality: "medium"
+                                        } : {
+                                            resizeWidth: c,
+                                            resizeHeight: v
+                                        });
+                                        o.postMessage({
+                                            id: i,
+                                            bitmap: p,
+                                            width: c,
+                                            height: v,
+                                            displayWidth: l,
+                                            displayHeight: d,
+                                            dataURLOptions: s.dataURLOptions,
+                                            maskRegions: f
+                                        }, [p])
+                                    } catch (t) {
+                                        h.set(i, !1)
+                                    }
+                                }
+                            }));
+                            return function(e) {
+                                return t.apply(this, arguments)
+                            }
+                        }())), v = requestAnimationFrame(m))
+                    };
+                v = requestAnimationFrame(m), this.resetObservers = () => {
+                    var t;
+                    l(), cancelAnimationFrame(v), null == (t = o.terminate) || t.call(o), this.resetFrameDedup = null
+                }
+            }
+        }
+        initCanvasMutationObserver(t, e, r, i) {
+            this.startRAFTimestamping(), this.startPendingCanvasMutationFlusher();
+            var n = _e(t, e, r, !1),
+                s = function(t, e, r, i, n) {
+                    var s = [],
+                        a = Object.getOwnPropertyNames(e.CanvasRenderingContext2D.prototype),
+                        o = function(a) {
+                            try {
+                                if ("function" != typeof e.CanvasRenderingContext2D.prototype[a]) return 1;
+                                var o = I(e.CanvasRenderingContext2D.prototype, a, (function(s) {
+                                    return function() {
+                                        for (var o = arguments.length, u = new Array(o), l = 0; o > l; l++) u[l] = arguments[l];
+                                        return xt(this.canvas, r, i, !0) || setTimeout((() => {
+                                            var r = ye(u, e, this, n);
+                                            t(this.canvas, {
+                                                type: d["2D"],
+                                                property: a,
+                                                args: r
+                                            })
+                                        }), 0), s.apply(this, u)
+                                    }
+                                }));
+                                s.push(o)
+                            } catch (r) {
+                                var u = _t(e.CanvasRenderingContext2D.prototype, a, {
+                                    set(e) {
+                                        t(this.canvas, {
+                                            type: d["2D"],
+                                            property: a,
+                                            args: [e],
+                                            setter: !0
+                                        })
+                                    }
+                                });
+                                s.push(u)
+                            }
+                        };
+                    for (var u of a) o(u);
+                    return () => {
+                        s.forEach((t => t()))
+                    }
+                }(this.processMutation.bind(this), t, e, r, i),
+                a = function(t, e, r, i, n) {
+                    var s = [];
+                    return void 0 !== e.WebGLRenderingContext && s.push(...Se(e.WebGLRenderingContext.prototype, d.WebGL, t, r, i, e, n)), void 0 !== e.WebGL2RenderingContext && s.push(...Se(e.WebGL2RenderingContext.prototype, d.WebGL2, t, r, i, e, n)), () => {
+                        s.forEach((t => t()))
+                    }
+                }(this.processMutation.bind(this), t, e, r, i);
+            this.resetObservers = () => {
+                n(), s(), a()
+            }
+        }
+        startPendingCanvasMutationFlusher() {
+            this.rafIdFlush = requestAnimationFrame((() => this.flushPendingCanvasMutations()))
+        }
+        startRAFTimestamping() {
+            var t = e => {
+                this.rafStamps.latestId = e, this.rafIdTimestamp = requestAnimationFrame(t)
+            };
+            this.rafIdTimestamp = requestAnimationFrame(t)
+        }
+        flushPendingCanvasMutations() {
+            this.pendingCanvasMutations.forEach(((t, e) => {
+                var r = this.mirror.getId(e);
+                this.flushPendingCanvasMutationFor(e, r)
+            })), this.rafIdFlush = requestAnimationFrame((() => this.flushPendingCanvasMutations()))
+        }
+        flushPendingCanvasMutationFor(t, e) {
+            if (!this.frozen && !this.locked) {
+                var r = this.pendingCanvasMutations.get(t);
+                if (r && -1 !== e) {
+                    var i = r.map((t => function(t, e) {
+                        if (null == t) return {};
+                        var r = {};
+                        for (var i in t)
+                            if ({}.hasOwnProperty.call(t, i)) {
+                                if (-1 !== e.indexOf(i)) continue;
+                                r[i] = t[i]
+                            } return r
+                    }(t, n)));
+                    this.mutationCb({
+                        id: e,
+                        type: r[0].type,
+                        commands: i
+                    }), this.pendingCanvasMutations.delete(t)
+                }
+            }
+        }
+    }
+    class Oe {
+        constructor(t) {
+            a(this, "trackedLinkElements", new WeakSet), a(this, "mutationCb"), a(this, "adoptedStyleSheetCb"), a(this, "styleMirror", new Lt), this.mutationCb = t.mutationCb, this.adoptedStyleSheetCb = t.adoptedStyleSheetCb
+        }
+        attachLinkElement(t, e) {
+            "_cssText" in e.attributes && this.mutationCb({
+                adds: [],
+                removes: [],
+                texts: [],
+                attributes: [{
+                    id: e.id,
+                    attributes: e.attributes
+                }]
+            }), this.trackLinkElement(t)
+        }
+        trackLinkElement(t) {
+            this.trackedLinkElements.has(t) || (this.trackedLinkElements.add(t), this.trackStylesheetInLinkElement(t))
+        }
+        adoptStyleSheets(t, e) {
+            var r = this;
+            if (0 !== t.length) {
+                var i = {
+                        id: e,
+                        styleIds: []
+                    },
+                    n = [],
+                    s = function(t) {
+                        var e;
+                        r.styleMirror.has(t) ? e = r.styleMirror.getId(t) : (e = r.styleMirror.add(t), n.push({
+                            styleId: e,
+                            rules: Array.from(t.rules || CSSRule, ((e, r) => ({
+                                rule: A(e, t.href),
+                                index: r
+                            })))
+                        })), i.styleIds.push(e)
+                    };
+                for (var a of t) s(a);
+                n.length > 0 && (i.styles = n), this.adoptedStyleSheetCb(i)
+            }
+        }
+        reset() {
+            this.styleMirror.reset(), this.trackedLinkElements = new WeakSet, ot.forEach((t => t.abort())), ot.clear()
+        }
+        trackStylesheetInLinkElement(t) {}
+    }
+    class Ee {
+        constructor() {
+            a(this, "nodeMap", new WeakMap), a(this, "active", !1)
+        }
+        inOtherBuffer(t, e) {
+            var r = this.nodeMap.get(t);
+            return r && Array.from(r).some((t => t !== e))
+        }
+        add(t, e) {
+            this.active || (this.active = !0, requestAnimationFrame((() => {
+                this.nodeMap = new WeakMap, this.active = !1
+            }))), this.nodeMap.set(t, (this.nodeMap.get(t) || new Set).add(e))
+        }
+        destroy() {}
+    }
+    var Ne = !1;
+    try {
+        if (2 !== Array.from([1], (t => 2 * t))[0]) {
+            var Fe = document.createElement("iframe");
+            document.body.appendChild(Fe), Array.from = (null == (i = Fe.contentWindow) ? void 0 : i.Array.from) || Array.from, document.body.removeChild(Fe)
+        }
+    } catch (t) {
+        console.debug("Unable to override Array.from", t)
+    }
+    var Le = new O,
+        De = new Set([u.Mutation, u.MediaInteraction, u.StyleSheetRule, u.CanvasMutation, u.Font, u.Log, u.StyleDeclaration, u.AdoptedStyleSheet]);
+
+    function Pe(t) {
+        void 0 === t && (t = {});
+        var e = t,
+            i = e.emit,
+            n = e.checkoutEveryNms,
+            s = e.checkoutEveryNth,
+            a = e.blockClass,
+            l = void 0 === a ? "rr-block" : a,
+            h = e.blockSelector,
+            d = void 0 === h ? null : h,
+            c = e.ignoreClass,
+            v = void 0 === c ? "rr-ignore" : c,
+            f = e.ignoreSelector,
+            p = void 0 === f ? null : f,
+            m = e.maskTextClass,
+            g = void 0 === m ? "rr-mask" : m,
+            y = e.maskTextSelector,
+            w = void 0 === y ? null : y,
+            b = e.inlineStylesheet,
+            k = void 0 === b || b,
+            _ = e.maskAllInputs,
+            S = e.maskInputOptions,
+            I = e.slimDOMOptions,
+            C = e.maskInputFn,
+            R = e.maskTextFn,
+            x = e.hooks,
+            T = e.packFn,
+            A = e.sampling,
+            E = void 0 === A ? {} : A,
+            N = e.dataURLOptions,
+            F = void 0 === N ? {} : N,
+            L = e.canvasResolutionScale,
+            D = e.canvasMasking,
+            P = e.mousemoveWait,
+            W = e.recordDOM,
+            B = void 0 === W || W,
+            z = e.recordCanvas,
+            U = void 0 !== z && z,
+            j = e.recordCrossOriginIframes,
+            q = void 0 !== j && j,
+            H = e.recordAfter,
+            G = void 0 === H ? "DOMContentLoaded" === t.recordAfter ? t.recordAfter : "load" : H,
+            V = e.userTriggeredOnInput,
+            Z = void 0 !== V && V,
+            J = e.collectFonts,
+            Q = void 0 !== J && J,
+            K = e.inlineImages,
+            X = void 0 !== K && K,
+            Y = e.plugins,
+            tt = e.keepIframeSrcFn,
+            et = void 0 === tt ? () => !1 : tt,
+            rt = e.ignoreCSSAttributes,
+            it = void 0 === rt ? new Set([]) : rt,
+            nt = e.attributeFilter;
+        Bt = e.errorHandler;
+        var st = r({
+                type: "image/webp",
+                quality: .4,
+                maxBase64ImageLength: 1048576
+            }, F),
+            at = !q || window.parent === window,
+            ot = !1;
+        if (!at) try {
+            window.parent.document && (ot = !1)
+        } catch (t) {
+            ot = !0
+        }
+        if (at && !i) throw new Error("emit function is required");
+        if (!at && !ot) return () => {};
+        void 0 !== P && void 0 === E.mousemove && (E.mousemove = P), Le.reset();
+        var ut, lt = !0 === _ ? {
+                color: !0,
+                date: !0,
+                "datetime-local": !0,
+                email: !0,
+                month: !0,
+                number: !0,
+                range: !0,
+                search: !0,
+                tel: !0,
+                text: !0,
+                time: !0,
+                url: !0,
+                week: !0,
+                textarea: !0,
+                select: !0,
+                password: !0
+            } : void 0 !== S ? S : {
+                password: !0
+            },
+            ht = ft(void 0 !== I && I);
+        ! function(t) {
+            void 0 === t && (t = window), "NodeList" in t && !t.NodeList.prototype.forEach && (t.NodeList.prototype.forEach = [].forEach), "DOMTokenList" in t && !t.DOMTokenList.prototype.forEach && (t.DOMTokenList.prototype.forEach = [].forEach)
+        }();
+        var dt, ct, pt = 0,
+            gt = new Map,
+            wt = t => {
+                for (var e of Y || []) e.eventProcessor && (t = e.eventProcessor(t));
+                return T && !ot && (t = T(t)), t
+            };
+        Ie = (t, e) => {
+            var r, a = t;
+            if (a.timestamp = St(), !(null == (r = Zt[0]) ? void 0 : r.isFrozen()) || a.type === o.FullSnapshot || a.type === o.IncrementalSnapshot && De.has(a.data.source) || Zt.forEach((t => t.unfreeze())), at) null == i || i(wt(a), e);
+            else if (ot) {
+                var l = {
+                    type: "rrweb",
+                    event: wt(a),
+                    origin: window.location.origin,
+                    isCheckout: e
+                };
+                window.parent.postMessage(l, "*")
+            }
+            if (a.type === o.FullSnapshot) ut = a, pt = 0;
+            else if (a.type === o.IncrementalSnapshot) {
+                if (a.data.source === u.Mutation && a.data.isAttachIframe) return;
+                pt++, (s && pt >= s || n && a.timestamp - ut.timestamp > n) && Me(!0)
+            }
+        };
+        var bt = t => {
+                if (t.removes && t.removes.length > 0) {
+                    var e = t.adds.length > 0 ? new Set(t.adds.map((t => t.node.id))) : null,
+                        i = new Set;
+                    if (t.adds.length > 0)
+                        for (var n of t.adds) {
+                            var s = Le.getNode(n.node.id);
+                            s && "IFRAME" === s.nodeName && i.add(s)
+                        }
+                    t.removes.forEach((t => {
+                        var r = t.id;
+                        if (!e || !e.has(r)) {
+                            var n = xt.getIframeElementById(r);
+                            n && i.has(n) ? xt.forgetIframeId(r) : (null == dt || dt(r), xt.removeIframeById(r))
+                        }
+                    })), null == ct || ct(), xt.cleanupDetachedIframes()
+                }
+                Ie({
+                    type: o.IncrementalSnapshot,
+                    data: r({
+                        source: u.Mutation
+                    }, t)
+                })
+            },
+            kt = t => Ie({
+                type: o.IncrementalSnapshot,
+                data: r({
+                    source: u.Scroll
+                }, t)
+            }),
+            _t = t => Ie({
+                type: o.IncrementalSnapshot,
+                data: r({
+                    source: u.CanvasMutation
+                }, t)
+            }),
+            Rt = new Oe({
+                mutationCb: bt,
+                adoptedStyleSheetCb: t => Ie({
+                    type: o.IncrementalSnapshot,
+                    data: r({
+                        source: u.AdoptedStyleSheet
+                    }, t)
+                })
+            }),
+            xt = new ue({
+                mirror: Le,
+                mutationCb: bt,
+                stylesheetManager: Rt,
+                recordCrossOriginIframes: q,
+                wrappedEmit: Ie
+            });
+        for (var Tt of Y || []) Tt.getMirror && Tt.getMirror({
+            nodeMirror: Le,
+            crossOriginIframeMirror: xt.crossOriginIframeMirror,
+            crossOriginIframeStyleMirror: xt.crossOriginIframeStyleMirror
+        });
+        var At = new Ee,
+            Ot = null == D ? void 0 : D.configured;
+        Ce = new Ae({
+            recordCanvas: U,
+            mutationCb: _t,
+            win: window,
+            blockClass: l,
+            blockSelector: d,
+            mirror: Le,
+            sampling: E.canvas,
+            dataURLOptions: st,
+            resolutionScale: L,
+            canvasMasking: D
+        });
+        var Lt = new le({
+            mutationCb: bt,
+            scrollCb: kt,
+            bypassOptions: {
+                blockClass: l,
+                blockSelector: d,
+                maskTextClass: g,
+                maskTextSelector: w,
+                inlineStylesheet: k,
+                maskInputOptions: lt,
+                dataURLOptions: st,
+                maskTextFn: R,
+                maskInputFn: C,
+                recordCanvas: U,
+                canvasMaskingConfigured: Ot,
+                inlineImages: X,
+                sampling: E,
+                slimDOMOptions: ht,
+                iframeManager: xt,
+                stylesheetManager: Rt,
+                canvasManager: Ce,
+                keepIframeSrcFn: et,
+                processedNodeManager: At,
+                attributeFilter: nt
+            },
+            mirror: Le
+        });
+        Me = function(t) {
+            if (void 0 === t && (t = !1), B) {
+                Ie({
+                    type: o.Meta,
+                    data: {
+                        href: window.location.href,
+                        width: Ct(),
+                        height: Mt()
+                    }
+                }, t), Rt.reset(), Lt.init(), Zt.forEach((t => t.lock()));
+                var e = function(t, e) {
+                    var r = e || {},
+                        i = r.mirror,
+                        n = void 0 === i ? new O : i,
+                        s = r.blockClass,
+                        a = r.blockSelector,
+                        o = r.maskTextClass,
+                        u = r.maskTextSelector,
+                        l = r.inlineStylesheet,
+                        h = r.inlineImages,
+                        d = void 0 !== h && h,
+                        c = r.recordCanvas,
+                        v = void 0 !== c && c,
+                        f = r.canvasMaskingConfigured,
+                        p = r.maskAllInputs,
+                        m = void 0 !== p && p,
+                        g = r.slimDOM,
+                        y = r.dataURLOptions,
+                        w = r.preserveWhiteSpace,
+                        b = r.onSerialize,
+                        k = r.onIframeLoad,
+                        _ = r.iframeLoadTimeout,
+                        S = r.onIframeListenerRegistered,
+                        I = r.onStylesheetLoad,
+                        M = r.stylesheetLoadTimeout,
+                        C = r.keepIframeSrcFn,
+                        R = void 0 === C ? () => !1 : C,
+                        x = r.maxDepth;
+                    return vt(t, {
+                        doc: t,
+                        mirror: n,
+                        blockClass: void 0 === s ? "rr-block" : s,
+                        blockSelector: void 0 === a ? null : a,
+                        maskTextClass: void 0 === o ? "rr-mask" : o,
+                        maskTextSelector: void 0 === u ? null : u,
+                        skipChild: !1,
+                        inlineStylesheet: void 0 === l || l,
+                        maskInputOptions: !0 === m ? {
+                            color: !0,
+                            date: !0,
+                            "datetime-local": !0,
+                            email: !0,
+                            month: !0,
+                            number: !0,
+                            range: !0,
+                            search: !0,
+                            tel: !0,
+                            text: !0,
+                            time: !0,
+                            url: !0,
+                            week: !0,
+                            textarea: !0,
+                            select: !0,
+                            password: !0
+                        } : !1 === m ? {
+                            password: !0
+                        } : m,
+                        maskTextFn: r.maskTextFn,
+                        maskInputFn: r.maskInputFn,
+                        slimDOMOptions: ft(void 0 !== g && g),
+                        dataURLOptions: y,
+                        inlineImages: d,
+                        recordCanvas: v,
+                        canvasMaskingConfigured: f,
+                        preserveWhiteSpace: w,
+                        onSerialize: b,
+                        onIframeLoad: k,
+                        iframeLoadTimeout: _,
+                        onIframeListenerRegistered: S,
+                        onStylesheetLoad: I,
+                        stylesheetLoadTimeout: M,
+                        keepIframeSrcFn: R,
+                        newlyAddedElement: !1,
+                        maxDepth: x
+                    })
+                }(document, {
+                    mirror: Le,
+                    blockClass: l,
+                    blockSelector: d,
+                    maskTextClass: g,
+                    maskTextSelector: w,
+                    inlineStylesheet: k,
+                    maskAllInputs: lt,
+                    maskTextFn: R,
+                    maskInputFn: C,
+                    slimDOM: ht,
+                    dataURLOptions: st,
+                    recordCanvas: U,
+                    canvasMaskingConfigured: Ot,
+                    inlineImages: X,
+                    onSerialize(t) {
+                        Et(t, Le) && xt.addIframe(t), Nt(t, Le) && Rt.trackLinkElement(t), Ft(t) && Lt.addShadowRoot(M.shadowRoot(t), document)
+                    },
+                    onIframeLoad(t, e) {
+                        xt.attachIframe(t, e), Lt.observeAttachShadow(t)
+                    },
+                    onIframeListenerRegistered(t, e) {
+                        xt.registerLoadListenerDisposer(t, e)
+                    },
+                    onStylesheetLoad(t, e) {
+                        Rt.attachLinkElement(t, e)
+                    },
+                    keepIframeSrcFn: et
+                });
+                if (!e) return console.warn("Failed to snapshot the document");
+                Ie({
+                    type: o.FullSnapshot,
+                    data: {
+                        node: e,
+                        initialOffset: It(window)
+                    }
+                }, t), Zt.forEach((t => t.unlock())), Ce.onFullSnapshot(), q && xt.reattachIframes(), document.adoptedStyleSheets && document.adoptedStyleSheets.length > 0 && Rt.adoptStyleSheets(document.adoptedStyleSheets, Le.getId(document))
+            }
+        };
+        try {
+            var Dt = [];
+            dt = t => {
+                var e = gt.get(t);
+                e && (e.forEach((t => {
+                    yt(t);
+                    var e = Dt.indexOf(t); - 1 !== e && Dt.splice(e, 1)
+                })), gt.delete(t))
+            }, ct = () => {
+                for (var t of gt) {
+                    var e = t[0],
+                        r = Le.getNode(e);
+                    if (r) try {
+                        r.contentDocument && r.contentDocument.defaultView || null == dt || dt(e)
+                    } catch (t) {
+                        null == dt || dt(e)
+                    } else null == dt || dt(e)
+                }
+            };
+            var Pt = t => {
+                var e;
+                return Vt(ne)({
+                    mutationCb: bt,
+                    mousemoveCb: (t, e) => Ie({
+                        type: o.IncrementalSnapshot,
+                        data: {
+                            source: e,
+                            positions: t
+                        }
+                    }),
+                    mouseInteractionCb: t => Ie({
+                        type: o.IncrementalSnapshot,
+                        data: r({
+                            source: u.MouseInteraction
+                        }, t)
+                    }),
+                    scrollCb: kt,
+                    viewportResizeCb: t => Ie({
+                        type: o.IncrementalSnapshot,
+                        data: r({
+                            source: u.ViewportResize
+                        }, t)
+                    }),
+                    inputCb: t => Ie({
+                        type: o.IncrementalSnapshot,
+                        data: r({
+                            source: u.Input
+                        }, t)
+                    }),
+                    mediaInteractionCb: t => Ie({
+                        type: o.IncrementalSnapshot,
+                        data: r({
+                            source: u.MediaInteraction
+                        }, t)
+                    }),
+                    styleSheetRuleCb: t => Ie({
+                        type: o.IncrementalSnapshot,
+                        data: r({
+                            source: u.StyleSheetRule
+                        }, t)
+                    }),
+                    styleDeclarationCb: t => Ie({
+                        type: o.IncrementalSnapshot,
+                        data: r({
+                            source: u.StyleDeclaration
+                        }, t)
+                    }),
+                    canvasMutationCb: _t,
+                    fontCb: t => Ie({
+                        type: o.IncrementalSnapshot,
+                        data: r({
+                            source: u.Font
+                        }, t)
+                    }),
+                    selectionCb(t) {
+                        Ie({
+                            type: o.IncrementalSnapshot,
+                            data: r({
+                                source: u.Selection
+                            }, t)
+                        })
+                    },
+                    customElementCb(t) {
+                        Ie({
+                            type: o.IncrementalSnapshot,
+                            data: r({
+                                source: u.CustomElement
+                            }, t)
+                        })
+                    },
+                    blockClass: l,
+                    ignoreClass: v,
+                    ignoreSelector: p,
+                    maskTextClass: g,
+                    maskTextSelector: w,
+                    maskInputOptions: lt,
+                    inlineStylesheet: k,
+                    sampling: E,
+                    recordDOM: B,
+                    recordCanvas: U,
+                    canvasMaskingConfigured: Ot,
+                    inlineImages: X,
+                    userTriggeredOnInput: Z,
+                    collectFonts: Q,
+                    doc: t,
+                    maskInputFn: C,
+                    maskTextFn: R,
+                    keepIframeSrcFn: et,
+                    blockSelector: d,
+                    slimDOMOptions: ht,
+                    dataURLOptions: st,
+                    mirror: Le,
+                    iframeManager: xt,
+                    stylesheetManager: Rt,
+                    shadowDomManager: Lt,
+                    processedNodeManager: At,
+                    canvasManager: Ce,
+                    ignoreCSSAttributes: it,
+                    attributeFilter: nt,
+                    plugins: (null == (e = null == Y ? void 0 : Y.filter((t => t.observer))) ? void 0 : e.map((t => ({
+                        observer: t.observer,
+                        options: t.options,
+                        callback: e => Ie({
+                            type: o.Plugin,
+                            data: {
+                                plugin: t.name,
+                                payload: e
+                            }
+                        })
+                    })))) || []
+                }, x)
+            };
+            xt.addLoadListener((t => {
+                try {
+                    var e = Le.getId(t),
+                        r = Pt(t.contentDocument);
+                    if (Dt.push(r), -1 !== e) {
+                        var i = gt.get(e);
+                        i || gt.set(e, i = new Set), i.add(r)
+                    }
+                } catch (t) {
+                    console.warn(t)
+                }
+            })), xt.addPageHideListener((t => {
+                var e = Le.getId(t);
+                null == dt || dt(e), Xt(t)
+            }));
+            var Wt = -1,
+                $t = t => Ie({
+                    type: o.Custom,
+                    data: {
+                        tag: "rrweb/fullscreen",
+                        payload: t
+                    }
+                }),
+                zt = () => {
+                    var t, e, r, i, n = document,
+                        s = null !== (t = null !== (e = null !== (r = null !== (i = n.fullscreenElement) && void 0 !== i ? i : n.webkitFullscreenElement) && void 0 !== r ? r : n.mozFullScreenElement) && void 0 !== e ? e : n.msFullscreenElement) && void 0 !== t ? t : null,
+                        a = s ? Le.getId(s) : -1;
+                    a !== Wt && (-1 !== Wt && $t({
+                        id: Wt,
+                        enter: !1
+                    }), Wt = a, -1 !== a && $t({
+                        id: a,
+                        enter: !0
+                    }))
+                },
+                Ut = () => {
+                    Me(), Dt.push(Pt(document)), Dt.push(mt("fullscreenchange", zt)), Dt.push(mt("webkitfullscreenchange", zt)), Dt.push(mt("mozfullscreenchange", zt)), Dt.push(mt("MSFullscreenChange", zt)), Ne = !0
+                };
+            return ["interactive", "complete"].includes(document.readyState) ? Ut() : (Dt.push(mt("DOMContentLoaded", (() => {
+                Ie({
+                    type: o.DomContentLoaded,
+                    data: {}
+                }), "DOMContentLoaded" === G && Ut()
+            }))), Dt.push(mt("load", (() => {
+                Ie({
+                    type: o.Load,
+                    data: {}
+                }), "load" === G && Ut()
+            }), window))), () => {
+                Dt.forEach((t => yt(t))), At.destroy(), xt.removeLoadListener(), xt.destroy(), gt.clear(), Lt.reset(), Le.reset(), Ne = !1, Bt = void 0
+            }
+        } catch (t) {
+            console.warn(t)
+        }
+    }
+    Pe.addCustomEvent = (t, e) => {
+        if (!Ne) throw new Error("please add custom event after start recording");
+        Ie({
+            type: o.Custom,
+            data: {
+                tag: t,
+                payload: e
+            }
+        })
+    }, Pe.freezePage = () => {
+        Zt.forEach((t => t.freeze()))
+    }, Pe.takeFullSnapshot = t => {
+        if (!Ne) throw new Error("please take full snapshot after start recording");
+        Me(t)
+    }, Pe.mirror = Le;
+    var We = Object.defineProperty,
+        $e = (t, e, r) => ((t, e, r) => e in t ? We(t, e, {
+            enumerable: !0,
+            configurable: !0,
+            writable: !0,
+            value: r
+        }) : t[e] = r)(t, "symbol" != typeof e ? e + "" : e, r);
+    class Be {
+        constructor(t) {
+            $e(this, "fileName"), $e(this, "functionName"), $e(this, "lineNumber"), $e(this, "columnNumber"), this.fileName = t.fileName || "", this.functionName = t.functionName || "", this.lineNumber = t.lineNumber, this.columnNumber = t.columnNumber
+        }
+        toString() {
+            var t = this.lineNumber || "",
+                e = this.columnNumber || "";
+            return this.functionName ? this.functionName + " (" + this.fileName + ":" + t + ":" + e + ")" : this.fileName + ":" + t + ":" + e
+        }
+    }
+    var ze = /(^|@)\S+:\d+/,
+        Ue = /^\s*at .*(\S+:\d+|\(native\))/m,
+        je = /^(eval@)?(\[native code])?$/,
+        qe = {
+            parse(t) {
+                return t ? void 0 !== t.stacktrace || void 0 !== t["opera#sourceloc"] ? this.parseOpera(t) : t.stack && t.stack.match(Ue) ? this.parseV8OrIE(t) : t.stack ? this.parseFFOrSafari(t) : [] : []
+            },
+            extractLocation(t) {
+                if (-1 === t.indexOf(":")) return [t];
+                var e = /(.+?)(?::(\d+))?(?::(\d+))?$/.exec(t.replace(/[()]/g, ""));
+                if (!e) throw new Error("Cannot parse given url: " + t);
+                return [e[1], e[2] || void 0, e[3] || void 0]
+            },
+            parseV8OrIE(t) {
+                return t.stack.split("\n").filter((function(t) {
+                    return !!t.match(Ue)
+                }), this).map((function(t) {
+                    t.indexOf("(eval ") > -1 && (t = t.replace(/eval code/g, "eval").replace(/(\(eval at [^()]*)|(\),.*$)/g, ""));
+                    var e = t.replace(/^\s+/, "").replace(/\(eval code/g, "("),
+                        r = e.match(/ (\((.+):(\d+):(\d+)\)$)/),
+                        i = (e = r ? e.replace(r[0], "") : e).split(/\s+/).slice(1),
+                        n = this.extractLocation(r ? r[1] : i.pop()),
+                        s = i.join(" ") || void 0,
+                        a = ["eval", "<anonymous>"].indexOf(n[0]) > -1 ? void 0 : n[0];
+                    return new Be({
+                        functionName: s,
+                        fileName: a,
+                        lineNumber: n[1],
+                        columnNumber: n[2]
+                    })
+                }), this)
+            },
+            parseFFOrSafari(t) {
+                return t.stack.split("\n").filter((function(t) {
+                    return !t.match(je)
+                }), this).map((function(t) {
+                    if (t.indexOf(" > eval") > -1 && (t = t.replace(/ line (\d+)(?: > eval line \d+)* > eval:\d+:\d+/g, ":$1")), -1 === t.indexOf("@") && -1 === t.indexOf(":")) return new Be({
+                        functionName: t
+                    });
+                    var e = /((.*".+"[^@]*)?[^@]*)(?:@)/,
+                        r = t.match(e),
+                        i = r && r[1] ? r[1] : void 0,
+                        n = this.extractLocation(t.replace(e, ""));
+                    return new Be({
+                        functionName: i,
+                        fileName: n[0],
+                        lineNumber: n[1],
+                        columnNumber: n[2]
+                    })
+                }), this)
+            },
+            parseOpera(t) {
+                return !t.stacktrace || t.message.indexOf("\n") > -1 && t.message.split("\n").length > t.stacktrace.split("\n").length ? this.parseOpera9(t) : t.stack ? this.parseOpera11(t) : this.parseOpera10(t)
+            },
+            parseOpera9(t) {
+                for (var e = /Line (\d+).*script (?:in )?(\S+)/i, r = t.message.split("\n"), i = [], n = 2, s = r.length; s > n; n += 2) {
+                    var a = e.exec(r[n]);
+                    a && i.push(new Be({
+                        fileName: a[2],
+                        lineNumber: parseFloat(a[1])
+                    }))
+                }
+                return i
+            },
+            parseOpera10(t) {
+                for (var e = /Line (\d+).*script (?:in )?(\S+)(?:: In function (\S+))?$/i, r = t.stacktrace.split("\n"), i = [], n = 0, s = r.length; s > n; n += 2) {
+                    var a = e.exec(r[n]);
+                    a && i.push(new Be({
+                        functionName: a[3] || void 0,
+                        fileName: a[2],
+                        lineNumber: parseFloat(a[1])
+                    }))
+                }
+                return i
+            },
+            parseOpera11(t) {
+                return t.stack.split("\n").filter((function(t) {
+                    return !!t.match(ze) && !t.match(/^Error created at/)
+                }), this).map((function(t) {
+                    var e = t.split("@"),
+                        r = this.extractLocation(e.pop()),
+                        i = (e.shift() || "").replace(/<anonymous function(: (\w+))?>/, "$2").replace(/\([^)]*\)/g, "") || void 0;
+                    return new Be({
+                        functionName: i,
+                        fileName: r[0],
+                        lineNumber: r[1],
+                        columnNumber: r[2]
+                    })
+                }), this)
+            }
+        };
+
+    function He(t) {
+        if (!t || !t.outerHTML) return "";
+        for (var e = ""; t.parentElement;) {
+            var r = t.localName;
+            if (!r) break;
+            r = r.toLowerCase();
+            var i = t.parentElement,
+                n = [];
+            if (i.children && i.children.length > 0)
+                for (var s = 0; i.children.length > s; s++) {
+                    var a = i.children[s];
+                    a.localName && a.localName.toLowerCase && a.localName.toLowerCase() === r && n.push(a)
+                }
+            n.length > 1 && (r += ":eq(" + n.indexOf(t) + ")"), e = r + (e ? ">" + e : ""), t = i
+        }
+        return e
+    }
+
+    function Ge(t) {
+        return Array.isArray(t)
+    }
+
+    function Ve(t) {
+        return "object" == typeof t && null !== t && !Ge(t)
+    }
+
+    function Ze(t, e) {
+        if (0 === e) return !0;
+        var r = Object.keys(t);
+        for (var i of r)
+            if (Ve(t[i]) && Ze(t[i], e - 1)) return !0;
+        return !1
+    }
+
+    function Je(t, e) {
+        var r = {
+            numOfKeysLimit: 50,
+            depthOfLimit: 4
+        };
+        Object.assign(r, e);
+        var i = [],
+            n = [];
+        return JSON.stringify(t, (function(t, e) {
+            if (i.length > 0) {
+                var s = i.indexOf(this);
+                ~s ? i.splice(s + 1) : i.push(this), ~s ? n.splice(s, 1 / 0, t) : n.push(t), ~i.indexOf(e) && (e = i[0] === e ? "[Circular ~]" : "[Circular ~." + n.slice(0, i.indexOf(e)).join(".") + "]")
+            } else i.push(e);
+            if (null === e) return e;
+            if (void 0 === e) return "undefined";
+            if (Ve(a = e) && Object.keys(a).length > r.numOfKeysLimit || "function" == typeof a || Ve(a) && Ze(a, r.depthOfLimit)) return function(t) {
+                var e = t.toString();
+                return r.stringLengthLimit && e.length > r.stringLengthLimit && (e = e.slice(0, r.stringLengthLimit) + "..."), e
+            }(e);
+            var a;
+            if ("bigint" == typeof e) return e.toString() + "n";
+            if (e instanceof Event) {
+                var o = {};
+                for (var u in e) {
+                    var l = e[u];
+                    o[u] = Ge(l) ? He(l.length ? l[0] : null) : l
+                }
+                return o
+            }
+            return e instanceof Node ? e instanceof HTMLElement ? e ? e.outerHTML : "" : e.nodeName : e instanceof Error ? e.stack ? e.stack + "\nEnd of stack for Error object" : e.name + ": " + e.message : e
+        }))
+    }
+    var Qe = {
+        level: ["assert", "clear", "count", "countReset", "debug", "dir", "dirxml", "error", "group", "groupCollapsed", "groupEnd", "info", "log", "table", "time", "timeEnd", "timeLog", "trace", "warn"],
+        lengthThreshold: 1e3,
+        logger: "console"
+    };
+
+    function Ke(t, e, r) {
+        var i, n = r ? Object.assign({}, Qe, r) : Qe,
+            s = n.logger;
+        if (!s) return () => {};
+        i = "string" == typeof s ? e[s] : s;
+        var a = 0,
+            o = !1,
+            u = [];
+        if (n.level.includes("error")) {
+            var l = e => {
+                var r = e.message,
+                    i = qe.parse(e.error).map((t => t.toString())),
+                    s = [Je(r, n.stringifyOptions)];
+                t({
+                    level: "error",
+                    trace: i,
+                    payload: s
+                })
+            };
+            e.addEventListener("error", l), u.push((() => {
+                e.removeEventListener("error", l)
+            }));
+            var h = e => {
+                var r, i;
+                e.reason instanceof Error ? i = [Je("Uncaught (in promise) " + (r = e.reason).name + ": " + r.message, n.stringifyOptions)] : (r = new Error, i = [Je("Uncaught (in promise)", n.stringifyOptions), Je(e.reason, n.stringifyOptions)]);
+                var s = qe.parse(r).map((t => t.toString()));
+                t({
+                    level: "error",
+                    trace: s,
+                    payload: i
+                })
+            };
+            e.addEventListener("unhandledrejection", h), u.push((() => {
+                e.removeEventListener("unhandledrejection", h)
+            }))
+        }
+        for (var d of n.level) u.push(c(i, d));
+        return () => {
+            u.forEach((t => t()))
+        };
+
+        function c(e, r) {
+            var i = this;
+            return e[r] ? function(e, s, u) {
+                try {
+                    if (!(s in e)) return () => {};
+                    var l = e[s],
+                        h = {
+                            next: l
+                        },
+                        d = (e => function() {
+                            for (var s = arguments.length, u = new Array(s), l = 0; s > l; l++) u[l] = arguments[l];
+                            if (e.apply(i, u), !("assert" === r && u[0] || o)) {
+                                o = !0;
+                                try {
+                                    var h = qe.parse(new Error).map((t => t.toString())).splice(1),
+                                        d = ("assert" === r ? u.slice(1) : u).map((t => Je(t, n.stringifyOptions)));
+                                    a++, n.lengthThreshold > a ? t({
+                                        level: r,
+                                        trace: h,
+                                        payload: d
+                                    }) : a === n.lengthThreshold && t({
+                                        level: "warn",
+                                        trace: [],
+                                        payload: [Je("The number of log records reached the threshold.")]
+                                    })
+                                } catch (t) {
+                                    e("rrweb logger error:", t, ...u)
+                                } finally {
+                                    o = !1
+                                }
+                            }
+                        })((function() {
+                            for (var t = arguments.length, e = new Array(t), r = 0; t > r; r++) e[r] = arguments[r];
+                            return h.next.apply(this, e)
+                        }));
+                    return "function" == typeof d && (d.prototype = d.prototype || {}, Object.defineProperties(d, {
+                        __rrweb_original__: {
+                            enumerable: !1,
+                            value: l
+                        },
+                        __rrweb_layer__: {
+                            enumerable: !1,
+                            value: h
+                        }
+                    })), e[s] = d, () => {
+                        if (e[s] !== d)
+                            for (var t = e[s];
+                                "function" == typeof t && t.__rrweb_layer__;) {
+                                var r = t.__rrweb_layer__;
+                                if (r.next === d) return void(r.next = h.next);
+                                t = r.next
+                            } else e[s] = h.next
+                    }
+                } catch (t) {
+                    return () => {}
+                }
+            }(e, r) : () => {}
+        }
+    }
+    var Xe = "undefined" != typeof window ? window : void 0,
+        Ye = "undefined" != typeof globalThis ? globalThis : Xe,
+        tr = null == Ye ? void 0 : Ye.document,
+        er = null == Ye ? void 0 : Ye.location;
+    null != Ye && Ye.XMLHttpRequest && new Ye.XMLHttpRequest;
+    var rr = "undefined" != typeof globalThis ? globalThis : Xe;
+    rr && "undefined" == typeof self && (rr.self = rr), rr && "undefined" == typeof File && (rr.File = function() {});
+    var ir, nr = null != Xe ? Xe : {},
+        sr = "NativeGzipValidationError",
+        ar = t => {
+            var e = new Error("Native gzip produced invalid output: " + t);
+            throw e.name = sr, e
+        },
+        or = function() {
+            var t = e((function*(t, e) {
+                18 > t.size && ar("too-short");
+                var r, i = new Uint8Array(yield t.slice(0, 10).arrayBuffer());
+                (2 > (r = i).length || 31 !== r[0] || 139 !== r[1] || 8 !== i[2]) && ar("invalid-header");
+                var n = new DataView(yield t.slice(t.size - 8).arrayBuffer());
+                n.getUint32(0, !0) !== (t => {
+                    for (var e = (() => {
+                            if (ir) return ir;
+                            ir = [];
+                            for (var t = 0; 256 > t; t++) {
+                                for (var e = t, r = 0; 8 > r; r++) e = 1 & e ? 3988292384 ^ e >>> 1 : e >>> 1;
+                                ir[t] = e >>> 0
+                            }
+                            return ir
+                        })(), r = 4294967295, i = 0; t.length > i; i++) r = e[255 & (r ^ t[i])] ^ r >>> 8;
+                    return (4294967295 ^ r) >>> 0
+                })(e) && ar("invalid-crc");
+                var s = e.length >>> 0;
+                n.getUint32(4, !0) !== s && ar("invalid-size")
+            }));
+            return function(e, r) {
+                return t.apply(this, arguments)
+            }
+        }();
+
+    function ur() {
+        return ur = e((function*(t, r, i) {
+            void 0 === r && (r = !0);
+            try {
+                var n = (new TextEncoder).encode(t),
+                    s = new globalThis.CompressionStream("gzip"),
+                    a = s.writable.getWriter(),
+                    o = a.write(n).then((() => a.close())).catch(function() {
+                        var t = e((function*(t) {
+                            try {
+                                yield a.abort(t)
+                            } catch (t) {}
+                            throw t
+                        }));
+                        return function(e) {
+                            return t.apply(this, arguments)
+                        }
+                    }()),
+                    u = new Response(s.readable).blob(),
+                    l = (yield Promise.all([u, o]))[0];
+                return yield or(l, n), l
+            } catch (t) {
+                if (null != i && i.rethrow) throw t;
+                return r && console.error("Failed to gzip compress data", t), null
+            }
+        })), ur.apply(this, arguments)
+    }
+    var lr = function(t) {
+            return t.trim()
+        },
+        hr = Object.prototype,
+        dr = hr.hasOwnProperty,
+        cr = hr.toString,
+        vr = Array.isArray || function(t) {
+            return "[object Array]" === cr.call(t)
+        },
+        fr = t => "function" == typeof t,
+        pr = t => t === Object(t) && !vr(t),
+        mr = t => void 0 === t,
+        gr = t => "[object String]" == cr.call(t),
+        yr = t => null === t,
+        wr = t => mr(t) || yr(t),
+        br = t => "[object Number]" == cr.call(t) && t == t,
+        kr = t => "[object Boolean]" === cr.call(t),
+        _r = t => t instanceof FormData;
+
+    function Sr(t, e, r, i, n) {
+        return e > r && (i.warn("min cannot be greater than max."), e = r), br(t) ? t > r ? (i.warn(" cannot be  greater than max: " + r + ". Using max value instead."), r) : e > t ? (i.warn(" cannot be less than min: " + e + ". Using min value instead."), e) : t : (i.warn(" must be a number. using max or fallback. max: " + r + ", fallback: " + n), Sr(n || r, e, r, i))
+    }
+    class Ir {
+        constructor(t) {
+            this.tt = {}, this.et = t.et, this.rt = Sr(t.bucketSize, 0, 100, t.it), this.nt = Sr(t.refillRate, 0, this.rt, t.it), this.st = Sr(t.refillInterval, 0, 864e5, t.it)
+        }
+        ot(t, e) {
+            var r = Math.floor((e - t.lastAccess) / this.st);
+            r > 0 && (t.tokens = Math.min(t.tokens + r * this.nt, this.rt), t.lastAccess = t.lastAccess + r * this.st)
+        }
+        consumeRateLimit(t) {
+            var e, r = Date.now(),
+                i = String(t),
+                n = this.tt[i];
+            return n ? this.ot(n, r) : this.tt[i] = n = {
+                tokens: this.rt,
+                lastAccess: r
+            }, 0 === n.tokens || (n.tokens--, 0 === n.tokens && (null == (e = this.et) || e.call(this, t)), 0 === n.tokens)
+        }
+        stop() {
+            this.tt = {}
+        }
+    }
+
+    function Mr(t) {
+        return t ? t.split("#")[0] : t
+    }
+    var Cr = t => "undefined" != typeof Document && t instanceof Document,
+        Rr = {
+            DEBUG: !1,
+            LIB_VERSION: "0.3.1",
+            LIB_NAME: "browser-common"
+        },
+        xr = function(t, e) {
+            var r = (void 0 === e ? {} : e).debugEnabled,
+                i = {
+                    k(e) {
+                        if (Xe && (Rr.DEBUG || Xe.POSTHOG_DEBUG || r) && !mr(Xe.console) && Xe.console) {
+                            for (var i = ("__rrweb_original__" in Xe.console[e] ? Xe.console[e].__rrweb_original__ : Xe.console[e]), n = arguments.length, s = new Array(n > 1 ? n - 1 : 0), a = 1; n > a; a++) s[a - 1] = arguments[a];
+                            i(t, ...s)
+                        }
+                    },
+                    debug() {
+                        for (var t = arguments.length, e = new Array(t), r = 0; t > r; r++) e[r] = arguments[r];
+                        i.k("debug", ...e)
+                    },
+                    info() {
+                        for (var t = arguments.length, e = new Array(t), r = 0; t > r; r++) e[r] = arguments[r];
+                        i.k("log", ...e)
+                    },
+                    warn() {
+                        for (var t = arguments.length, e = new Array(t), r = 0; t > r; r++) e[r] = arguments[r];
+                        i.k("warn", ...e)
+                    },
+                    error() {
+                        for (var t = arguments.length, e = new Array(t), r = 0; t > r; r++) e[r] = arguments[r];
+                        i.k("error", ...e)
+                    },
+                    critical() {
+                        for (var e = arguments.length, r = new Array(e), i = 0; e > i; i++) r[i] = arguments[i];
+                        console.error(t, ...r)
+                    },
+                    uninitializedWarning(t) {
+                        i.error("You must initialize PostHog before calling " + t)
+                    },
+                    createLogger: (e, r) => xr(t + " " + e, r)
+                };
+            return i
+        },
+        Tr = xr("[PostHog.js]"),
+        Ar = Tr.createLogger;
+
+    function Or(t, e) {
+        if (!wr(t))
+            if (vr(t)) t.forEach(e);
+            else if (_r(t)) t.forEach(((t, r) => e(t, r)));
+        else
+            for (var r in t) dr.call(t, r) && e(t[r], r)
+    }
+
+    function Er(t, e, r, i) {
+        var n = {},
+            s = n.capture,
+            a = n.passive;
+        null == t || t.addEventListener(e, r, {
+            capture: void 0 !== s && s,
+            passive: void 0 === a || a
+        })
+    }
+    var Nr = ["localhost", "127.0.0.1"],
+        Fr = t => {
+            var e = null == tr ? void 0 : tr.createElement("a");
+            return mr(e) ? null : (e.href = t, e)
+        },
+        Lr = function(t, e) {
+            var r, i;
+            void 0 === e && (e = "&");
+            var n = [];
+            return Or(t, (function(t, e) {
+                mr(t) || mr(e) || "undefined" === e || (r = encodeURIComponent((t => t instanceof File)(t) ? t.name : t.toString()), i = encodeURIComponent(e), n[n.length] = i + "=" + r)
+            })), n.join(e)
+        },
+        Dr = () => {};
+
+    function Pr(t, e, r) {
+        try {
+            if (!(e in t)) return Dr;
+            var i = {
+                    next: t[e]
+                },
+                n = r((function() {
+                    for (var t = arguments.length, e = new Array(t), r = 0; t > r; r++) e[r] = arguments[r];
+                    return i.next.apply(this, e)
+                }));
+            return fr(n) && (n.prototype = n.prototype || {}, Object.defineProperties(n, {
+                __posthog_wrapped__: {
+                    enumerable: !1,
+                    value: !0
+                },
+                __posthog_layer__: {
+                    enumerable: !1,
+                    value: i
+                }
+            })), t[e] = n, () => {
+                if (t[e] !== n)
+                    for (var r = t[e]; fr(r) && r.__posthog_layer__;) {
+                        var s = r.__posthog_layer__;
+                        if (s.next === n) return void(s.next = i.next);
+                        r = s.next
+                    } else t[e] = i.next
+            }
+        } catch (t) {
+            return Dr
+        }
+    }
+
+    function Wr(t, e) {
+        var r, i = function(t) {
+                try {
+                    return "string" == typeof t ? new URL(t).hostname : "url" in t ? new URL(t.url).hostname : t.hostname
+                } catch (t) {
+                    return null
+                }
+            }(t),
+            n = {
+                hostname: i,
+                isHostDenied: !1
+            };
+        if (null == (r = e.payloadHostDenyList) || !r.length || null == i || !i.trim().length) return n;
+        for (var s of e.payloadHostDenyList)
+            if (i.endsWith(s)) return {
+                hostname: i,
+                isHostDenied: !0
+            };
+        return n
+    }
+
+    function $r(t) {
+        var e, r = null == Xe || null == (e = Xe.location) ? void 0 : e.href;
+        return mr(r) ? void 0 : function(t, e) {
+            var r, i = null == t || null == (r = t.config) ? void 0 : r.get_current_url;
+            if (!fr(i)) return e;
+            try {
+                var n = i(e);
+                return gr(n) && n ? n : e
+            } catch (t) {
+                return Tr.error("Error in get_current_url, falling back to window.location.href", t), e
+            }
+        }(t, r)
+    }
+    var Br = new RegExp("^(?:(4[0-9]{12}(?:[0-9]{3})?)|(5[1-5][0-9]{14})|(6(?:011|5[0-9]{2})[0-9]{12})|(3[47][0-9]{13})|(3(?:0[0-5]|[68][0-9])[0-9]{11})|((?:2131|1800|35[0-9]{3})[0-9]{11}))$"),
+        zr = /(^|[^0-9A-Za-z_])([0-9][0-9 -]*[0-9])(?=$|[^0-9A-Za-z_])/g,
+        Ur = [16, 15, 14, 13],
+        jr = new RegExp("(^|[^0-9])((?!000|666)[0-9]{3}-?(?!00)[0-9]{2}-?(?!0000)[0-9]{4})(?=$|([^0-9]))", "g"),
+        qr = /[0-9A-Za-z_]/;
+
+    function Hr(t) {
+        for (var e = 0, r = !1, i = t.length - 1; i >= 0; i--) {
+            var n = t.charCodeAt(i) - 48;
+            r && (n *= 2) > 9 && (n -= 9), e += n, r = !r
+        }
+        return e % 10 == 0
+    }
+    var Gr = "[SessionRecording]",
+        Vr = "redacted",
+        Zr = 1e6;
+
+    function Jr(t) {
+        var e;
+        return Math.min(Zr, null !== (e = t.payloadSizeLimitBytes) && void 0 !== e ? e : Zr)
+    }
+    var Qr = {
+            initiatorTypes: ["audio", "beacon", "body", "css", "early-hint", "embed", "fetch", "frame", "iframe", "icon", "image", "img", "input", "link", "navigation", "object", "ping", "script", "track", "video", "xmlhttprequest"],
+            maskRequestFn: t => t,
+            recordHeaders: !1,
+            recordBody: !1,
+            recordInitialRequests: !1,
+            recordPerformance: !1,
+            performanceEntryTypeToObserve: ["first-input", "navigation", "paint", "resource"],
+            payloadSizeLimitBytes: Zr,
+            payloadHostDenyList: [".lr-ingest.io", ".ingest.sentry.io", ".clarity.ms", "google-analytics.com", "analytics.google.com", "nr-data.net", "datadoghq.com", "datadoghq.eu", "ddog-gov.com", "segment.io", "rudderstack.com", "amplitude.com", "mixpanel.com", "hotjar.com", "hotjar.io", "fullstory.com"],
+            streamNetworkBody: !1
+        },
+        Kr = ["authorization", "x-forwarded-for", "authorization", "cookie", "set-cookie", "x-api-key", "x-real-ip", "remote-addr", "forwarded", "proxy-authorization", "x-csrf-token", "x-csrftoken", "x-xsrf-token"],
+        Xr = ["password", "secret", "passwd", "api_key", "apikey", "auth", "credentials", "mysql_pwd", "privatekey", "private_key", "token"],
+        Yr = ["auth", "token", "secret", "session", "api-key", "apikey", "api_key", "credential", "password", "passwd", "cookie", "csrf", "xsrf"],
+        ti = t => {
+            wr(t) || Or(Object.keys(t), (e => {
+                (t => {
+                    var e = t.toLowerCase();
+                    return Kr.includes(e) || Yr.some((t => e.includes(t)))
+                })(e) && (t[e] = Vr)
+            }))
+        },
+        ei = ["/s/", "/e/", "/i/"];
+
+    function ri(t, e, r, i) {
+        if (wr(t)) return t;
+        var n = (null == e ? void 0 : e["content-length"]) || function(t) {
+            return new Blob([t]).size
+        }(t);
+        return gr(n) && (n = parseInt(n)), n > r ? Gr + " " + i + " body too large to record (" + n + " bytes)" : t
+    }
+
+    function ii(t, e) {
+        if (wr(t)) return t;
+        var r = t;
+        return function(t, e) {
+            if (wr(t)) return !1;
+            if (gr(t)) {
+                if (function(t) {
+                        var e;
+                        for (zr.lastIndex = 0; e = zr.exec(t);) {
+                            var r = e[2];
+                            if (r)
+                                for (var i = r.replace(/[- ]/g, ""), n = 0; i.length > n; n++)
+                                    for (var s of Ur) {
+                                        var a = n + s;
+                                        if (i.length >= a) {
+                                            var o = i.slice(n, a);
+                                            if (Br.test(o) && Hr(o)) return !0
+                                        }
+                                    }
+                        }
+                        return !1
+                    }(t = lr(t))) return !1;
+                var r = function(t) {
+                    var e;
+                    for (jr.lastIndex = 0; e = jr.exec(t);) {
+                        var r = e[1],
+                            i = e[3];
+                        if (!(r && i && qr.test(r) && qr.test(i))) return !0
+                    }
+                    return !1
+                }(t);
+                if (r) return !1
+            }
+            return !0
+        }(r) || (r = Gr + " " + e + " body " + Vr), Or(Xr, (t => {
+            var i, n;
+            null != (i = r) && i.length && -1 !== (null == (n = r) ? void 0 : n.indexOf(t)) && (r = Gr + " " + e + " body " + Vr + " as might contain: " + t)
+        })), r
+    }
+    var ni = Ar("[Recorder]"),
+        si = t => "navigation" === t.entryType,
+        ai = t => "resource" === t.entryType;
+
+    function oi(t, e) {
+        return !!e && (kr(e) || e[t])
+    }
+
+    function ui(t) {
+        if ("undefined" == typeof Request) return !1;
+        if (t instanceof Request) return !0;
+        try {
+            return "[object Request]" === {}.toString.call(t)
+        } catch (t) {
+            return !1
+        }
+    }
+    var li = ["image/", "video/", "audio/", "font/", "application/octet-stream", "application/pdf", "application/zip", "application/wasm"];
+
+    function hi(t) {
+        var e = t.type,
+            r = t.recordBody,
+            i = t.headers;
+
+        function n(t) {
+            var e = Object.keys(i).find((t => "content-type" === t.toLowerCase())),
+                r = e && i[e];
+            return t.some((t => null == r ? void 0 : r.toLowerCase().includes(t)))
+        }
+        if (!r) return !1;
+        if (function t(e) {
+                try {
+                    return "string" == typeof e ? e.startsWith("blob:") : e instanceof URL ? "blob:" === e.protocol : !!ui(e) && t(e.url)
+                } catch (t) {
+                    return !1
+                }
+            }(t.url)) return !1;
+        if (n(li)) return !1;
+        if (kr(r)) return !0;
+        if (vr(r)) return n(r);
+        var s = r[e];
+        return kr(s) ? s : n(s)
+    }
+
+    function di(t, e, r, i, n, s) {
+        return ci.apply(this, arguments)
+    }
+
+    function ci() {
+        return ci = e((function*(t, e, r, i, n, s) {
+            if (void 0 === s && (s = 0), s > 10) return ni.warn("Failed to get performance entry for request", {
+                url: r,
+                initiatorType: e
+            }), null;
+            var a = function(t, r) {
+                for (var s = t.length - 1; s >= 0; s -= 1)
+                    if (ai(a = t[s]) && a.initiatorType === e && (mr(i) || a.startTime >= i) && (mr(n) || n >= a.startTime)) return t[s];
+                var a
+            }(t.performance.getEntriesByName(r));
+            return a || (yield new Promise((t => setTimeout(t, 50 * s))), di(t, e, r, i, n, s + 1))
+        })), ci.apply(this, arguments)
+    }
+
+    function vi(t) {
+        var e = t.body,
+            r = t.options,
+            i = t.url;
+        if (wr(e)) return null;
+        var n = Wr(i, r);
+        if (n.isHostDenied) return n.hostname + " is in deny list";
+        if (gr(e)) return e;
+        if (Cr(e)) return e.textContent;
+        if (_r(e)) return Lr(e);
+        if (pr(e)) try {
+            return JSON.stringify(e)
+        } catch (t) {
+            return "[SessionReplay] Failed to stringify response object"
+        }
+        return "[SessionReplay] Cannot read body of type " + toString.call(e)
+    }
+    var fi = t => !yr(t) && ("navigation" === t.entryType || "resource" === t.entryType);
+
+    function pi(t) {
+        var e = t.entry,
+            i = t.method,
+            n = t.status,
+            s = t.networkRequest,
+            a = t.isInitial,
+            o = t.start,
+            u = t.end,
+            l = t.url,
+            h = t.initiatorType;
+        o = e ? e.startTime : o, u = e ? e.responseEnd : u;
+        var d = Math.floor(Date.now() - performance.now()),
+            c = Math.floor(d + (o || 0)),
+            v = [r({}, e ? e.toJSON() : {
+                name: l
+            }, {
+                startTime: mr(o) ? void 0 : Math.round(o),
+                endTime: mr(u) ? void 0 : Math.round(u),
+                timeOrigin: d,
+                timestamp: c,
+                method: i,
+                initiatorType: h || (e ? e.initiatorType : void 0),
+                status: n,
+                requestHeaders: s.requestHeaders,
+                requestBody: s.requestBody,
+                responseHeaders: s.responseHeaders,
+                responseBody: s.responseBody,
+                isInitial: a
+            })];
+        if (fi(e))
+            for (var f of e.serverTiming || []) v.push({
+                timeOrigin: d,
+                timestamp: c,
+                startTime: Math.round(e.startTime),
+                name: f.name,
+                duration: f.duration,
+                entryType: "serverTiming"
+            });
+        return v
+    }
+    var mi = ["video/", "audio/"];
+
+    function gi(t) {
+        return pr(t) && fr(t.getReader) && fr(t.tee)
+    }
+    var yi = 500,
+        wi = "[SessionReplay] Timeout while trying to read body",
+        bi = "[SessionReplay] Failed to read body";
+
+    function ki(t) {
+        return bi + ": " + t
+    }
+
+    function _i(t) {
+        return "[SessionReplay] Body too large to record (> " + t + " bytes)"
+    }
+
+    function Si(t, e) {
+        if (!e.streamNetworkBody) return function(t) {
+            return new Promise((e => {
+                var r = setTimeout((() => e(wi)), yi);
+                try {
+                    t.clone().text().then((t => e(t)), (t => e(ki(t)))).finally((() => clearTimeout(r)))
+                } catch (t) {
+                    clearTimeout(r), e(bi)
+                }
+            }))
+        }(t);
+        var r = Jr(e);
+        return function(t, e) {
+            try {
+                var r, i = null == (r = t.headers) || null == r.get ? void 0 : r.get("content-length");
+                if (!i) return !1;
+                var n = parseInt(i, 10);
+                return Number.isFinite(n) && n > e
+            } catch (t) {
+                return !1
+            }
+        }(t, r) ? Promise.resolve(_i(r)) : function(t, e) {
+            return new Promise((r => {
+                var i, n = !1;
+
+                function s() {
+                    try {
+                        var t;
+                        null == (t = i) || t.cancel()
+                    } catch (t) {}
+                }
+
+                function a(t) {
+                    n || (n = !0, clearTimeout(u), s(), r(t))
+                }
+                var o, u = setTimeout((() => a(wi)), yi);
+                try {
+                    o = t.clone()
+                } catch (t) {
+                    return void a(bi)
+                }
+                var l = o.body;
+                if (gi(l) && "undefined" != typeof TextDecoder) {
+                    try {
+                        i = l.getReader()
+                    } catch (t) {
+                        return void a(bi)
+                    }
+                    var h = [],
+                        d = 0;
+                    ! function t() {
+                        i.read().then((r => {
+                            var i = r.done,
+                                o = r.value;
+                            if (n) s();
+                            else if (i) a((new TextDecoder).decode(function(t, e) {
+                                var r = new Uint8Array(e),
+                                    i = 0;
+                                for (var n of t) r.set(n, i), i += n.byteLength;
+                                return r
+                            }(h, d)));
+                            else {
+                                if (o) {
+                                    if (d + o.byteLength > e) return void a(_i(e));
+                                    d += o.byteLength, h.push(o)
+                                }
+                                t()
+                            }
+                        }), (t => a(ki(t))))
+                    }()
+                } else try {
+                    o.text().then((t => a(t)), (t => a(ki(t))))
+                } catch (t) {
+                    a(bi)
+                }
+            }))
+        }(t, r)
+    }
+
+    function Ii() {
+        return (Ii = e((function*(t) {
+            var e = t.r,
+                r = t.options,
+                i = Wr(t.url, r);
+            return i.isHostDenied ? Promise.resolve(i.hostname + " is in deny list") : Si(e, r)
+        }))).apply(this, arguments)
+    }
+
+    function Mi() {
+        return (Mi = e((function*(t) {
+            var e = t.r,
+                r = t.options,
+                i = function(t) {
+                    var e, r = t.r,
+                        i = t.options,
+                        n = t.url;
+                    if ("chunked" === r.headers.get("Transfer-Encoding")) return "Chunked Transfer-Encoding is not supported";
+                    var s = null == (e = r.headers.get("Content-Type")) ? void 0 : e.toLowerCase(),
+                        a = mi.some((t => null == s ? void 0 : s.startsWith(t)));
+                    if (s && a) return "Content-Type " + s + " is not supported";
+                    var o = Wr(n, i);
+                    return o.isHostDenied ? o.hostname + " is in deny list" : null
+                }({
+                    r: e,
+                    options: r,
+                    url: t.url
+                });
+            return yr(i) ? Si(e, r) : Promise.resolve(i)
+        }))).apply(this, arguments)
+    }
+    var Ci = null;
+
+    function Ri(t, i, n) {
+        if (!("performance" in i)) return () => {};
+        if (Ci) return ni.warn("Network observer already initialised, doing nothing"), () => {};
+        var s = n ? Object.assign({}, Qr, n) : Qr,
+            a = e => {
+                var i = [],
+                    n = !1;
+                e.requests.forEach((t => {
+                    var e = "serverTiming" === t.entryType;
+                    if (!e || !n) {
+                        var r = s.maskRequestFn(t);
+                        e || (n = !r), r && i.push(r)
+                    }
+                })), i.length > 0 && t(r({}, e, {
+                    requests: i
+                }))
+            },
+            o = function(t, e, r) {
+                if (r.recordInitialRequests) {
+                    var i = e.performance.getEntries().filter((t => si(t) || ai(t) && r.initiatorTypes.includes(t.initiatorType)));
+                    t({
+                        requests: i.flatMap((t => pi({
+                            entry: t,
+                            method: void 0,
+                            status: void 0,
+                            networkRequest: {},
+                            isInitial: !0
+                        }))),
+                        isInitial: !0
+                    })
+                }
+                var n = new e.PerformanceObserver((e => {
+                        var i = e.getEntries().filter((t => si(t) || ai(t) && r.initiatorTypes.includes(t.initiatorType) && (t => !r.recordBody && !r.recordHeaders || "xmlhttprequest" !== t.initiatorType && "fetch" !== t.initiatorType)(t)));
+                        t({
+                            requests: i.flatMap((t => pi({
+                                entry: t,
+                                method: void 0,
+                                status: void 0,
+                                networkRequest: {}
+                            })))
+                        })
+                    })),
+                    s = PerformanceObserver.supportedEntryTypes.filter((t => r.performanceEntryTypeToObserve.includes(t)));
+                return n.observe({
+                    entryTypes: s
+                }), () => {
+                    n.disconnect()
+                }
+            }(a, i, s),
+            u = () => {},
+            l = () => {};
+        return (s.recordHeaders || s.recordBody) && (u = function(t, e, r) {
+            if (!r.initiatorTypes.includes("xmlhttprequest")) return () => {};
+            var i = oi("request", r.recordHeaders),
+                n = oi("response", r.recordHeaders),
+                s = Pr(e.XMLHttpRequest.prototype, "open", (s => function(a, o, u, l, h) {
+                    void 0 === u && (u = !0);
+                    var d = this;
+                    try {
+                        var c, v, f = new Request(o),
+                            p = {},
+                            m = {},
+                            g = d.setRequestHeader.bind(d);
+                        d.setRequestHeader = (t, e) => (m[t] = e, g(t, e)), i && (p.requestHeaders = m);
+                        var y = d.send.bind(d);
+                        d.send = t => (hi({
+                            type: "request",
+                            headers: m,
+                            url: o,
+                            recordBody: r.recordBody
+                        }) && (p.requestBody = vi({
+                            body: t,
+                            options: r,
+                            url: o
+                        })), c = e.performance.now(), y(t));
+                        var w = () => {
+                                d.removeEventListener("readystatechange", b), d.removeEventListener("error", w), d.removeEventListener("abort", w), d.removeEventListener("timeout", w)
+                            },
+                            b = () => {
+                                if (d.readyState === d.DONE) {
+                                    w(), v = e.performance.now();
+                                    var i = {};
+                                    d.getAllResponseHeaders().trim().split(/[\r\n]+/).forEach((t => {
+                                        var e = t.split(": "),
+                                            r = e.shift(),
+                                            n = e.join(": ");
+                                        r && (i[r] = n)
+                                    })), n && (p.responseHeaders = i), hi({
+                                        type: "response",
+                                        headers: i,
+                                        url: o,
+                                        recordBody: r.recordBody
+                                    }) && (p.responseBody = vi({
+                                        body: d.response,
+                                        options: r,
+                                        url: o
+                                    })), di(e, "xmlhttprequest", f.url, c, v).then((e => {
+                                        var r = pi({
+                                            entry: e,
+                                            method: a,
+                                            status: null == d ? void 0 : d.status,
+                                            networkRequest: p,
+                                            start: c,
+                                            end: v,
+                                            url: o.toString(),
+                                            initiatorType: "xmlhttprequest"
+                                        });
+                                        t({
+                                            requests: r
+                                        })
+                                    })).catch((() => {}))
+                                }
+                            };
+                        d.addEventListener("readystatechange", b), d.addEventListener("error", w), d.addEventListener("abort", w), d.addEventListener("timeout", w)
+                    } catch (t) {
+                        ni.error("Failed to instrument XHR for network capture", t)
+                    }
+                    s.call(d, a, o.toString(), u, l, h)
+                }));
+            return () => {
+                s()
+            }
+        }(a, i, s), l = function(t, r, i) {
+            if (!i.initiatorTypes.includes("fetch")) return () => {};
+            var n = oi("request", i.recordHeaders),
+                s = oi("response", i.recordHeaders),
+                a = Pr(r, "fetch", (a => function() {
+                    var o = e((function*(e, o) {
+                        var u, l;
+                        try {
+                            u = new Request(e, o)
+                        } catch (t) {
+                            return ni.error("Failed to instrument fetch for network capture", t), a(e, o)
+                        }
+                        var h, d, c = {};
+                        try {
+                            try {
+                                var v = {};
+                                u.headers.forEach(((t, e) => {
+                                    v[e] = t
+                                })), n && (c.requestHeaders = v), !gi(null == o ? void 0 : o.body) && hi({
+                                    type: "request",
+                                    headers: v,
+                                    url: e,
+                                    recordBody: i.recordBody
+                                }) && (c.requestBody = yield function(t) {
+                                    return Ii.apply(this, arguments)
+                                }({
+                                    r: u,
+                                    options: i,
+                                    url: e
+                                }))
+                            } catch (t) {
+                                ni.error("Failed to record fetch request for network capture", t)
+                            }
+                            h = r.performance.now(), l = ui(e) ? yield a(u): yield a(e, o), d = r.performance.now();
+                            var f = {};
+                            return l.headers.forEach(((t, e) => {
+                                f[e] = t
+                            })), s && (c.responseHeaders = f), hi({
+                                type: "response",
+                                headers: f,
+                                url: e,
+                                recordBody: i.recordBody
+                            }) && (c.responseBody = yield function(t) {
+                                return Mi.apply(this, arguments)
+                            }({
+                                r: l,
+                                options: i,
+                                url: e
+                            })), l
+                        } finally {
+                            di(r, "fetch", u.url, h, d).then((e => {
+                                var r, i = pi({
+                                    entry: e,
+                                    method: u.method,
+                                    status: null == (r = l) ? void 0 : r.status,
+                                    networkRequest: c,
+                                    start: h,
+                                    end: d,
+                                    url: u.url,
+                                    initiatorType: "fetch"
+                                });
+                                t({
+                                    requests: i
+                                })
+                            })).catch((() => {}))
+                        }
+                    }));
+                    return function(t, e) {
+                        return o.apply(this, arguments)
+                    }
+                }()));
+            return () => {
+                a()
+            }
+        }(a, i, s)), Ci = () => {
+            o(), u(), l(), Ci = null
+        }
+    }
+    var xi = {
+            DomContentLoaded: 0,
+            Load: 1,
+            FullSnapshot: 2,
+            IncrementalSnapshot: 3,
+            Meta: 4,
+            Custom: 5,
+            Plugin: 6
+        },
+        Ti = {
+            Mutation: 0,
+            MouseMove: 1,
+            MouseInteraction: 2,
+            Scroll: 3,
+            ViewportResize: 4,
+            Input: 5,
+            TouchMove: 6,
+            MediaInteraction: 7,
+            StyleSheetRule: 8,
+            CanvasMutation: 9,
+            Font: 10,
+            Log: 11,
+            Drag: 12,
+            StyleDeclaration: 13,
+            Selection: 14,
+            AdoptedStyleSheet: 15,
+            CustomElement: 16
+        },
+        Ai = "$session_recording_remote_config",
+        Oi = "$replay_sample_rate",
+        Ei = "$replay_override_sampling",
+        Ni = "$replay_override_linked_flag",
+        Fi = "$replay_override_url_trigger",
+        Li = "$replay_override_event_trigger",
+        Di = "$session_is_sampled",
+        Pi = "$session_past_minimum_duration",
+        Wi = "$session_recording_url_trigger_activated_session",
+        $i = "$session_recording_event_trigger_activated_session",
+        Bi = "$posthog_sr_group_event_trigger_",
+        zi = "$posthog_sr_group_url_trigger_",
+        Ui = "$posthog_sr_group_sampling_",
+        ji = "$debug_first_full_snapshot_timestamp",
+        qi = "$sess_rec_flush_size",
+        Hi = "$stored_person_properties",
+        Gi = "$sdk_debug_replay_remote_trigger_matching_config",
+        Vi = "disabled",
+        Zi = "sampled",
+        Ji = "active",
+        Qi = "buffering",
+        Ki = "paused",
+        Xi = "rrweb_error",
+        Yi = "trigger",
+        tn = Yi + "_activated",
+        en = Yi + "_pending",
+        rn = Yi + "_" + Vi;
+
+    function nn(t, e, r, i, n, s) {
+        return 0 === e ? rn : (null == t ? void 0 : t.get_property(r ? i + r : n)) === s ? tn : en
+    }
+
+    function sn(t, e, r) {
+        return e.some((e => {
+            var i;
+            return "regex" === e.matching && (null !== (i = null == r ? void 0 : r.get(e.url)) && void 0 !== i ? i : new RegExp(e.url)).test(t)
+        }))
+    }
+    class an {
+        constructor(t) {
+            this.u = t
+        }
+        triggerStatus(t) {
+            var e = this.u.map((e => e.triggerStatus(t)));
+            return e.includes(tn) ? tn : e.includes(en) ? en : rn
+        }
+        stop() {
+            this.u.forEach((t => t.stop()))
+        }
+    }
+    class on {
+        constructor(t) {
+            this.u = t
+        }
+        triggerStatus(t) {
+            var e = new Set;
+            for (var r of this.u) e.add(r.triggerStatus(t));
+            switch (e.delete(rn), e.size) {
+                case 0:
+                    return rn;
+                case 1:
+                    return Array.from(e)[0];
+                default:
+                    return en
+            }
+        }
+        stop() {
+            this.u.forEach((t => t.stop()))
+        }
+    }
+    class un {
+        triggerStatus() {
+            return tn
+        }
+        stop() {}
+    }
+    var ln = t => "sessionRecording" in t;
+    class hn {
+        constructor(t, e) {
+            this.th = [], this.eh = [], this.rh = new Map, this.ih = new Map, this.nh = "", this.urlBlocked = !1, this._instance = t, this.sh = e
+        }
+        onConfig(t) {
+            var e, r;
+            this.th = (ln(t) ? pr(t.sessionRecording) ? null == (e = t.sessionRecording) ? void 0 : e.urlTriggers : [] : null == t ? void 0 : t.urlTriggers) || [], this.eh = (ln(t) ? pr(t.sessionRecording) ? null == (r = t.sessionRecording) ? void 0 : r.urlBlocklist : [] : null == t ? void 0 : t.urlBlocklist) || [], this.ah()
+        }
+        ah() {
+            for (var t of (this.rh.clear(), this.ih.clear(), this.th))
+                if ("regex" === t.matching && !this.rh.has(t.url)) try {
+                    this.rh.set(t.url, new RegExp(t.url))
+                } catch (e) {
+                    Tr.error("Invalid URL trigger regex pattern:", t.url, e)
+                }
+            for (var e of this.eh)
+                if ("regex" === e.matching && !this.ih.has(e.url)) try {
+                    this.ih.set(e.url, new RegExp(e.url))
+                } catch (t) {
+                    Tr.error("Invalid URL blocklist regex pattern:", e.url, t)
+                }
+        }
+        onRemoteConfig(t) {
+            this.onConfig(t)
+        }
+        oh(t) {
+            return nn(this._instance, this.th.length, this.sh, zi, Wi, t)
+        }
+        triggerStatus(t) {
+            var e = this.oh(t),
+                r = e === tn ? tn : e === en ? en : rn;
+            return this._instance.register_for_session({
+                $sdk_debug_replay_url_trigger_status: r
+            }), r
+        }
+        checkUrlBlocklist(t, e) {
+            var r = $r(this._instance);
+            if (r && r !== this.nh) {
+                this.nh = r;
+                var i = this.urlBlocked,
+                    n = sn(r, this.eh, this.ih);
+                i && n || (n && !i ? t() : !n && i && e())
+            }
+        }
+        checkUrlTriggerConditions(t, e, r, i) {
+            var n = $r(this._instance);
+            if (n && n !== this.nh) {
+                this.nh = n;
+                var s = this.urlBlocked,
+                    a = sn(n, this.eh, this.ih);
+                a && !s ? t() : !a && s && e();
+                var o = this.oh(i) === tn,
+                    u = sn(n, this.th, this.rh);
+                !o && u && r("url", n)
+            }
+        }
+        stop() {
+            this.nh = ""
+        }
+    }
+    class dn {
+        constructor(t) {
+            this.linkedFlag = null, this.linkedFlagSeen = !1, this.uh = () => {}, this._instance = t
+        }
+        triggerStatus() {
+            var t = en;
+            return wr(this.linkedFlag) && (t = rn), this.linkedFlagSeen && (t = tn), this._instance.register_for_session({
+                $sdk_debug_replay_linked_flag_trigger_status: t
+            }), t
+        }
+        onConfig(t, e) {
+            var r;
+            if (this.linkedFlag = (ln(t) ? pr(t.sessionRecording) ? null == (r = t.sessionRecording) ? void 0 : r.linkedFlag : null : null == t ? void 0 : t.linkedFlag) || null, !wr(this.linkedFlag) && !this.linkedFlagSeen) {
+                var i = gr(this.linkedFlag) ? this.linkedFlag : this.linkedFlag.flag,
+                    n = gr(this.linkedFlag) ? null : this.linkedFlag.variant;
+                this.uh = this._instance.onFeatureFlags(((t, r) => {
+                    var s = !1;
+                    if (pr(r) && i in r) {
+                        var a = r[i];
+                        s = kr(a) ? !0 === a : n ? a === n : !!a
+                    }
+                    var o = s && !this.linkedFlagSeen;
+                    this.linkedFlagSeen = s, o && e(i, n)
+                }))
+            }
+        }
+        onRemoteConfig(t, e) {
+            this.onConfig(t, e)
+        }
+        stop() {
+            this.uh()
+        }
+    }
+    class cn {
+        constructor(t, e) {
+            this.lh = [], this._instance = t, this.sh = e
+        }
+        onConfig(t) {
+            var e;
+            this.lh = (ln(t) ? pr(t.sessionRecording) ? null == (e = t.sessionRecording) ? void 0 : e.eventTriggers : [] : null == t ? void 0 : t.eventTriggers) || []
+        }
+        onRemoteConfig(t) {
+            this.onConfig(t)
+        }
+        hh(t) {
+            return nn(this._instance, this.lh.length, this.sh, Bi, $i, t)
+        }
+        triggerStatus(t) {
+            var e = this.hh(t),
+                r = e === tn ? tn : e === en ? en : rn;
+            return this._instance.register_for_session({
+                $sdk_debug_replay_event_trigger_status: r
+            }), r
+        }
+        checkEventTriggerConditions(t, e, r) {
+            if (0 !== this.lh.length) {
+                var i = this.hh(r) === tn,
+                    n = this.lh.includes(t);
+                !i && n && e("event", t)
+            }
+        }
+        stop() {}
+    }
+    class vn {
+        constructor(t, e, r) {
+            if (this._instance = t, this.group = e, this.dh = new hn(t, e.id), this.fh = new cn(t, e.id), this.ph = new dn(t), e.conditions.events && e.conditions.events.length > 0 || e.conditions.urls && e.conditions.urls.length > 0 || e.conditions.flag) {
+                var i = (e.conditions.events || []).map((t => t.name)),
+                    n = {
+                        urlTriggers: e.conditions.urls || [],
+                        eventTriggers: i,
+                        linkedFlag: e.conditions.flag || null,
+                        urlBlocklist: []
+                    };
+                this.dh.onConfig(n), this.fh.onConfig(n), this.ph.onConfig(n, r);
+                var s = [this.fh, this.dh, this.ph];
+                this.mh = "any" === e.conditions.matchType ? new an(s) : new on(s)
+            } else this.mh = new un
+        }
+        triggerStatus(t) {
+            return this.mh.triggerStatus(t)
+        }
+        checkEventTriggerConditions(t, e, r) {
+            this.fh.checkEventTriggerConditions(t, e, r)
+        }
+        checkUrlTriggerConditions(t, e, r, i) {
+            this.dh.checkUrlTriggerConditions(t, e, r, i)
+        }
+        activateTrigger(t, e) {
+            var r;
+            null == (r = this._instance.persistence) || r.register({
+                ["url" === t ? zi + this.group.id : Bi + this.group.id]: e
+            })
+        }
+        stop() {
+            this.dh.stop(), this.fh.stop(), this.ph.stop()
+        }
+    }
+
+    function fn(t) {
+        if (t.rrwebError) return Xi;
+        if (!t.receivedFlags) return Qi;
+        if (!t.isRecordingEnabled) return Vi;
+        if (t.urlTriggerMatching.urlBlocked) return Ki;
+        var e = !0 === t.isSampled,
+            r = new an([t.eventTriggerMatching, t.urlTriggerMatching, t.linkedFlagMatching]).triggerStatus(t.sessionId);
+        return e ? Zi : r === tn ? Ji : r === en ? Qi : !1 === t.isSampled ? Vi : Ji
+    }
+
+    function pn(t) {
+        if (t.rrwebError) return Xi;
+        if (!t.receivedFlags) return Qi;
+        if (!t.isRecordingEnabled) return Vi;
+        if (t.urlTriggerMatching.urlBlocked) return Ki;
+        var e = new on([t.eventTriggerMatching, t.urlTriggerMatching, t.linkedFlagMatching]).triggerStatus(t.sessionId),
+            r = e !== rn,
+            i = kr(t.isSampled);
+        return r && e === en ? Qi : r && e === rn || i && !t.isSampled ? Vi : !0 === t.isSampled ? Zi : Ji
+    }
+
+    function mn() {
+        var t = [];
+        return function(e, r) {
+            if (pr(r) || vr(r)) {
+                for (; t.length > 0 && t[t.length - 1] !== this;) t.pop();
+                return t.includes(r) ? "[Circular]" : (t.push(r), r)
+            }
+            return r
+        }
+    }
+
+    function gn(t) {
+        var e = JSON.stringify(t, mn());
+        return e ? new Blob([e]).size : 0
+    }
+
+    function yn(t) {
+        if (yr(t)) return 4;
+        if (mr(t)) return 0;
+        switch (typeof t) {
+            case "string":
+                return t.length + 2;
+            case "number":
+                return String(t).length;
+            case "boolean":
+                return t ? 4 : 5;
+            case "object":
+                if (vr(t)) {
+                    for (var e = 2, r = 0; t.length > r; r++) {
+                        r > 0 && (e += 1);
+                        var i = t[r];
+                        e += mr(i) || yr(i) ? 4 : yn(i)
+                    }
+                    return e
+                }
+                var n = t,
+                    s = 2,
+                    a = !0;
+                for (var o in n)
+                    if ({}.hasOwnProperty.call(n, o)) {
+                        var u = n[o];
+                        mr(u) || (a || (s += 1), a = !1, s += o.length + 3 + yn(u))
+                    } return s;
+            default:
+                return 0
+        }
+    }
+
+    function wn(t, e) {
+        if (void 0 === e && (e = 6606028.8), t.size >= e && t.data.length > 1) {
+            var r = Math.floor(t.data.length / 2),
+                i = t.sizes.slice(0, r),
+                n = t.sizes.slice(r);
+            return [wn({
+                size: i.reduce(((t, e) => t + e), 0),
+                data: t.data.slice(0, r),
+                sizes: i,
+                sessionId: t.sessionId,
+                windowId: t.windowId
+            }), wn({
+                size: n.reduce(((t, e) => t + e), 0),
+                data: t.data.slice(r),
+                sizes: n,
+                sessionId: t.sessionId,
+                windowId: t.windowId
+            })].flatMap((t => t))
+        }
+        return [t]
+    }
+    var bn = Uint8Array,
+        kn = Uint16Array,
+        _n = Uint32Array,
+        Sn = new bn([0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 0, 0, 0, 0]),
+        In = new bn([0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 0, 0]),
+        Mn = new bn([16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15]),
+        Cn = function(t, e) {
+            for (var r = new kn(31), i = 0; 31 > i; ++i) r[i] = e += 1 << t[i - 1];
+            var n = new _n(r[30]);
+            for (i = 1; 30 > i; ++i)
+                for (var s = r[i]; r[i + 1] > s; ++s) n[s] = s - r[i] << 5 | i;
+            return [r, n]
+        },
+        Rn = Cn(Sn, 2),
+        xn = Rn[1];
+    Rn[0][28] = 258, xn[258] = 28;
+    for (var Tn = Cn(In, 0)[1], An = new kn(32768), On = 0; 32768 > On; ++On) {
+        var En = (43690 & On) >>> 1 | (21845 & On) << 1;
+        An[On] = ((65280 & (En = (61680 & (En = (52428 & En) >>> 2 | (13107 & En) << 2)) >>> 4 | (3855 & En) << 4)) >>> 8 | (255 & En) << 8) >>> 1
+    }
+    var Nn = function(t, e, r) {
+            for (var i = t.length, n = 0, s = new kn(e); i > n; ++n) ++s[t[n] - 1];
+            var a, o = new kn(e);
+            for (n = 0; e > n; ++n) o[n] = o[n - 1] + s[n - 1] << 1;
+            if (r) {
+                a = new kn(1 << e);
+                var u = 15 - e;
+                for (n = 0; i > n; ++n)
+                    if (t[n])
+                        for (var l = n << 4 | t[n], h = e - t[n], d = o[t[n] - 1]++ << h, c = d | (1 << h) - 1; c >= d; ++d) a[An[d] >>> u] = l
+            } else
+                for (a = new kn(i), n = 0; i > n; ++n) a[n] = An[o[t[n] - 1]++] >>> 15 - t[n];
+            return a
+        },
+        Fn = new bn(288);
+    for (On = 0; 144 > On; ++On) Fn[On] = 8;
+    for (On = 144; 256 > On; ++On) Fn[On] = 9;
+    for (On = 256; 280 > On; ++On) Fn[On] = 7;
+    for (On = 280; 288 > On; ++On) Fn[On] = 8;
+    var Ln = new bn(32);
+    for (On = 0; 32 > On; ++On) Ln[On] = 5;
+    var Dn = Nn(Fn, 9, 0),
+        Pn = Nn(Ln, 5, 0),
+        Wn = function(t) {
+            return (t / 8 >> 0) + (7 & t && 1)
+        },
+        $n = function(t, e, r) {
+            (null == r || r > t.length) && (r = t.length);
+            var i = new(t instanceof kn ? kn : t instanceof _n ? _n : bn)(r - e);
+            return i.set(t.subarray(e, r)), i
+        },
+        Bn = function(t, e, r) {
+            var i = e / 8 >> 0;
+            t[i] |= r <<= 7 & e, t[i + 1] |= r >>> 8
+        },
+        zn = function(t, e, r) {
+            var i = e / 8 >> 0;
+            t[i] |= r <<= 7 & e, t[i + 1] |= r >>> 8, t[i + 2] |= r >>> 16
+        },
+        Un = function(t, e) {
+            for (var r = [], i = 0; t.length > i; ++i) t[i] && r.push({
+                s: i,
+                f: t[i]
+            });
+            var n = r.length,
+                s = r.slice();
+            if (!n) return [new bn(0), 0];
+            if (1 == n) {
+                var a = new bn(r[0].s + 1);
+                return a[r[0].s] = 1, [a, 1]
+            }
+            r.sort((function(t, e) {
+                return t.f - e.f
+            })), r.push({
+                s: -1,
+                f: 25001
+            });
+            var o = r[0],
+                u = r[1],
+                l = 0,
+                h = 1,
+                d = 2;
+            for (r[0] = {
+                    s: -1,
+                    f: o.f + u.f,
+                    l: o,
+                    r: u
+                }; h != n - 1;) o = r[r[d].f > r[l].f ? l++ : d++], u = r[l != h && r[d].f > r[l].f ? l++ : d++], r[h++] = {
+                s: -1,
+                f: o.f + u.f,
+                l: o,
+                r: u
+            };
+            var c = s[0].s;
+            for (i = 1; n > i; ++i) s[i].s > c && (c = s[i].s);
+            var v = new kn(c + 1),
+                f = jn(r[h - 1], v, 0);
+            if (f > e) {
+                i = 0;
+                var p = 0,
+                    m = f - e,
+                    g = 1 << m;
+                for (s.sort((function(t, e) {
+                        return v[e.s] - v[t.s] || t.f - e.f
+                    })); n > i; ++i) {
+                    var y = s[i].s;
+                    if (e >= v[y]) break;
+                    p += g - (1 << f - v[y]), v[y] = e
+                }
+                for (p >>>= m; p > 0;) {
+                    var w = s[i].s;
+                    e > v[w] ? p -= 1 << e - v[w]++ - 1 : ++i
+                }
+                for (; i >= 0 && p; --i) {
+                    var b = s[i].s;
+                    v[b] == e && (--v[b], ++p)
+                }
+                f = e
+            }
+            return [new bn(v), f]
+        },
+        jn = function(t, e, r) {
+            return -1 == t.s ? Math.max(jn(t.l, e, r + 1), jn(t.r, e, r + 1)) : e[t.s] = r
+        },
+        qn = function(t) {
+            for (var e = t.length; e && !t[--e];);
+            for (var r = new kn(++e), i = 0, n = t[0], s = 1, a = function(t) {
+                    r[i++] = t
+                }, o = 1; e >= o; ++o)
+                if (t[o] == n && o != e) ++s;
+                else {
+                    if (!n && s > 2) {
+                        for (; s > 138; s -= 138) a(32754);
+                        s > 2 && (a(s > 10 ? s - 11 << 5 | 28690 : s - 3 << 5 | 12305), s = 0)
+                    } else if (s > 3) {
+                        for (a(n), --s; s > 6; s -= 6) a(8304);
+                        s > 2 && (a(s - 3 << 5 | 8208), s = 0)
+                    }
+                    for (; s--;) a(n);
+                    s = 1, n = t[o]
+                } return [r.subarray(0, i), e]
+        },
+        Hn = function(t, e) {
+            for (var r = 0, i = 0; e.length > i; ++i) r += t[i] * e[i];
+            return r
+        },
+        Gn = function(t, e, r) {
+            var i = r.length,
+                n = Wn(e + 2);
+            t[n] = 255 & i, t[n + 1] = i >>> 8, t[n + 2] = 255 ^ t[n], t[n + 3] = 255 ^ t[n + 1];
+            for (var s = 0; i > s; ++s) t[n + s + 4] = r[s];
+            return 8 * (n + 4 + i)
+        },
+        Vn = function(t, e, r, i, n, s, a, o, u, l, h) {
+            Bn(e, h++, r), ++n[256];
+            for (var d = Un(n, 15), c = d[0], v = d[1], f = Un(s, 15), p = f[0], m = f[1], g = qn(c), y = g[0], w = g[1], b = qn(p), k = b[0], _ = b[1], S = new kn(19), I = 0; y.length > I; ++I) S[31 & y[I]]++;
+            for (I = 0; k.length > I; ++I) S[31 & k[I]]++;
+            for (var M = Un(S, 7), C = M[0], R = M[1], x = 19; x > 4 && !C[Mn[x - 1]]; --x);
+            var T, A, O, E, N = l + 5 << 3,
+                F = Hn(n, Fn) + Hn(s, Ln) + a,
+                L = Hn(n, c) + Hn(s, p) + a + 14 + 3 * x + Hn(S, C) + (2 * S[16] + 3 * S[17] + 7 * S[18]);
+            if (F >= N && L >= N) return Gn(e, h, t.subarray(u, u + l));
+            if (Bn(e, h, 1 + (F > L)), h += 2, F > L) {
+                T = Nn(c, v, 0), A = c, O = Nn(p, m, 0), E = p;
+                var D = Nn(C, R, 0);
+                for (Bn(e, h, w - 257), Bn(e, h + 5, _ - 1), Bn(e, h + 10, x - 4), h += 14, I = 0; x > I; ++I) Bn(e, h + 3 * I, C[Mn[I]]);
+                h += 3 * x;
+                for (var P = [y, k], W = 0; 2 > W; ++W) {
+                    var B = P[W];
+                    for (I = 0; B.length > I; ++I) Bn(e, h, D[z = 31 & B[I]]), h += C[z], z > 15 && (Bn(e, h, B[I] >>> 5 & 127), h += B[I] >>> 12)
+                }
+            } else T = Dn, A = Fn, O = Pn, E = Ln;
+            for (I = 0; o > I; ++I)
+                if (i[I] > 255) {
+                    var z;
+                    zn(e, h, T[257 + (z = i[I] >>> 18 & 31)]), h += A[z + 257], z > 7 && (Bn(e, h, i[I] >>> 23 & 31), h += Sn[z]);
+                    var U = 31 & i[I];
+                    zn(e, h, O[U]), h += E[U], U > 3 && (zn(e, h, i[I] >>> 5 & 8191), h += In[U])
+                } else zn(e, h, T[i[I]]), h += A[i[I]];
+            return zn(e, h, T[256]), h + A[256]
+        },
+        Zn = new _n([65540, 131080, 131088, 131104, 262176, 1048704, 1048832, 2114560, 2117632]),
+        Jn = function() {
+            for (var t = new _n(256), e = 0; 256 > e; ++e) {
+                for (var r = e, i = 9; --i;) r = (1 & r && 3988292384) ^ r >>> 1;
+                t[e] = r
+            }
+            return t
+        }(),
+        Qn = function() {
+            var t = 4294967295;
+            return {
+                p(e) {
+                    for (var r = t, i = 0; e.length > i; ++i) r = Jn[255 & r ^ e[i]] ^ r >>> 8;
+                    t = r
+                },
+                d: () => 4294967295 ^ t
+            }
+        },
+        Kn = function(t, e, r, i, n) {
+            return function(t, e, r, i, n, s) {
+                var a = t.length,
+                    o = new bn(i + a + 5 * (1 + Math.floor(a / 7e3)) + n),
+                    u = o.subarray(i, o.length - n),
+                    l = 0;
+                if (!e || 8 > a)
+                    for (var h = 0; a >= h; h += 65535) {
+                        var d = h + 65535;
+                        a > d ? l = Gn(u, l, t.subarray(h, d)) : (u[h] = true, l = Gn(u, l, t.subarray(h, a)))
+                    } else {
+                        for (var c = Zn[e - 1], v = c >>> 13, f = 8191 & c, p = (1 << r) - 1, m = new kn(32768), g = new kn(p + 1), y = Math.ceil(r / 3), w = 2 * y, b = function(e) {
+                                return (t[e] ^ t[e + 1] << y ^ t[e + 2] << w) & p
+                            }, k = new _n(25e3), _ = new kn(288), S = new kn(32), I = 0, M = 0, C = (h = 0, 0), R = 0, x = 0; a > h; ++h) {
+                            var T = b(h),
+                                A = 32767 & h,
+                                O = g[T];
+                            if (m[A] = O, g[T] = A, h >= R) {
+                                var E = a - h;
+                                if ((I > 7e3 || C > 24576) && E > 423) {
+                                    l = Vn(t, u, 0, k, _, S, M, C, x, h - x, l), C = I = M = 0, x = h;
+                                    for (var N = 0; 286 > N; ++N) _[N] = 0;
+                                    for (N = 0; 30 > N; ++N) S[N] = 0
+                                }
+                                var F = 2,
+                                    L = 0,
+                                    D = f,
+                                    P = A - O & 32767;
+                                if (E > 2 && T == b(h - P))
+                                    for (var W = Math.min(v, E) - 1, B = Math.min(32767, h), z = Math.min(258, E); B >= P && --D && A != O;) {
+                                        if (t[h + F] == t[h + F - P]) {
+                                            for (var U = 0; z > U && t[h + U] == t[h + U - P]; ++U);
+                                            if (U > F) {
+                                                if (F = U, L = P, U > W) break;
+                                                var j = Math.min(P, U - 2),
+                                                    q = 0;
+                                                for (N = 0; j > N; ++N) {
+                                                    var H = h - P + N + 32768 & 32767,
+                                                        G = H - m[H] + 32768 & 32767;
+                                                    G > q && (q = G, O = H)
+                                                }
+                                            }
+                                        }
+                                        P += (A = O) - (O = m[A]) + 32768 & 32767
+                                    }
+                                if (L) {
+                                    k[C++] = 268435456 | xn[F] << 18 | Tn[L];
+                                    var V = 31 & xn[F],
+                                        Z = 31 & Tn[L];
+                                    M += Sn[V] + In[Z], ++_[257 + V], ++S[Z], R = h + F, ++I
+                                } else k[C++] = t[h], ++_[t[h]]
+                            }
+                        }
+                        l = Vn(t, u, true, k, _, S, M, C, x, h - x, l)
+                    }
+                return $n(o, 0, i + Wn(l) + n)
+            }(t, null == e.level ? 6 : e.level, null == e.mem ? Math.ceil(1.5 * Math.max(8, Math.min(13, Math.log(t.length)))) : 12 + e.mem, r, i)
+        },
+        Xn = function(t, e, r) {
+            for (; r; ++e) t[e] = r, r >>>= 8
+        },
+        Yn = function(t, e) {
+            var r = e.filename;
+            if (t[0] = 31, t[1] = 139, t[2] = 8, t[8] = 2 > e.level ? 4 : 9 == e.level ? 2 : 0, t[9] = 3, 0 != e.mtime && Xn(t, 4, Math.floor(new Date(e.mtime || Date.now()) / 1e3)), r) {
+                t[3] = 8;
+                for (var i = 0; r.length >= i; ++i) t[i + 10] = r.charCodeAt(i)
+            }
+        },
+        ts = function(t) {
+            return 10 + (t.filename && t.filename.length + 1 || 0)
+        };
+
+    function es(t, e) {
+        for (var r = "", i = 0; t.length > i;) {
+            var n = t[i++];
+            r += String.fromCharCode(n)
+        }
+        return r
+    }
+    class rs {
+        constructor(t, e) {
+            var r, i;
+            void 0 === e && (e = {}), this.gh = {}, this.yh = t => {
+                if (!this.gh[t]) {
+                    var e, r;
+                    this.gh[t] = !0;
+                    var i = this.wh(t);
+                    null == (e = (r = this.bh).onBlockedNode) || e.call(r, t, i)
+                }
+            }, this.kh = t => {
+                var e = this.wh(t);
+                if ("svg" !== (null == e ? void 0 : e.nodeName) && e instanceof Element) {
+                    var r = e.closest("svg");
+                    if (r) return [this._rrweb.mirror.getId(r), r]
+                }
+                return [t, e]
+            }, this.wh = t => this._rrweb.mirror.getNode(t), this._h = t => {
+                var e, r, i, n, s, a, o, u;
+                return (null !== (e = null == (r = t.removes) ? void 0 : r.length) && void 0 !== e ? e : 0) + (null !== (i = null == (n = t.attributes) ? void 0 : n.length) && void 0 !== i ? i : 0) + (null !== (s = null == (a = t.texts) ? void 0 : a.length) && void 0 !== s ? s : 0) + (null !== (o = null == (u = t.adds) ? void 0 : u.length) && void 0 !== o ? o : 0)
+            }, this.throttleMutations = t => {
+                if (3 !== t.type || 0 !== t.data.source) return t;
+                var e = t.data,
+                    r = this._h(e);
+                e.attributes && (e.attributes = e.attributes.filter((t => {
+                    var e = this.kh(t.id);
+                    return !this.la.consumeRateLimit(e[0]) && t
+                })));
+                var i = this._h(e);
+                return 0 !== i || r === i ? t : void 0
+            }, this._rrweb = t, this.bh = e, this.la = new Ir({
+                bucketSize: null !== (r = this.bh.bucketSize) && void 0 !== r ? r : 100,
+                refillRate: null !== (i = this.bh.refillRate) && void 0 !== i ? i : 10,
+                refillInterval: 1e3,
+                et: this.yh,
+                it: Tr
+            })
+        }
+        reset() {
+            this.gh = {}
+        }
+        stop() {
+            this.la.stop(), this.reset()
+        }
+    }
+    Rr.DEBUG = !1, Rr.LIB_VERSION = "1.409.4", Rr.LIB_NAME = "web";
+    class is {
+        constructor(t) {
+            if (!t.persistence) throw new Error("it is not valid to not have persistence and be this far into setting up the application");
+            this.Sh = t.get_property.bind(t), this.Ih = t.persistence.set_property.bind(t.persistence)
+        }
+        trackSize(t, e) {
+            this.Ih(qi, {
+                sessionId: t,
+                size: this.currentTrackedSize(t) + e
+            })
+        }
+        currentTrackedSize(t) {
+            var e, r = this.Sh(qi);
+            return pr(e = r) && gr(e.sessionId) && br(e.size) && r.sessionId === t ? r.size : 0
+        }
+    }
+
+    function ns(t, e) {
+        return function(t) {
+            for (var e = 0, r = 0; t.length > r; r++) e = (e << 5) - e + t.charCodeAt(r), e |= 0;
+            return Math.abs(e)
+        }(t) % 100 < Sr(100 * e, 0, 100, Tr)
+    }
+    var ss = function(t, e) {
+            if (! function(t) {
+                    try {
+                        new RegExp(t)
+                    } catch (t) {
+                        return !1
+                    }
+                    return !0
+                }(e)) return !1;
+            try {
+                return new RegExp(e).test(t)
+            } catch (t) {
+                return !1
+            }
+        },
+        as = {
+            exact: (t, e) => e.some((e => t.some((t => e === t)))),
+            is_not: (t, e) => e.every((e => t.every((t => e !== t)))),
+            regex: (t, e) => e.some((e => t.some((t => ss(e, t))))),
+            not_regex: (t, e) => e.every((e => t.every((t => !ss(e, t))))),
+            icontains: (t, e) => e.map(os).some((e => t.map(os).some((t => e.includes(t))))),
+            not_icontains: (t, e) => e.map(os).every((e => t.map(os).every((t => !e.includes(t))))),
+            gt: (t, e) => e.some((e => {
+                var r = parseFloat(e);
+                return !isNaN(r) && t.some((t => r > parseFloat(t)))
+            })),
+            lt: (t, e) => e.some((e => {
+                var r = parseFloat(e);
+                return !isNaN(r) && t.some((t => r < parseFloat(t)))
+            }))
+        },
+        os = t => t.toLowerCase(),
+        us = new Set(["is_not", "not_icontains", "not_regex"]);
+
+    function ls(t, e, r) {
+        return !t || 0 === t.length || t.every((t => {
+            var i = "person" === t.type ? r : e,
+                n = null == i ? void 0 : i[t.key],
+                s = t.operator || "exact";
+            if (mr(n) || yr(n)) return us.has(s);
+            var a = as[s];
+            return !!a && !mr(t.value) && !yr(t.value) && a(vr(t.value) ? t.value.map(String) : [String(t.value)], vr(n) ? n.map(String) : [String(n)])
+        }))
+    }
+    var hs = Ar("[SessionRecording]");
+
+    function ds(t, e) {
+        return e ? t : "!" + t
+    }
+
+    function cs(t, e) {
+        return t === e || t !== "!" + e && null
+    }
+    class vs {
+        constructor(t, e, r, i, n, s, a) {
+            this.Mh = null, this.Ch = pn, this._instance = t, this.dh = e, this.fh = r, this.ph = i, this.Rh = n, this.xh = s, this.Th = a
+        }
+        onRemoteConfig(t) {
+            this.Mh = br(t.sampleRate) ? t.sampleRate : null, "any" === t.triggerMatchType ? (this.Ah = new an([this.fh, this.dh]), this.Ch = fn) : (this.Ah = new on([this.fh, this.dh]), this.Ch = pn), this._instance.register_for_session({
+                [Gi]: t.triggerMatchType
+            }), this.dh.onConfig(t), this.fh.onConfig(t), this.ph.onConfig(t, ((t, e) => {
+                this.Rh("linked_flag_matched", {
+                    flag: t,
+                    variant: e
+                }), this.Th()
+            }))
+        }
+        getStatus(t) {
+            return this.Ch({
+                receivedFlags: !0,
+                isRecordingEnabled: !0,
+                isSampled: t.isSampled,
+                rrwebError: t.rrwebError,
+                urlTriggerMatching: t.urlTriggerMatching,
+                eventTriggerMatching: t.eventTriggerMatching,
+                linkedFlagMatching: t.linkedFlagMatching,
+                sessionId: t.sessionId
+            })
+        }
+        getMinimumDuration(t) {
+            var e = this._instance.get_property("$session_recording_remote_config"),
+                r = null == e ? void 0 : e.minimumDurationMilliseconds;
+            return br(r) ? r : null
+        }
+        checkUrlTriggers(t, e, r, i) {
+            this.dh.checkUrlTriggerConditions(e, r, i, t)
+        }
+        setupEventTriggerListeners(t, e, r) {
+            if (0 !== this.fh.lh.length && wr(this.Oh)) return this.Oh = t((t => {
+                try {
+                    this.fh.checkEventTriggerConditions(t.event, r, e)
+                } catch (t) {
+                    hs.error("Could not activate event trigger", t)
+                }
+            })), this.Oh
+        }
+        makeSamplingDecisions(t) {
+            var e, r, i, n = this.Mh;
+            if (!br(n)) return null == (r = this._instance.persistence) || r.unregister(Di), void(null == (i = this._instance.persistence) || i.unregister(Oi));
+            var s = this._instance.get_property(Di),
+                a = this._instance.get_property(Oi),
+                o = cs(s, t),
+                u = br(a) && a !== n,
+                l = mr(a) && s === t,
+                h = u || l || !kr(o),
+                d = h ? ns(t, n) : o;
+            h && (d ? this.Rh("sampled") : hs.warn("Sample rate (" + n + ") has determined that this sessionId (" + t + ") will not be sent to the server.")), null == (e = this._instance.persistence) || e.register({
+                [Di]: ds(t, d),
+                [Oi]: yr(a) && s === t ? null : n
+            })
+        }
+        ensureSamplingDecision(t) {
+            if (br(this.Mh)) {
+                var e = this._instance.get_property(Di);
+                kr(cs(e, t)) || this.makeSamplingDecisions(t)
+            }
+        }
+        onFlushComplete() {}
+        clearConditionalRecordingPersistence() {
+            var t, e, r, i, n;
+            null == (t = this._instance.persistence) || t.unregister($i), null == (e = this._instance.persistence) || e.unregister(Wi), null == (r = this._instance.persistence) || r.unregister(Di), null == (i = this._instance.persistence) || i.unregister(Oi), null == (n = this._instance.persistence) || n.unregister(Pi)
+        }
+        updateActiveTriggers(t) {}
+        hasPendingTriggers(t) {
+            var e;
+            return (null == (e = this.Ah) ? void 0 : e.triggerStatus(t)) === en
+        }
+        stop() {
+            var t;
+            null == (t = this.Oh) || t.call(this), this.Oh = void 0, this.fh.stop(), this.dh.stop(), this.ph.stop()
+        }
+    }
+    class fs {
+        constructor(t, e, r, i, n) {
+            this.Eh = [], this.Nh = new Map, this.Fh = !1, this._instance = t, this.dh = e, this.Rh = r, this.Lh = i, this.Th = n
+        }
+        onRemoteConfig(t) {
+            t.triggerGroups && 0 !== t.triggerGroups.length ? (this.Dh(t.triggerGroups), this._instance.register_for_session({
+                [Gi]: "v2_trigger_groups",
+                $sdk_debug_replay_trigger_groups_count: t.triggerGroups.length
+            }), this.dh.onConfig(t)) : hs.warn("[V2Strategy] No trigger groups configured")
+        }
+        getStatus(t) {
+            return function(t) {
+                if (t.rrwebError) return Xi;
+                if (t.urlTriggerMatching.urlBlocked) return Ki;
+                var e = t.triggerGroupMatchers,
+                    r = t.triggerGroupSamplingResults;
+                if (0 === e.length) return Vi;
+                var i = !1,
+                    n = !1;
+                for (var s of e) {
+                    var a = s.triggerStatus(t.sessionId);
+                    if (a === tn) {
+                        var o = s.group.id,
+                            u = r.get(o);
+                        mr(u) ? Tr.warn("[V2 Triggers] Group activated but no sampling decision found", {
+                            groupId: o
+                        }) : !0 === u && (n = !0)
+                    } else a === en && (i = !0)
+                }
+                return n ? Zi : i ? Qi : Vi
+            }({
+                isSampled: t.isSampled,
+                rrwebError: t.rrwebError,
+                urlTriggerMatching: t.urlTriggerMatching,
+                eventTriggerMatching: t.eventTriggerMatching,
+                linkedFlagMatching: t.linkedFlagMatching,
+                sessionId: t.sessionId,
+                triggerGroupMatchers: this.Eh,
+                triggerGroupSamplingResults: this.Nh,
+                minimumDuration: this.getMinimumDuration(t.sessionId)
+            })
+        }
+        getMinimumDuration(t) {
+            var e = null;
+            for (var r of this.Eh)
+                if ("trigger_activated" === r.triggerStatus(t)) {
+                    var i = r.group.minDurationMs;
+                    br(i) && (yr(e) || e > i) && (e = i)
+                } return e
+        }
+        checkUrlTriggers(t, e, r, i) {
+            var n = this;
+            this.dh.checkUrlBlocklist(e, r);
+            var s = function(i) {
+                i.checkUrlTriggerConditions(e, r, (e => {
+                    n.Ph(i, void 0) && (i.activateTrigger(e, t), n.updateActiveTriggers(t), n.Th())
+                }), t)
+            };
+            for (var a of this.Eh) s(a)
+        }
+        setupEventTriggerListeners(t, e, r) {
+            var i = this;
+            return this.Oh = t((t => {
+                var r;
+                if (this.Fh) return hs.info("[SessionRecorder] Stopping trigger checks - initial buffer flushed"), null == (r = this.Oh) || r.call(this), void(this.Oh = void 0);
+                try {
+                    var n = function(r) {
+                        r.checkEventTriggerConditions(t.event, (n => {
+                            if (i.Ph(r, t.properties)) {
+                                var s = (r.group.conditions.events || []).filter((e => e.name === t.event)),
+                                    a = i._instance.get_property(Hi);
+                                s.some((e => !e.properties || 0 === e.properties.length || ls(e.properties, t.properties, a))) && (r.activateTrigger(n, e), i.updateActiveTriggers(e), i.Th())
+                            }
+                        }), e)
+                    };
+                    for (var s of this.Eh) n(s)
+                } catch (t) {
+                    hs.error("Could not activate event trigger for trigger groups", t)
+                }
+            })), this.Oh
+        }
+        makeSamplingDecisions(t) {
+            for (var e of this.Eh) {
+                var r, i = e.group,
+                    n = i.id,
+                    s = i.sampleRate,
+                    a = Ui + n,
+                    o = this._instance.get_property(a),
+                    u = null,
+                    l = !1,
+                    h = !1,
+                    d = !1;
+                if (pr(o)) {
+                    var c = o.sessionId,
+                        v = o.sampleRate,
+                        f = o.sampled;
+                    l = "string" == typeof c && c !== t, h = br(v) && v !== s, u = c === t && br(v) && v === s && kr(f) ? f : null
+                } else u = o === t || null, l = "string" == typeof o && o !== t, d = o === t;
+                var p = l || h || d || !kr(u),
+                    m = p ? ns(t + n, s) : u;
+                p && this.Lh("triggerGroupSamplingDecisionMade", {
+                    group_id: n,
+                    group_name: i.name,
+                    sampleRate: s,
+                    isSampled: m
+                }), this.Nh.set(n, m), null == (r = this._instance.persistence) || r.register({
+                    [a]: {
+                        sessionId: t,
+                        sampleRate: s,
+                        sampled: m
+                    }
+                })
+            }
+            this.updateActiveTriggers(t)
+        }
+        ensureSamplingDecision(t) {}
+        onFlushComplete() {
+            this.Fh = !0
+        }
+        clearConditionalRecordingPersistence() {
+            var t, e, r;
+            for (var i of (null == (t = this._instance.persistence) || t.unregister(Di), null == (e = this._instance.persistence) || e.unregister(Oi), null == (r = this._instance.persistence) || r.unregister(Pi), this.Eh)) {
+                var n, s, a, o = i.group.id;
+                null == (n = this._instance.persistence) || n.unregister(Bi + o), null == (s = this._instance.persistence) || s.unregister(zi + o), null == (a = this._instance.persistence) || a.unregister(Ui + o)
+            }
+        }
+        updateActiveTriggers(t) {
+            var e = [];
+            for (var r of this.Eh) {
+                var i = r.group,
+                    n = i.id,
+                    s = "trigger_activated" === r.triggerStatus(t),
+                    a = !0 === this.Nh.get(n);
+                s && e.push({
+                    id: n,
+                    name: i.name,
+                    matched: !0,
+                    sampled: a
+                })
+            }
+            this._instance.register_for_session({
+                $sdk_debug_replay_matched_recording_trigger_groups: e
+            })
+        }
+        hasPendingTriggers(t) {
+            for (var e of this.Eh)
+                if (e.triggerStatus(t) === en) return !0;
+            return !1
+        }
+        stop() {
+            var t;
+            null == (t = this.Oh) || t.call(this), this.Oh = void 0, this.Eh.forEach((t => t.stop())), this.Eh = [], this.Nh.clear(), this.dh.stop()
+        }
+        Ph(t, e) {
+            var r = t.group.conditions.properties;
+            return !r || 0 === r.length || ls(r, e, this._instance.get_property(Hi))
+        }
+        Dh(t) {
+            var e = this;
+            this.Eh.forEach((t => t.stop())), this.Eh = [], this.Nh.clear();
+            var r = function(t) {
+                var r = new vn(e._instance, t, ((r, i) => {
+                    e.Rh("linked_flag_matched", {
+                        flag: r,
+                        variant: i,
+                        group_id: t.id,
+                        group_name: t.name
+                    }), e.Th()
+                }));
+                e.Eh.push(r)
+            };
+            for (var i of t) r(i)
+        }
+    }
+    var ps = ["gclid", "gclsrc", "dclid", "gbraid", "wbraid", "fbclid", "msclkid", "twclid", "li_fat_id", "igshid", "ttclid", "rdt_cid", "epik", "qclid", "sccid", "irclid", "_kx"];
+
+    function ms(t) {
+        return pr(t) ? t.network_timing : t
+    }
+    var gs, ys, ws = "[SessionRecording]",
+        bs = Ar(ws),
+        ks = [Ti.MouseMove, Ti.MouseInteraction, Ti.Scroll, Ti.ViewportResize, Ti.Input, Ti.TouchMove, Ti.MediaInteraction, Ti.Drag],
+        _s = t => ({
+            rrwebMethod: t,
+            enqueuedAt: Date.now(),
+            attempt: 1
+        });
+
+    function Ss() {
+        var t;
+        return null == nr || null == (t = nr.__PosthogExtensions__) ? void 0 : t.rrweb
+    }
+
+    function Is() {
+        var t;
+        return null == (t = Ss()) ? void 0 : t.record
+    }
+
+    function Ms(t) {
+        try {
+            return JSON.stringify(t)
+        } catch (e) {
+            return JSON.stringify(t, mn())
+        }
+    }
+
+    function Cs(t) {
+        return es(function(t, e) {
+            void 0 === e && (e = {});
+            var r = Qn(),
+                i = t.length;
+            r.p(t);
+            var n = Kn(t, e, ts(e), 8),
+                s = n.length;
+            return Yn(n, e), Xn(n, s - 8, r.d()), Xn(n, s - 4, i), n
+        }(function(t, e) {
+            var r = t.length;
+            if ("undefined" != typeof TextEncoder) return (new TextEncoder).encode(t);
+            for (var i = new bn(t.length + (t.length >>> 1)), n = 0, s = function(t) {
+                    i[n++] = t
+                }, a = 0; r > a; ++a) {
+                if (n + 5 > i.length) {
+                    var o = new bn(n + 8 + (r - a << 1));
+                    o.set(i), i = o
+                }
+                var u = t.charCodeAt(a);
+                128 > u ? s(u) : 2048 > u ? (s(192 | u >>> 6), s(128 | 63 & u)) : u > 55295 && 57344 > u ? (s(240 | (u = 65536 + (1047552 & u) | 1023 & t.charCodeAt(++a)) >>> 18), s(128 | u >>> 12 & 63), s(128 | u >>> 6 & 63), s(128 | 63 & u)) : (s(224 | u >>> 12), s(128 | u >>> 6 & 63), s(128 | 63 & u))
+            }
+            return $n(i, 0, n)
+        }(Ms(t))))
+    }
+
+    function Rs(t) {
+        return xs.apply(this, arguments)
+    }
+
+    function xs() {
+        return xs = e((function*(t) {
+            var e = Ms(t),
+                r = yield function(t, e, r) {
+                    return ur.apply(this, arguments)
+                }(e, Rr.DEBUG, {
+                    rethrow: !0
+                });
+            return es(new Uint8Array(yield r.arrayBuffer()))
+        })), xs.apply(this, arguments)
+    }
+    var Ts = "undefined" != typeof globalThis && "CompressionStream" in globalThis && "TextEncoder" in globalThis && "Response" in globalThis && "function" == typeof Response.prototype.blob,
+        As = !1;
+
+    function Os(t) {
+        return vr(t) && 0 === t.length ? gs = null != gs ? gs : Cs([]) : Cs(t)
+    }
+
+    function Es(t) {
+        return Ns.apply(this, arguments)
+    }
+
+    function Ns() {
+        return (Ns = e((function*(t) {
+            return vr(t) && 0 === t.length ? gs || (ys = null != ys ? ys : Rs([]).then((t => (gs = t, t))).catch((t => {
+                throw gs = void 0, ys = void 0, t
+            }))) : Rs(t)
+        }))).apply(this, arguments)
+    }
+
+    function Fs(t) {
+        return Ts && !As && function(t) {
+            return t.type === xi.FullSnapshot || t.type === xi.IncrementalSnapshot && (t.data.source === Ti.Mutation || t.data.source === Ti.StyleSheetRule)
+        }(t)
+    }
+
+    function Ls(t) {
+        return {
+            event: t,
+            size: yn(t)
+        }
+    }
+
+    function Ds(t, e) {
+        return r({}, t, {
+            data: e,
+            cv: "2024-10"
+        })
+    }
+
+    function Ps(t, e) {
+        return r({}, t, {
+            cv: "2024-10",
+            data: r({}, t.data, e)
+        })
+    }
+
+    function Ws(t) {
+        try {
+            if (t.type === xi.FullSnapshot) return Ls(Ds(t, Cs(t.data)));
+            if (t.type === xi.IncrementalSnapshot && t.data.source === Ti.Mutation) return Ls(Ps(t, {
+                texts: Os(t.data.texts),
+                attributes: Os(t.data.attributes),
+                removes: Os(t.data.removes),
+                adds: Os(t.data.adds)
+            }));
+            if (t.type === xi.IncrementalSnapshot && t.data.source === Ti.StyleSheetRule) return Ls(Ps(t, {
+                adds: t.data.adds ? Cs(t.data.adds) : void 0,
+                removes: t.data.removes ? Cs(t.data.removes) : void 0
+            }))
+        } catch (t) {
+            bs.error("could not compress event - will use uncompressed event", t)
+        }
+        return {
+            event: t,
+            size: gn(t)
+        }
+    }
+
+    function $s() {
+        return ($s = e((function*(t) {
+            try {
+                if (t.type === xi.FullSnapshot) return Ls(Ds(t, yield Rs(t.data)));
+                if (t.type === xi.IncrementalSnapshot && t.data.source === Ti.Mutation) {
+                    var e = yield Promise.all([Es(t.data.texts), Es(t.data.attributes), Es(t.data.removes), Es(t.data.adds)]);
+                    return Ls(Ps(t, {
+                        texts: e[0],
+                        attributes: e[1],
+                        removes: e[2],
+                        adds: e[3]
+                    }))
+                }
+                if (t.type === xi.IncrementalSnapshot && t.data.source === Ti.StyleSheetRule) {
+                    var r = yield Promise.all([t.data.adds ? Rs(t.data.adds) : void 0, t.data.removes ? Rs(t.data.removes) : void 0]);
+                    return Ls(Ps(t, {
+                        adds: r[0],
+                        removes: r[1]
+                    }))
+                }
+            } catch (e) {
+                return (t => {
+                    if (!t || "object" != typeof t) return !1;
+                    var e = "name" in t ? String(t.name) : "";
+                    return (t => !(!t || "object" != typeof t) && "NotReadableError" === ("name" in t ? String(t.name) : ""))(t) || e === sr
+                })(e) && (As = !0), bs.error("could not compress event asynchronously - trying synchronous compression", e), Ws(t)
+            }
+            return {
+                event: t,
+                size: gn(t)
+            }
+        }))).apply(this, arguments)
+    }
+
+    function Bs(t, e) {
+        return t.type === xi.Custom && t.data.tag === e
+    }
+
+    function zs(t) {
+        return Bs(t, "sessionIdle")
+    }
+
+    function Us(t) {
+        return Bs(t, "$session_ending")
+    }
+
+    function js(t) {
+        return Bs(t, "$session_starting")
+    }
+    class qs {
+        get sessionId() {
+            return this.Ti
+        }
+        get Wh() {
+            if (!this._instance.sessionManager) throw new Error(ws + " must be started with a valid sessionManager.");
+            return this._instance.sessionManager
+        }
+        get $h() {
+            return this._instance.config.session_recording.session_idle_threshold_ms || 3e5
+        }
+        get Bh() {
+            return cs(this._instance.get_property(Di), this.sessionId)
+        }
+        get Mh() {
+            var t, e = null == (t = this.ll) ? void 0 : t.sampleRate;
+            return br(e) ? e : null
+        }
+        get zh() {
+            var t, e;
+            return null !== (t = null == (e = this.Uh) ? void 0 : e.getMinimumDuration(this.sessionId)) && void 0 !== t ? t : null
+        }
+        constructor(t) {
+            this.jh = "/s/", this._forceAllowLocalhostNetworkCapture = !1, this.qh = void 0, this.Hh = Date.now(), this.Gh = !1, this.Vh = [], this.Zh = "unknown", this.Jh = !1, this.Qh = !1, this.Kh = !1, this.Xh = !1, this.Yh = !1, this.td = [], this.rd = void 0, this.nd = void 0, this.sd = [], this.ad = 0, this.od = 0, this.ud = !1, this.ld = void 0, this.Oh = void 0, this.hd = void 0, this.dd = void 0, this.vd = void 0, this.fi = (t, e, r) => {
+                var i, n, s;
+                if (r && (t !== this.Ti || e !== this.Ii)) {
+                    var a, o = !r.noSessionId && (r.activityTimeout || r.sessionPastMaximumLength),
+                        u = this.Ti,
+                        l = this.Ii;
+                    o && this.Lh("$session_ending", {
+                        currentSessionId: u,
+                        currentWindowId: l,
+                        nextSessionId: t,
+                        nextWindowId: e,
+                        changeReason: r,
+                        lastActivityTimestamp: this.Hh,
+                        flushed_size: null == (a = this.fd) ? void 0 : a.currentTrackedSize(u)
+                    }), null == (i = this._instance.persistence) || i.unregister(ji), this.Kh = !1, null == (n = Ss()) || null == n.resetMaxDepthState || n.resetMaxDepthState(), this.Lh("$session_id_change", {
+                        sessionId: t,
+                        windowId: e,
+                        changeReason: r
+                    }), this.pd(), !1 === this.Zh && this.isStarted || this.Ti === t && this.Ii === e || (this.Zh = "unknown", this.stop(), this.start("session_id_changed")), o && this.Lh("$session_starting", {
+                        previousSessionId: u,
+                        previousWindowId: l,
+                        nextSessionId: t,
+                        nextWindowId: e,
+                        changeReason: r,
+                        lastActivityTimestamp: this.Hh
+                    }), null == (s = this.Uh) || s.makeSamplingDecisions(t)
+                }
+            }, this.md = () => {
+                var t;
+                return (null == (t = this._instance.persistence) ? void 0 : t.props[Pi]) === this.Ti
+            }, this.gd = () => {
+                var t, e;
+                if (0 === this.R.data.length) return null;
+                var r = null == (t = this.R.data[0]) ? void 0 : t.timestamp,
+                    i = null == (e = this.R.data[this.R.data.length - 1]) ? void 0 : e.timestamp;
+                return br(r) && br(i) ? i - r : null
+            }, this.yd = () => {
+                var t, e, r = this.zh;
+                if (!br(r)) return !1;
+                if (null === (t = null == (e = this._instance.config.session_recording) ? void 0 : e.strictMinimumDuration) || void 0 === t || !t) {
+                    var i = this.wd;
+                    return br(i) && i >= 0 && r > i
+                }
+                if (this.md()) return !1;
+                var n, s = this.gd();
+                return !!yr(s) || r > s || (null == (n = this._instance.persistence) || n.register({
+                    [Pi]: this.Ti
+                }), !1)
+            }, this.bd = () => {
+                this.status !== Qi ? (this.kd(), this._d()) : this.Sd()
+            }, this.Id = () => {
+                this.Lh("browser offline", {})
+            }, this.Ks = () => {
+                this.Lh("browser online", {})
+            }, this.xe = () => {
+                null != tr && tr.visibilityState && this.Lh("window " + tr.visibilityState, {})
+            }, this._instance = t;
+            var e = this.Wh.checkAndGetSessionAndWindowId(),
+                r = e.windowId;
+            this.Ti = e.sessionId, this.Ii = r, this.ph = new dn(this._instance), this.dh = new hn(this._instance), this.fh = new cn(this._instance), this.R = this.Sd(), this.Wh.sessionTimeoutMs > this.$h || bs.warn("session_idle_threshold_ms (" + this.$h + ") is greater than the session timeout (" + this.Wh.sessionTimeoutMs + "). Session will never be detected as idle"), this.fd = new is(this._instance)
+        }
+        get Md() {
+            var t, e, r, i, n, s, a, o = null == (t = this.ll) ? void 0 : t.masking,
+                u = {
+                    maskAllInputs: null == (e = this._instance.config.session_recording) ? void 0 : e.maskAllInputs,
+                    maskTextSelector: null == (r = this._instance.config.session_recording) ? void 0 : r.maskTextSelector,
+                    blockSelector: null == (i = this._instance.config.session_recording) ? void 0 : i.blockSelector
+                },
+                l = null !== (n = null == u ? void 0 : u.maskAllInputs) && void 0 !== n ? n : null == o ? void 0 : o.maskAllInputs,
+                h = null !== (s = null == u ? void 0 : u.maskTextSelector) && void 0 !== s ? s : null == o ? void 0 : o.maskTextSelector,
+                d = null !== (a = null == u ? void 0 : u.blockSelector) && void 0 !== a ? a : null == o ? void 0 : o.blockSelector;
+            return mr(l) && mr(h) && mr(d) ? void 0 : {
+                maskAllInputs: null == l || l,
+                maskTextSelector: h,
+                blockSelector: d
+            }
+        }
+        Cd() {
+            var t;
+            if (!this.Xh) {
+                var e = null == (t = this.ll) ? void 0 : t.masking;
+                if (!wr(e)) {
+                    var r = this._instance.config.session_recording,
+                        i = ["maskAllInputs", "maskTextSelector", "blockSelector"].filter((t => {
+                            var i = null == r ? void 0 : r[t],
+                                n = e[t];
+                            return !mr(i) && i !== n
+                        }));
+                    0 !== i.length && (this.Xh = !0, bs.warn('Session recording masking is configured both in `posthog.init` and in your project settings, and they differ. The `session_recording` options in `posthog.init` take precedence, so the project ("Privacy and masking") setting is ignored for: ' + i.join(", ") + ". Remove these masking options from `posthog.init` to use the project setting instead. See https://posthog.com/docs/session-replay/privacy", {
+                        client: {
+                            maskAllInputs: null == r ? void 0 : r.maskAllInputs,
+                            maskTextSelector: null == r ? void 0 : r.maskTextSelector,
+                            blockSelector: null == r ? void 0 : r.blockSelector
+                        },
+                        project: e
+                    }))
+                }
+            }
+        }
+        get Rd() {
+            var t;
+            return Sr(null == (t = this._instance.config.session_recording.canvasCapture) ? void 0 : t.resolutionScale, .1, 1, Ar("canvas recording resolution scale"), 1)
+        }
+        get xd() {
+            var t, e, r, i, n, s, a, o = this._instance.config.session_recording.captureCanvas,
+                u = null == (t = this.ll) ? void 0 : t.canvasRecording,
+                l = null !== (e = null !== (r = null == o ? void 0 : o.recordCanvas) && void 0 !== r ? r : null == u ? void 0 : u.enabled) && void 0 !== e && e,
+                h = null !== (i = null !== (n = null == o ? void 0 : o.canvasFps) && void 0 !== n ? n : null == u ? void 0 : u.fps) && void 0 !== i ? i : 4,
+                d = null !== (s = null !== (a = null == o ? void 0 : o.canvasQuality) && void 0 !== a ? a : null == u ? void 0 : u.quality) && void 0 !== s ? s : .4;
+            if ("string" == typeof d) {
+                var c = parseFloat(d);
+                d = isNaN(c) ? .4 : c
+            }
+            return {
+                enabled: l,
+                fps: Sr(h, 0, 12, Ar("canvas recording fps"), 4),
+                quality: Sr(d, 0, 1, Ar("canvas recording quality"), .4)
+            }
+        }
+        get Td() {
+            var t, e = !(null == (t = this.ll) || !t.consoleLogRecordingEnabled),
+                r = this._instance.config.enable_recording_console_log;
+            return null != r ? r : e
+        }
+        get Ad() {
+            var t, e, r, i = null == (t = this.ll) ? void 0 : t.networkPayloadCapture,
+                n = {
+                    recordHeaders: null == (e = this._instance.config.session_recording) ? void 0 : e.recordHeaders,
+                    recordBody: null == (r = this._instance.config.session_recording) ? void 0 : r.recordBody
+                },
+                s = (null == n ? void 0 : n.recordHeaders) || (null == i ? void 0 : i.recordHeaders),
+                a = (null == n ? void 0 : n.recordBody) || (null == i ? void 0 : i.recordBody),
+                o = ms(this._instance.config.capture_performance),
+                u = ms(null == i ? void 0 : i.capturePerformance),
+                l = !!(kr(o) ? o : u);
+            return s || a || l ? {
+                recordHeaders: s,
+                recordBody: a,
+                recordPerformance: l
+            } : void 0
+        }
+        Od() {
+            var t, e, i = [],
+                n = null == (t = nr.__PosthogExtensions__) || null == (t = t.rrwebPlugins) ? void 0 : t.getRecordConsolePlugin;
+            n && this.Td && i.push(n());
+            var s = null == (e = nr.__PosthogExtensions__) || null == (e = e.rrwebPlugins) ? void 0 : e.getRecordNetworkPlugin;
+            return this.Ad && fr(s) && (!Nr.includes(er.hostname) || this._forceAllowLocalhostNetworkCapture ? i.push(s(((t, e) => {
+                var i, n = {
+                        payloadSizeLimitBytes: Qr.payloadSizeLimitBytes,
+                        performanceEntryTypeToObserve: [...Qr.performanceEntryTypeToObserve],
+                        payloadHostDenyList: [...e.payloadHostDenyList || [], ...Qr.payloadHostDenyList]
+                    },
+                    s = !1 !== t.session_recording.recordHeaders && e.recordHeaders,
+                    a = !1 !== t.session_recording.recordBody && e.recordBody,
+                    o = !1 !== t.capture_performance && e.recordPerformance,
+                    u = (i = Jr(n), t => (null != t && t.requestBody && (t.requestBody = ri(t.requestBody, t.requestHeaders, i, "Request")), null != t && t.responseBody && (t.responseBody = ri(t.responseBody, t.responseHeaders, i, "Response")), t)),
+                    l = e => {
+                        return u(((t, e) => {
+                            var r, i = Fr(t.name),
+                                n = 0 === e.indexOf("http") ? null == (r = Fr(e)) ? void 0 : r.pathname : e;
+                            "/" === n && (n = "");
+                            var s = null == i ? void 0 : i.pathname.replace(n || "", "");
+                            if (!(i && s && ei.some((t => 0 === s.indexOf(t))))) return t
+                        })((ti((r = e).requestHeaders), ti(r.responseHeaders), r), t.api_host));
+                        var r
+                    },
+                    h = fr(t.session_recording.maskNetworkRequestFn);
+                return h && fr(t.session_recording.maskCapturedNetworkRequestFn) && Tr.warn("Both `maskNetworkRequestFn` and `maskCapturedNetworkRequestFn` are defined. `maskNetworkRequestFn` will be ignored."), h && (t.session_recording.maskCapturedNetworkRequestFn = e => {
+                    var i = t.session_recording.maskNetworkRequestFn({
+                        url: e.name
+                    });
+                    return r({}, e, {
+                        name: null == i ? void 0 : i.url
+                    })
+                }), n.maskRequestFn = fr(t.session_recording.maskCapturedNetworkRequestFn) ? e => {
+                    var r, i = l(e);
+                    return i && null !== (r = null == t.session_recording.maskCapturedNetworkRequestFn ? void 0 : t.session_recording.maskCapturedNetworkRequestFn(i)) && void 0 !== r ? r : void 0
+                } : t => function(t) {
+                    if (!mr(t)) return t.requestBody = ii(t.requestBody, "Request"), t.responseBody = ii(t.responseBody, "Response"), t
+                }(l(t)), r({}, Qr, n, {
+                    recordHeaders: s,
+                    recordBody: a,
+                    recordPerformance: o,
+                    recordInitialRequests: o,
+                    streamNetworkBody: !0 === t.session_recording.streamNetworkBody
+                })
+            })(this._instance.config, this.Ad))) : bs.info("NetworkCapture not started because we are on localhost.")), i
+        }
+        Ed(t) {
+            return this._instance.config.disable_capture_url_hashes ? Mr(t) : t
+        }
+        Nd(t, e) {
+            void 0 === e && (e = !1);
+            var r = e ? Mr(t) : this.Ed(t),
+                i = this._instance.config.mask_personal_data_properties ? [...ps, ...this._instance.config.custom_personal_data_properties || []] : [];
+            return this.Fd(function(t, e, r) {
+                if (!t || !e || !e.length) return t;
+                for (var i = t.split("#"), n = i[1], s = (i[0] || "").split("?"), a = s[1], o = s[0], u = (a || "").split("&"), l = [], h = 0; u.length > h; h++) {
+                    var d = u[h].split("=");
+                    vr(d) && (e.includes(d[0]) ? l.push(d[0] + "=<masked>") : l.push(u[h]))
+                }
+                var c = o;
+                return null != a && (c += "?" + l.join("&")), null != n && (c += "#" + n), c
+            }(r, i))
+        }
+        Fd(t) {
+            var e = this._instance.config.session_recording;
+            if (e.maskCapturedNetworkRequestFn) {
+                var r, i = e.maskCapturedNetworkRequestFn({
+                    name: t
+                });
+                return null !== (r = null == i ? void 0 : i.name) && void 0 !== r ? r : null == i ? void 0 : i.url
+            }
+            if (e.maskNetworkRequestFn) {
+                var n = e.maskNetworkRequestFn({
+                    url: t
+                });
+                return null == n ? void 0 : n.url
+            }
+            return t
+        }
+        Ld(t) {
+            try {
+                return t.rrwebMethod(), !0
+            } catch (e) {
+                return 10 > this.Vh.length ? this.Vh.push({
+                    enqueuedAt: t.enqueuedAt || Date.now(),
+                    attempt: t.attempt + 1,
+                    rrwebMethod: t.rrwebMethod
+                }) : bs.warn("could not emit queued rrweb event.", e, t), !1
+            }
+        }
+        Lh(t, e) {
+            return this.Ld(_s((() => Is().addCustomEvent(t, e))))
+        }
+        Dd() {
+            try {
+                if (this._instance.config.capture_pageview || !Xe) return;
+                var t = new URL(Xe.location.href),
+                    e = this.Nd(t.origin + t.pathname + t.search);
+                this.Pd !== e && (this.Pd = e, this.Lh("$url_changed", {
+                    href: e
+                }))
+            } catch (t) {}
+        }
+        Wd() {
+            if (this.Vh.length) {
+                var t = [...this.Vh];
+                this.Vh = [], t.forEach((t => {
+                    Date.now() - t.enqueuedAt > 2e3 || this.Ld(t)
+                }))
+            }
+        }
+        xh() {
+            return this.Ld(_s((() => Is().takeFullSnapshot())))
+        }
+        get $d() {
+            var t, e, r;
+            if (null != (t = this.Uh) && t.hasPendingTriggers(this.sessionId) && !["sampled", "active"].includes(this.status)) {
+                var i, n = null == (i = this._instance.config.session_recording) ? void 0 : i.trigger_pending_buffer_interval_millis;
+                return br(n) && Number.isFinite(n) && n >= 1e3 && 36e5 >= n ? n : 6e4
+            }
+            return null !== (e = null == (r = this._instance.config.session_recording) ? void 0 : r.full_snapshot_interval_millis) && void 0 !== e ? e : 3e5
+        }
+        Bd() {
+            if (this.zd && clearInterval(this.zd), !0 !== this.Zh) {
+                var t = this.$d;
+                t && (this.zd = setInterval((() => {
+                    this.xh()
+                }), t))
+            }
+        }
+        Th() {
+            !this.dh.urlBlocked && ["sampled", "active"].includes(this.status) && this.Bd()
+        }
+        Ud() {
+            this.dh.urlBlocked || (this.dh.urlBlocked = !0, clearInterval(this.zd), bs.info("recording paused due to URL blocker"), this.Lh("recording paused", {
+                reason: "url blocker"
+            }))
+        }
+        jd() {
+            this.dh.urlBlocked && (this.dh.urlBlocked = !1, this.xh(), this.Bd(), this.Lh("recording resumed", {
+                reason: "left blocked url"
+            }), bs.info("recording resumed"))
+        }
+        qd(t, e) {
+            var r;
+            if (!this.Gh && null != (r = this.Uh) && r.hasPendingTriggers(this.sessionId)) {
+                this.Gh = !0;
+                try {
+                    var i, n;
+                    null == (i = this._instance.persistence) || i.register({
+                        ["url" === t ? Wi : $i]: this.sessionId
+                    }), null == (n = this.Uh) || n.updateActiveTriggers(this.sessionId), this.Th(), this._d(), this.Rh(t + "_trigger_matched", {
+                        ["url" === t ? "matchedUrl" : "matchedEvent"]: e
+                    })
+                } finally {
+                    this.Gh = !1
+                }
+            }
+        }
+        get isStarted() {
+            return !!this.qh
+        }
+        get ll() {
+            var t = this._instance.get_property(Ai);
+            if (t) {
+                var e;
+                try {
+                    e = pr(t) ? t : JSON.parse(t)
+                } catch (t) {
+                    return void bs.warn("persisted remote config for session recording is invalid and will be ignored", t)
+                }
+                if (!this.isStarted) {
+                    var r, i, n = null !== (r = e.cache_timestamp) && void 0 !== r ? r : Date.now();
+                    if (Date.now() - n > 36e5) return bs.info("persisted remote config for session recording is stale and will be ignored", {
+                        cacheTimestamp: n,
+                        persistedConfig: t
+                    }), void(null == (i = this._instance.persistence) || i.unregister(Ai))
+                }
+                return e
+            }
+        }
+        Hd(t, e, r) {
+            this._instance.get_property(t) && (e(), r())
+        }
+        start(t) {
+            var e, r, i = this.ll;
+            if (i) {
+                this.ud && (this.Gd(), this.Sd());
+                var n = this.Wh.checkAndGetSessionAndWindowId(),
+                    s = n.windowId;
+                this.Ti = n.sessionId, this.Ii = s, null == (e = this._instance.persistence) || e.unregister(ji), null != i && i.endpoint && (this.jh = null == i ? void 0 : i.endpoint), this.Uh = 2 === (null == i ? void 0 : i.version) && (null == i ? void 0 : i.triggerGroups) && i.triggerGroups.length > 0 ? new fs(this._instance, this.dh, this.Rh.bind(this), this.Lh.bind(this), this.Th.bind(this)) : new vs(this._instance, this.dh, this.fh, this.ph, this.Rh.bind(this), this.xh.bind(this), this.Th.bind(this)), this.Uh.onRemoteConfig(i), null == (r = this.Oh) || r.call(this), this.Oh = this.Uh.setupEventTriggerListeners(this._instance.on.bind(this._instance, "eventCaptured"), this.sessionId, ((t, e) => this.qd(t, e))), this.Hd(Ei, (() => {
+                    this.overrideSampling()
+                }), (() => {
+                    var t;
+                    return null == (t = this._instance.persistence) ? void 0 : t.unregister(Ei)
+                })), this.Hd(Ni, (() => {
+                    this.overrideLinkedFlag()
+                }), (() => {
+                    var t;
+                    return null == (t = this._instance.persistence) ? void 0 : t.unregister(Ni)
+                })), this.Hd(Li, (() => {
+                    this.overrideTrigger("event")
+                }), (() => {
+                    var t;
+                    return null == (t = this._instance.persistence) ? void 0 : t.unregister(Li)
+                })), this.Hd(Fi, (() => {
+                    this.overrideTrigger("url")
+                }), (() => {
+                    var t;
+                    return null == (t = this._instance.persistence) ? void 0 : t.unregister(Fi)
+                })), this.Uh.makeSamplingDecisions(this.sessionId), this.Vd(), this.Jh || (Er(Xe, "beforeunload", this.bd), Er(Xe, "offline", this.Id), Er(Xe, "online", this.Ks), Er(Xe, "visibilitychange", this.xe), !this.hd && fr(this.Wh.onSessionId) && (this.hd = this.Wh.onSessionId(this.fi)), !this.dd && fr(this.Wh.on) ? this.dd = this.Wh.on("forcedIdleReset", (() => {
+                    this.pd(), this.Zh = "unknown", this.stop(), this.vd = this.Wh.onSessionId(((t, e, r) => {
+                        var i;
+                        null == (i = this.vd) || i.call(this), this.vd = void 0, this.fi(t, e, r)
+                    }))
+                })) : fr(this.Wh.on) || bs.warn("bundled core has no SessionIdManager.on (requires posthog-js >= 1.268.6); recording will start but skip forced-idle-reset handling"), wr(this.ld) && (this.ld = this._instance.on("eventCaptured", (t => {
+                    try {
+                        if ("$pageview" === t.event) {
+                            var e = null != t && t.properties.$current_url ? this.Nd(t.properties.$current_url) : "";
+                            if (!e) return;
+                            this.Lh("$pageview", {
+                                href: e
+                            })
+                        }
+                    } catch (t) {
+                        bs.error("Could not add $pageview to rrweb session", t)
+                    }
+                }))), this.status === Ji && this.Rh(t || "recording_initialized"))
+            } else bs.info("remote config must be stored in persistence before recording can start")
+        }
+        Zd() {
+            var t, e, r, i, n, s;
+            null == Xe || Xe.removeEventListener("beforeunload", this.bd), null == Xe || Xe.removeEventListener("offline", this.Id), null == Xe || Xe.removeEventListener("online", this.Ks), null == Xe || Xe.removeEventListener("visibilitychange", this.xe), clearInterval(this.zd), this.Jd(), null == (t = this.ld) || t.call(this), this.ld = void 0, null == (e = this.Oh) || e.call(this), this.Oh = void 0, null == (r = this.hd) || r.call(this), this.hd = void 0, null == (i = this.dd) || i.call(this), this.dd = void 0, null == (n = this.vd) || n.call(this), this.vd = void 0, null == (s = this.Uh) || s.stop(), this.Qd(), this.Gd()
+        }
+        Gd() {
+            this.od += 1, this.sd = [], this.ad = 0, this.Kd = void 0, this.ud = !1
+        }
+        Qd() {
+            var t, e;
+            null == (t = this.Xd) || t.stop(), this.Vh = [], null == (e = this.qh) || e.call(this), this.qh = void 0
+        }
+        Yd() {
+            if (!this.Kd || 0 === this.ad) return !1;
+            if (this.ud) return !0;
+            this.ud = !0;
+            var t = this.od;
+            return this.Jd(), this.Qd(), this.Kd.catch((() => {})).then((() => {
+                t === this.od && (this.ud = !1, this._d(), this.Sd(), this.Zd(), bs.info("stopped"))
+            })).catch((() => {
+                this.ud = !1, this.Zd(), bs.info("stopped")
+            })), !0
+        }
+        stop() {
+            this.Yd() || (this._d(), this.Sd(), this.Zd(), bs.info("stopped"))
+        }
+        discard() {
+            this.Sd(), this.Zd(), bs.info("discarded")
+        }
+        tc(t, e, r, i, n) {
+            var s, a = {
+                $snapshot_bytes: r,
+                $snapshot_data: e,
+                $session_id: i,
+                $window_id: n
+            };
+            t.type === xi.FullSnapshot && null != (s = Ss()) && null != s.wasMaxDepthReached && s.wasMaxDepthReached() && (this.Kh = !0), this.status !== Vi ? (this.ec(t, i), this.rc(a)) : this.Sd()
+        }
+        ec(t, e) {
+            t.type !== xi.FullSnapshot ? t.type === xi.IncrementalSnapshot && (mr(this.rd) || this.rd === e || this.nd === e || (this.nd = e, bs.info("incremental snapshot for a session with no full snapshot - requesting one", {
+                sessionId: e
+            }), this.xh())) : this.rd = e
+        }
+        ic(t) {
+            t.counted && t.generation === this.od && (this.ad = Math.max(0, this.ad - 1)), t.counted = !1, this.sd = this.sd.filter((e => e !== t))
+        }
+        nc(t, e, r) {
+            t.processed || t.generation !== this.od || (t.processed = !0, this.tc(t.event, e, r, t.targetSessionId, t.targetWindowId))
+        }
+        sc(t) {
+            try {
+                var e = t.compressionEnabled ? Ws(t.event) : {
+                    event: t.event,
+                    size: gn(t.event)
+                };
+                this.nc(t, e.event, e.size)
+            } finally {
+                this.ic(t)
+            }
+        }
+        kd() {
+            [...this.sd].forEach((t => {
+                this.sc(t)
+            }))
+        }
+        ac(t, r, i, n) {
+            var s = this,
+                a = {
+                    event: t,
+                    compressionEnabled: r,
+                    targetSessionId: i,
+                    targetWindowId: n,
+                    generation: this.od,
+                    processed: !1,
+                    counted: !0
+                };
+            this.sd.push(a), this.ad += 1;
+            var o = function() {
+                var i = e((function*() {
+                    try {
+                        if (a.processed) return;
+                        var e, i;
+                        try {
+                            var n = r ? Fs(t) ? yield function(t) {
+                                return $s.apply(this, arguments)
+                            }(t): Ws(t): {
+                                event: t,
+                                size: gn(t)
+                            };
+                            e = n.event, i = n.size
+                        } catch (r) {
+                            bs.error("could not process queued compression event - will use uncompressed event", r), e = t, i = gn(t)
+                        }
+                        s.nc(a, e, i)
+                    } finally {
+                        s.ic(a)
+                    }
+                }));
+                return function() {
+                    return i.apply(this, arguments)
+                }
+            }();
+            this.Kd = this.Kd ? this.Kd.catch((() => {})).then(o) : o()
+        }
+        onRRwebEmit(t) {
+            var e, r, i, n, s, a, o;
+            if (this._instance.sessionManager && (this.Wd(), t && pr(t))) {
+                if (t.type === xi.Meta) {
+                    var u = this.Nd(t.data.href);
+                    if (this.Pd = u, !u) return;
+                    t.data.href = u
+                } else this.Dd();
+                if (null == (e = this.Uh) || e.checkUrlTriggers(this.sessionId, (() => this.Ud()), (() => this.jd()), ((t, e) => this.qd(t, e))), !this.dh.urlBlocked || (l = t).type === xi.Custom && "recording paused" === l.data.tag) {
+                    var l, h, d;
+                    t.type === xi.FullSnapshot && (this.Bd(), null == (h = this.Xd) || h.reset(), null == (d = this._instance.persistence) || d.register_once({
+                        [ji]: t.timestamp
+                    }, void 0)), t.type === xi.FullSnapshot && null != (r = this.Uh) && r.hasPendingTriggers(this.sessionId) && this.oc();
+                    var c = this.Xd ? this.Xd.throttleMutations(t) : t;
+                    if (c) {
+                        var v = function(t) {
+                                var e = t;
+                                if (e && pr(e) && 6 === e.type && pr(e.data) && "rrweb/console@1" === e.data.plugin) {
+                                    e.data.payload.payload.length > 10 && (e.data.payload.payload = e.data.payload.payload.slice(0, 10), e.data.payload.payload.push("...[truncated]"));
+                                    for (var r = [], i = 0; e.data.payload.payload.length > i; i++) r.push(e.data.payload.payload[i] && e.data.payload.payload[i].length > 2e3 ? e.data.payload.payload[i].slice(0, 2e3) + "...[truncated]" : e.data.payload.payload[i]);
+                                    return e.data.payload.payload = r, t
+                                }
+                                return t
+                            }(c),
+                            f = function(t) {
+                                return Us(t) ? t.data.payload : null
+                            }(v),
+                            p = function(t) {
+                                return js(t) ? t.data.payload : null
+                            }(v);
+                        if (f || p) {
+                            var m = null != f ? f : p;
+                            null != m && m.lastActivityTimestamp && (v.timestamp = m.lastActivityTimestamp)
+                        } else this.uc(v);
+                        t.type === xi.FullSnapshot && (this.td.push([this.Ti, t.timestamp]), this.td.length > 6 && (this.td = this.td.slice(-6)));
+                        var g = null !== (i = null !== (n = null == f ? void 0 : f.currentSessionId) && void 0 !== n ? n : null == p ? void 0 : p.nextSessionId) && void 0 !== i ? i : this.Ti,
+                            y = null !== (s = null !== (a = null == f ? void 0 : f.currentWindowId) && void 0 !== a ? a : null == p ? void 0 : p.nextWindowId) && void 0 !== s ? s : this.Ii;
+                        if (!0 !== this.Zh || function(t) {
+                                return zs(t) || Us(t) || js(t)
+                            }(v)) {
+                            if (zs(v)) {
+                                var w = v.data.payload;
+                                w && (v.timestamp = w.lastActivityTimestamp + w.threshold)
+                            }
+                            var b = null === (o = this._instance.config.session_recording.compress_events) || void 0 === o || o;
+                            if (this.ad > 0 || b && Fs(v)) this.ac(v, b, g, y);
+                            else {
+                                var k = b ? Ws(v) : {
+                                    event: v,
+                                    size: gn(v)
+                                };
+                                this.tc(v, k.event, k.size, g, y)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        get status() {
+            return this.Uh ? this.Uh.getStatus({
+                instance: this._instance,
+                sessionId: this.sessionId,
+                isSampled: this.Bh,
+                rrwebError: this.Jh,
+                urlTriggerMatching: this.dh,
+                eventTriggerMatching: this.fh,
+                linkedFlagMatching: this.ph,
+                remoteConfig: this.ll
+            }) : Vi
+        }
+        log(t, e) {
+            var r;
+            void 0 === e && (e = "log"), null == (r = this._instance.sessionRecording) || r.onRRwebEmit({
+                type: 6,
+                data: {
+                    plugin: "rrweb/console@1",
+                    payload: {
+                        level: e,
+                        trace: [],
+                        payload: [JSON.stringify(t)]
+                    }
+                },
+                timestamp: Date.now()
+            })
+        }
+        overrideLinkedFlag() {
+            this.ph.linkedFlagSeen = !0, this.xh(), this.Rh("linked_flag_overridden")
+        }
+        overrideSampling() {
+            var t;
+            null == (t = this._instance.persistence) || t.register({
+                [Di]: this.sessionId,
+                [Oi]: null
+            }), this.xh(), this.Rh("sampling_overridden")
+        }
+        overrideTrigger(t) {
+            this.qd(t)
+        }
+        lc() {
+            try {
+                var t, e = null == Xe || null == (t = Xe.location) ? void 0 : t.href;
+                if (!e) return;
+                var r = this.Nd(e);
+                if (!r) return;
+                return new URL(r).hostname || void 0
+            } catch (t) {
+                return
+            }
+        }
+        Jd() {
+            this.hc && (clearTimeout(this.hc), this.hc = void 0)
+        }
+        _d() {
+            var t;
+            this.Jd(), null == (t = this.Uh) || t.ensureSamplingDecision(this.sessionId);
+            var e = this.yd();
+            if (this.status === Qi || this.status === Ki || this.status === Vi || e) return this.hc = setTimeout((() => {
+                this._d()
+            }), 2e3), this.R;
+            if (this.R.data.length > 0) {
+                var r, i = this.lc();
+                wn(this.R).forEach((t => {
+                    var e;
+                    null == (e = this.fd) || e.trackSize(t.sessionId, t.size), this.dc({
+                        $snapshot_bytes: t.size,
+                        $snapshot_data: t.data,
+                        $session_id: t.sessionId,
+                        $window_id: t.windowId,
+                        $lib: Rr.LIB_NAME,
+                        $lib_version: Rr.LIB_VERSION,
+                        $snapshot_host: i
+                    })
+                })), null == (r = this.Uh) || r.onFlushComplete()
+            }
+            return this.Sd()
+        }
+        rc(t) {
+            var e, r = 2 + ((null == (e = this.R) ? void 0 : e.data.length) || 0),
+                i = t.$session_id,
+                n = this.R.sessionId !== i;
+            (n || !0 !== this.Zh && this.R.size + t.$snapshot_bytes + r > 943718.4) && (this.R = this._d(), n && this.R.data.length > 0 && (this.R = this.Sd()), this.R.sessionId = i, this.R.windowId = t.$window_id), this.R.size += t.$snapshot_bytes, this.R.data.push(t.$snapshot_data), this.R.sizes.push(t.$snapshot_bytes), this.hc || !0 === this.Zh || (this.hc = setTimeout((() => {
+                this._d()
+            }), 2e3))
+        }
+        dc(t) {
+            this._instance.capture("$snapshot", t, {
+                _url: this._instance.requestRouter.endpointFor("api", this.jh),
+                _noTruncate: !0,
+                _batchKey: "recordings",
+                skip_client_rate_limiting: !0
+            })
+        }
+        get wd() {
+            var t, e, r = null == (t = this.R) ? void 0 : t.data[(null == (e = this.R) ? void 0 : e.data.length) - 1],
+                i = this.Wh.checkAndGetSessionAndWindowId(!0);
+            return r ? r.timestamp - i.sessionStartTimestamp : null
+        }
+        oc() {
+            if (!this.R || 0 === this.R.data.length) return this.Sd();
+            for (var t = -1, e = this.R.data.length - 1; e >= 0; e--)
+                if (this.R.data[e].type === xi.Meta) {
+                    t = e;
+                    break
+                } return 0 > t ? this.Sd() : (this.R.data = this.R.data.slice(t), this.R.sizes = this.R.sizes.slice(t), this.R.size = this.R.sizes.reduce(((t, e) => t + e), 0), this.R)
+        }
+        Sd() {
+            return this.R = {
+                size: 0,
+                data: [],
+                sizes: [],
+                sessionId: this.Ti,
+                windowId: this.Ii
+            }, this.R
+        }
+        Rh(t, e) {
+            this._instance.register_for_session({
+                $session_recording_start_reason: t
+            }), bs.info(t.replace("_", " "), e), "session_id_changed" !== t && this.Lh("$recording_started", r({
+                reason: t
+            }, e))
+        }
+        cc(t) {
+            var e;
+            return 3 === t.type && -1 !== ks.indexOf(null == (e = t.data) ? void 0 : e.source)
+        }
+        uc(t) {
+            var e = this.cc(t);
+            e || this.Zh || t.timestamp - this.Hh > this.$h && (this.Zh = !0, clearInterval(this.zd), this.Lh("sessionIdle", {
+                eventTimestamp: t.timestamp,
+                lastActivityTimestamp: this.Hh,
+                threshold: this.$h,
+                bufferLength: this.R.data.length,
+                bufferSize: this.R.size
+            }), this._d());
+            var r = !1;
+            if (e && (this.Hh = t.timestamp, this.Zh)) {
+                var i = "unknown" === this.Zh;
+                this.Zh = !1, i || (this.Lh("sessionNoLongerIdle", {
+                    reason: "user activity",
+                    type: t.type
+                }), r = !0)
+            }
+            if (!0 !== this.Zh) {
+                var n = this.Wh.checkAndGetSessionAndWindowId(!e, t.timestamp),
+                    s = n.windowId,
+                    a = n.sessionId,
+                    o = this.Ti !== a,
+                    u = this.Ii !== s;
+                this.Ii = s, this.Ti = a, o || u ? (this.stop(), this.start("session_id_changed")) : r && this.Bd()
+            }
+        }
+        pd() {
+            var t;
+            null == (t = this.Uh) || t.clearConditionalRecordingPersistence()
+        }
+        get sdkDebugProperties() {
+            var t, e = this.Wh.checkAndGetSessionAndWindowId(!0);
+            return {
+                $recording_status: this.status,
+                $sdk_debug_replay_internal_buffer_length: this.R.data.length,
+                $sdk_debug_replay_internal_buffer_size: this.R.size,
+                $sdk_debug_current_session_duration: this.wd,
+                $sdk_debug_session_start: e.sessionStartTimestamp,
+                $sdk_debug_replay_flushed_size: null == (t = this.fd) ? void 0 : t.currentTrackedSize(this.sessionId),
+                $sdk_debug_replay_full_snapshots: this.td,
+                $snapshot_max_depth_exceeded: this.Kh,
+                $sdk_debug_replay_rrweb_error: this.Jh,
+                $sdk_debug_rrweb_attached: !!this.qh,
+                $sdk_debug_rrweb_start_attempted: this.Qh
+            }
+        }
+        Vd() {
+            var t;
+            if (!this.qh) {
+                this.Qh = !0;
+                var e, i, n, s = {
+                        blockClass: "ph-no-capture",
+                        blockSelector: void 0,
+                        ignoreClass: "ph-ignore-input",
+                        maskTextClass: "ph-mask",
+                        maskTextSelector: void 0,
+                        maskTextFn: void 0,
+                        maskAllInputs: !0,
+                        maskInputOptions: {
+                            password: !0
+                        },
+                        maskInputFn: void 0,
+                        slimDOMOptions: {},
+                        collectFonts: !1,
+                        inlineStylesheet: !0,
+                        recordCrossOriginIframes: !1,
+                        attributeFilter: void 0
+                    },
+                    a = this._instance.config.session_recording;
+                for (var o of Object.entries(a || {})) {
+                    var u = o[0],
+                        l = o[1];
+                    u in s && ("maskInputOptions" === u ? s.maskInputOptions = r({
+                        password: !0
+                    }, l) : s[u] = l)
+                }
+                this.xd && this.xd.enabled && (s.recordCanvas = !0, s.sampling = {
+                    canvas: this.xd.fps
+                }, s.dataURLOptions = {
+                    type: "image/webp",
+                    quality: this.xd.quality
+                }, s.canvasResolutionScale = this.Rd, s.canvasMasking = {
+                    configured: () => {
+                        var t;
+                        return fr(null == (t = this._instance.config.session_recording) || null == (t = t.canvasCapture) ? void 0 : t.maskRegionsFn)
+                    },
+                    regionsFn: t => {
+                        var e, r = null == (e = this._instance.config.session_recording) || null == (e = e.canvasCapture) ? void 0 : e.maskRegionsFn;
+                        if (fr(r)) try {
+                            var i;
+                            return null !== (i = r(t)) && void 0 !== i ? i : null
+                        } catch (t) {
+                            return this.Yh || (this.Yh = !0, bs.warn("canvasCapture.maskRegionsFn threw, canvas frames will be skipped", t)), null
+                        }
+                    }
+                }), this.Md && (s.maskAllInputs = null === (e = this.Md.maskAllInputs) || void 0 === e || e, s.maskTextSelector = null !== (i = this.Md.maskTextSelector) && void 0 !== i ? i : void 0, s.blockSelector = null !== (n = this.Md.blockSelector) && void 0 !== n ? n : void 0), this.Cd();
+                var h = Is();
+                if (h) {
+                    this.Xd = null !== (t = this.Xd) && void 0 !== t ? t : new rs(h, {
+                        refillRate: this._instance.config.session_recording.__mutationThrottlerRefillRate,
+                        bucketSize: this._instance.config.session_recording.__mutationThrottlerBucketSize,
+                        onBlockedNode: (t, e) => {
+                            var r = "Too many mutations on node '" + t + "'. Rate limiting. This could be due to SVG animations or something similar";
+                            bs.info(r, {
+                                node: e
+                            }), this.log(ws + " " + r, "warn")
+                        }
+                    });
+                    var d = this.Od();
+                    if (this.qh = h(r({
+                            emit: t => {
+                                this.onRRwebEmit(t)
+                            },
+                            plugins: d
+                        }, s)), !this.qh) return this.Jh = !0, void bs.error("rrweb failed to start - Loss of recording data is possible. Check the browser console for rrweb errors.");
+                    this.Jh = !1, this.Hh = Date.now(), this.Zh = kr(this.Zh) ? this.Zh : "unknown", this.tryAddCustomEvent("$remote_config_received", this.ll), this.Lh("$session_options", {
+                        sessionRecordingOptions: s,
+                        activePlugins: d.map((t => null == t ? void 0 : t.name))
+                    }), this.Lh("$posthog_config", {
+                        config: this._instance.config
+                    })
+                } else bs.error("_startRecorder was called but rrwebRecord is not available. This indicates something has gone wrong.")
+            }
+        }
+        tryAddCustomEvent(t, e) {
+            return this.Lh(t, e)
+        }
+    }
+    nr.__PosthogExtensions__ = nr.__PosthogExtensions__ || {}, nr.__PosthogExtensions__.rrwebPlugins = {
+        getRecordConsolePlugin: t => ({
+            name: "rrweb/console@1",
+            observer: Ke,
+            options: t
+        }),
+        getRecordNetworkPlugin: t => ({
+            name: "rrweb/network@1",
+            observer: Ri,
+            options: t
+        })
+    }, nr.__PosthogExtensions__.rrweb = {
+        record: Pe,
+        version: "v2",
+        wasMaxDepthReached: () => ct,
+        resetMaxDepthState() {
+            ct = !1, dt = !1
+        }
+    }, nr.__PosthogExtensions__.initSessionRecording = t => new qs(t)
+}();
+//# sourceMappingURL=posthog-recorder.js.map
+
+//# chunkId=019fb8dc-1e45-7f93-9e69-f5ffe0eba414
