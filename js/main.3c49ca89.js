@@ -17343,22 +17343,6 @@
             description: "Collaborative process until you love the final cut.",
             icon: Nc
         }],
-        Wc = [{
-            id: "t1",
-            quote: "Ayush turned our raw footage into a promo that felt like a film. The pacing, the music cues \u2014 everything just worked. Delivered ahead of schedule.",
-            name: "Rohit Sharma",
-            role: "Content Creator"
-        }, {
-            id: "t2",
-            quote: "Our reels started performing noticeably better after Ayush took over the edits. Clean cuts, great sound design, and zero missed deadlines.",
-            name: "Priya Verma",
-            role: "Brand Manager"
-        }, {
-            id: "t3",
-            quote: "He understands cinematic language. The short film cut he delivered had a festival-grade feel \u2014 color, rhythm and emotion all on point.",
-            name: "Amit Singh",
-            role: "YouTuber & Filmmaker"
-        }],
         Hc = e => {
             const t = document.getElementById(e);
             t && (window.__lenis ? window.__lenis.scrollTo(t, {
@@ -18559,77 +18543,6 @@
                 })
             })]
         }),
-        Ld = lc("quote", [
-            ["path", {
-                d: "M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z",
-                key: "rib7q0"
-            }],
-            ["path", {
-                d: "M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z",
-                key: "1ymkrd"
-            }]
-        ]),
-        Od = lc("star", [
-            ["path", {
-                d: "M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z",
-                key: "r04s7s"
-            }]
-        ]),
-        Rd = () => (0, Fe.jsxs)("section", {
-            id: "testimonials",
-            "data-testid": "testimonials-section",
-            className: "mx-auto max-w-7xl px-5 py-24 sm:px-8 sm:py-32",
-            children: [(0, Fe.jsx)(Pd, {
-                kicker: "07 \u2014 Testimonials",
-                title: "What clients say"
-            }), (0, Fe.jsx)("div", {
-                className: "grid grid-cols-1 gap-5 md:grid-cols-3",
-                children: Wc.map((e, t) => (0, Fe.jsxs)(vu.figure, {
-                    "data-testid": "testimonial-card-".concat(e.id),
-                    initial: {
-                        opacity: 0,
-                        y: 30
-                    },
-                    whileInView: {
-                        opacity: 1,
-                        y: 0
-                    },
-                    viewport: {
-                        once: !0,
-                        margin: "-60px"
-                    },
-                    transition: {
-                        duration: .6,
-                        delay: .12 * t
-                    },
-                    className: "flex flex-col rounded-2xl border border-white/5 bg-[#0A0A0C] p-7 transition-all duration-500 hover:border-white/20 hover:shadow-[0_0_40px_rgba(255,255,255,0.04)]",
-                    children: [(0, Fe.jsx)(Ld, {
-                        size: 22,
-                        className: "text-zinc-600"
-                    }), (0, Fe.jsxs)("blockquote", {
-                        className: "mt-5 flex-1 text-sm leading-relaxed text-zinc-300",
-                        children: ['"', e.quote, '"']
-                    }), (0, Fe.jsx)("div", {
-                        className: "mt-6 flex gap-1",
-                        children: Array.from({
-                            length: 5
-                        }).map((e, t) => (0, Fe.jsx)(Od, {
-                            size: 12,
-                            className: "fill-white text-white"
-                        }, t))
-                    }), (0, Fe.jsxs)("figcaption", {
-                        className: "mt-4 border-t border-white/5 pt-4",
-                        children: [(0, Fe.jsx)("div", {
-                            className: "font-display text-sm font-bold text-white",
-                            children: e.name
-                        }), (0, Fe.jsx)("div", {
-                            className: "mt-0.5 font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500",
-                            children: e.role
-                        })]
-                    })]
-                }, e.id))
-            })]
-        }),
         _d = lc("message-circle", [
             ["path", {
                 d: "M7.9 20A9 9 0 1 0 4 16.1L2 22Z",
@@ -18908,7 +18821,7 @@
                     className: "grain",
                     "aria-hidden": "true"
                 }), (0, Fe.jsx)(Yc, {}), (0, Fe.jsxs)("main", {
-                    children: [(0, Fe.jsx)(Zc, {}), (0, Fe.jsx)(Td, {}), (0, Fe.jsx)(Ad, {}), (0, Fe.jsx)(jd, {}), (0, Fe.jsx)(Md, {}), (0, Fe.jsx)(Dd, {}), (0, Fe.jsx)(zd, {}), (0, Fe.jsx)(Rd, {}), (0, Fe.jsx)(Bd, {})]
+                    children: [(0, Fe.jsx)(Zc, {}), (0, Fe.jsx)(Td, {}), (0, Fe.jsx)(Ad, {}), (0, Fe.jsx)(jd, {}), (0, Fe.jsx)(Md, {}), (0, Fe.jsx)(Dd, {}), (0, Fe.jsx)(zd, {}), (0, Fe.jsx)(Bd, {})]
                 }), (0, Fe.jsx)(Ud, {}), (0, Fe.jsx)(cc, {})]
             })
         },
